@@ -9,28 +9,28 @@ const SCENARIOS = [
     image: '/assets/images/applications/icu.png',
     title: 'ICU Monitoring',
     alt: 'ICU monitoring',
-    desc: 'ICU 重症监护场景',
+    desc: 'Continuous 24/7 monitoring',
   },
   {
     slug: 'or',
     image: '/assets/images/applications/or.png',
     title: 'Operating Room',
     alt: 'Operating room',
-    desc: '手术室术中监测',
+    desc: 'Intraoperative vital-sign monitoring',
   },
   {
     slug: 'emergency',
     image: '/assets/images/applications/emergency.png',
     title: 'Emergency Dept.',
     alt: 'Emergency department',
-    desc: '急诊快速部署',
+    desc: 'Rapid deployment in the ED',
   },
   {
     slug: 'ward',
     image: '/assets/images/applications/ward.png',
     title: 'General Ward',
     alt: 'General ward',
-    desc: '普通病房日常监护',
+    desc: 'Daily monitoring for general wards',
   },
 ];
 

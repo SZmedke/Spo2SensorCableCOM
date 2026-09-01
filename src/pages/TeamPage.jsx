@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import SectionHeading from '../components/common/SectionHeading';
 
 const LEADERS = [
-  { name: 'Li Zhenzong', role: '创始人 / Founder', bio: '2008 年创立 Medke，主导工厂与供应链布局。' },
-  { name: 'Li Weitao', role: '董事长 / Chairman', bio: '集团战略与全球市场规划。' },
-  { name: 'Xian Zuyin', role: '总经理 / GM', bio: '生产运营、质量管理与交付。' },
-  { name: 'Liu Guiting', role: '销售总监 / Sales Director', bio: '全球渠道与大客户管理。' },
+  { name: 'Li Zhenzong', role: 'Founder', bio: 'Founded Medke in 2008; leads factory and supply-chain strategy.' },
+  { name: 'Li Weitao', role: 'Chairman', bio: 'Group strategy and global market planning.' },
+  { name: 'Xian Zuyin', role: 'General Manager', bio: 'Production operations, quality management and delivery.' },
+  { name: 'Liu Guiting', role: 'Sales Director', bio: 'Global channels and key-account management.' },
 ];
 
 const FUNCTIONS = [

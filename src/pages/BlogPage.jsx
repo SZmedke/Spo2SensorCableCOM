@@ -29,9 +29,9 @@ const POSTS = [
 ];
 
 const MORE = [
-  { slug: '/blog/nibp-maintenance', no: '05', title: 'NIBP 袖带与管路保养', desc: '延长使用寿命的 6 个习惯。' },
-  { slug: '/blog/ibp-storage', no: '06', title: 'IBP 传感器正确存放', desc: '避免压力线损坏的存放要点。' },
-  { slug: '/blog/fetal-probe-guide', no: '07', title: '胎监探头选购指南', desc: 'US / TOCO 探头与主机匹配速查。' },
+  { slug: '/blog/nibp-maintenance', no: '05', title: 'NIBP Cuff & Hose Care', desc: '6 habits that extend cuff and hose life.' },
+  { slug: '/blog/ibp-storage', no: '06', title: 'IBP Sensor Storage Done Right', desc: 'Key storage tips to protect pressure lines.' },
+  { slug: '/blog/fetal-probe-guide', no: '07', title: 'Fetal Probe Buying Guide', desc: 'Quick match guide for US / TOCO probes.' },
 ];
 
 export default function BlogPage() {
@@ -47,7 +47,7 @@ export default function BlogPage() {
           />
           <div className="app-grid">
             {POSTS.map((post) => (
-              <Link to={post.slug} className="app-card" key={post.slug}>
+              <Link to="/blog" className="app-card" key={post.slug}>
                 <div className="app-img-wrap">
                   <img src={post.image} alt={post.title} loading="lazy" />
                 </div>
@@ -67,7 +67,7 @@ export default function BlogPage() {
           <SectionHeading align="center" title="More Articles" />
           <div className="brand-grid">
             {MORE.map((m) => (
-              <Link to={m.slug} className="card" style={{ display: 'block' }} key={m.slug}>
+              <Link to="/blog" className="card" style={{ display: 'block' }} key={m.slug}>
                 <span className="mono" style={{ color: 'var(--cta)', fontWeight: 700 }}>{m.no}</span>
                 <h4 style={{ fontSize: 15, fontWeight: 600, marginTop: 8 }}>{m.title}</h4>
                 <p className="muted" style={{ fontSize: 13, marginTop: 6, lineHeight: 1.55 }}>{m.desc}</p>

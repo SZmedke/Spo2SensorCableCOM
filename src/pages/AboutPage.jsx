@@ -10,16 +10,16 @@ const CLIENT_BRANDS = [
 ];
 
 const JOURNEY = [
-  { year: '2008', text: '注册成立 · 注册资本 100 万元 · 厂房 1000㎡' },
-  { year: '2014', text: '取得医疗耗材生产准入 · 启动 OEM / ODM 服务' },
-  { year: '2024', text: '智能工厂升级 · 厂房 4000㎡ · 100+ 出口国' },
+  { year: '2008', text: 'Founded · RMB 10M registered capital · 1,000㎡ plant' },
+  { year: '2014', text: 'Medical consumables production license · OEM / ODM services launched' },
+  { year: '2024', text: 'Smart factory upgrade · 4,000㎡ plant · 100+ export countries' },
 ];
 
 const FACTORY = [
-  { image: '/assets/images/about/factory-01.jpg', title: 'Factory Exterior', desc: '4000㎡ 智能工厂' },
-  { image: '/assets/images/about/factory-02.jpg', title: 'Workshop', desc: '无尘车间' },
-  { image: '/assets/images/about/factory-03.jpg', title: 'Warehouse', desc: '成品仓 · 快速发货' },
-  { image: '/assets/images/about/quality-lab.png', title: 'Quality Lab', desc: '来料/成品双重检验' },
+  { image: '/assets/images/about/factory-01.jpg', title: 'Factory Exterior', desc: '4,000㎡ smart factory' },
+  { image: '/assets/images/about/factory-02.jpg', title: 'Workshop', desc: 'Cleanroom workshop' },
+  { image: '/assets/images/about/factory-03.jpg', title: 'Warehouse', desc: 'Finished-goods warehouse · fast dispatch' },
+  { image: '/assets/images/about/quality-lab.png', title: 'Quality Lab', desc: 'Incoming & finished-goods inspection' },
 ];
 
 export default function AboutPage() {

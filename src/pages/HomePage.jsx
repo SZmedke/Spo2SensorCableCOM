@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 /* ---------- local data (visual-design spec: page 1 / 首页) ---------- */
 
 const PRODUCT_LINES = [
-  { slug: 'spo2', name: 'SpO2 Sensors', desc: 'SpO2 系列', image: '/assets/images/categories/patient-monitoring.jpg' },
-  { slug: 'esu', name: 'ESU', desc: 'ESU 系列', image: '/assets/images/categories/esu.jpg' },
-  { slug: 'aed', name: 'AED', desc: 'AED 系列', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
-  { slug: 'nibp', name: 'NIBP', desc: 'NIBP 系列', image: '/assets/images/categories/ventilator.jpg' },
-  { slug: 'ecg', name: 'ECG / EKG', desc: 'ECG 系列', image: '/assets/images/categories/ekg.jpg' },
-  { slug: 'ibp', name: 'IBP', desc: 'IBP 系列', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
-  { slug: 'temperature', name: 'TEMP', desc: 'TEMP 系列', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
-  { slug: 'eeg', name: 'EEG', desc: 'EEG 系列', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+  { slug: 'spo2', name: 'SpO2 Sensors', desc: '123 SKUs · Disposable & Reusable', image: '/assets/images/categories/patient-monitoring.jpg' },
+  { slug: 'esu', name: 'ESU', desc: '26 SKUs · Pads, Pencils & Cables', image: '/assets/images/categories/esu.jpg' },
+  { slug: 'aed', name: 'AED', desc: 'Pads & Electrodes · Adapter Cables', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
+  { slug: 'nibp', name: 'NIBP', desc: '27 SKUs · Cuffs, Hoses & Adapters', image: '/assets/images/categories/ventilator.jpg' },
+  { slug: 'ecg', name: 'ECG / EKG', desc: '149 SKUs · Cables, Leadwires & Electrodes', image: '/assets/images/categories/ekg.jpg' },
+  { slug: 'ibp', name: 'IBP', desc: '23 SKUs · Cables & Transducers', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
+  { slug: 'temperature', name: 'TEMP', desc: '48 SKUs · Skin & Reusable Probes', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
+  { slug: 'eeg', name: 'EEG', desc: 'Cables & Electrodes · Adapters', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
 ];
 
 const HERO_BULLETS = [
@@ -41,10 +41,10 @@ const PROCESS_STEPS = [
 ];
 
 const APPLICATIONS = [
-  { slug: 'icu', name: 'ICU Monitoring', desc: 'ICU 场景', image: '/assets/images/applications/icu.png' },
-  { slug: 'or', name: 'Operating Room', desc: 'OR 场景', image: '/assets/images/applications/or.png' },
-  { slug: 'emergency', name: 'Emergency Dept.', desc: 'ED 场景', image: '/assets/images/applications/emergency.png' },
-  { slug: 'ward', name: 'General Ward', desc: 'Ward 场景', image: '/assets/images/applications/ward.png' },
+  { slug: 'icu', name: 'ICU Monitoring', desc: 'Continuous 24/7 monitoring', image: '/assets/images/applications/icu.png' },
+  { slug: 'or', name: 'Operating Room', desc: 'Intraoperative monitoring', image: '/assets/images/applications/or.png' },
+  { slug: 'emergency', name: 'Emergency Dept.', desc: 'Rapid ED deployment', image: '/assets/images/applications/emergency.png' },
+  { slug: 'ward', name: 'General Ward', desc: 'Daily ward monitoring', image: '/assets/images/applications/ward.png' },
 ];
 
 const QUOTES = [

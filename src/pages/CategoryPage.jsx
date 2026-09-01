@@ -10,10 +10,10 @@ const PRODUCT_LINES = [
     lead: 'Disposable & reusable SpO2 sensors, adapter cables and accessories — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
     image: '/assets/images/products/spo2-sensor/spo2-sensor-01.jpg',
     subs: [
-      { name: 'Disposable', desc: '一次性 SpO2 传感器', image: '/assets/images/products/spo2-sensor/spo2-sensor-01.jpg' },
-      { name: 'Reusable', desc: '可重复使用型', image: '/assets/images/products/spo2-sensor/spo2-sensor-02.jpg' },
-      { name: 'Adapters', desc: '转接头 / 延长线', image: '/assets/images/products/spo2-sensor/spo2-sensor-03.jpg' },
-      { name: 'Accessories', desc: '血氧配件', image: '/assets/images/categories/patient-monitoring.jpg' },
+      { name: 'Disposable', desc: 'Disposable SpO2 sensors', image: '/assets/images/products/spo2-sensor/spo2-sensor-01.jpg' },
+      { name: 'Reusable', desc: 'Reusable type', image: '/assets/images/products/spo2-sensor/spo2-sensor-02.jpg' },
+      { name: 'Adapters', desc: 'Adapters / extension cables', image: '/assets/images/products/spo2-sensor/spo2-sensor-03.jpg' },
+      { name: 'Accessories', desc: 'SpO2 accessories', image: '/assets/images/categories/patient-monitoring.jpg' },
     ],
   },
   {
@@ -22,10 +22,10 @@ const PRODUCT_LINES = [
     lead: 'Grounding pads, pencils, electrocoagulation cables and electrodes — compatible with mainstream electrosurgical units, with CE / FDA certified quality.',
     image: '/assets/images/products/esu-pad/esu-pad-01.jpg',
     subs: [
-      { name: 'Grounding Pads', desc: '回路电极垫', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
-      { name: 'Pencils', desc: '电刀笔', image: '/assets/images/categories/esu.jpg' },
-      { name: 'Cables', desc: '电凝线缆', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Electrodes', desc: '电极片', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
+      { name: 'Grounding Pads', desc: 'Return electrode pads', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
+      { name: 'Pencils', desc: 'Electrosurgical pencils', image: '/assets/images/categories/esu.jpg' },
+      { name: 'Cables', desc: 'Coagulation cables', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+      { name: 'Electrodes', desc: 'Electrodes', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
     ],
   },
   {
@@ -34,10 +34,10 @@ const PRODUCT_LINES = [
     lead: 'Defibrillation pads, electrodes and accessory cables — compatible with AED & defibrillator fleets, with CE / FDA certified quality.',
     image: '/assets/images/products/esu-pad/esu-pad-01.jpg',
     subs: [
-      { name: 'Pads & Electrodes', desc: '除颤电极片', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
-      { name: 'Adapter Cables', desc: '适配线缆', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Accessories', desc: '急救配件', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
-      { name: 'Consumables', desc: '耗材', image: '/assets/images/categories/esu.jpg' },
+      { name: 'Pads & Electrodes', desc: 'Defibrillation pads & electrodes', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
+      { name: 'Adapter Cables', desc: 'Adapter cables', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+      { name: 'Accessories', desc: 'Emergency accessories', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
+      { name: 'Consumables', desc: 'Consumables', image: '/assets/images/categories/esu.jpg' },
     ],
   },
   {
@@ -46,10 +46,10 @@ const PRODUCT_LINES = [
     lead: 'NIBP adapter hoses, connectors and cuffs — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
     image: '/assets/images/products/nibp-hose/nibp-hose-01.jpg',
     subs: [
-      { name: 'Adapter Hoses', desc: '适配管路', image: '/assets/images/products/nibp-hose/nibp-hose-01.jpg' },
-      { name: 'Cuffs', desc: '袖带', image: '/assets/images/categories/ventilator.jpg' },
-      { name: 'Connectors', desc: '接头', image: '/assets/images/categories/patient-monitoring.jpg' },
-      { name: 'Accessories', desc: '配件', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
+      { name: 'Adapter Hoses', desc: 'Adapter hoses', image: '/assets/images/products/nibp-hose/nibp-hose-01.jpg' },
+      { name: 'Cuffs', desc: 'Cuffs', image: '/assets/images/categories/ventilator.jpg' },
+      { name: 'Connectors', desc: 'Connectors', image: '/assets/images/categories/patient-monitoring.jpg' },
+      { name: 'Accessories', desc: 'Accessories', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
     ],
   },
   {
@@ -58,10 +58,10 @@ const PRODUCT_LINES = [
     lead: 'ECG trunk cables, leadwires, electrodes and adapters — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
     image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg',
     subs: [
-      { name: 'Trunk Cables', desc: '主线缆', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Leadwires', desc: '导联线', image: '/assets/images/categories/ekg.jpg' },
-      { name: 'Electrodes', desc: '电极片', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
-      { name: 'Adapters', desc: '转接头', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+      { name: 'Trunk Cables', desc: 'Trunk cables', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+      { name: 'Leadwires', desc: 'Leadwires', image: '/assets/images/categories/ekg.jpg' },
+      { name: 'Electrodes', desc: 'Electrodes', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
+      { name: 'Adapters', desc: 'Adapters', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
     ],
   },
   {
@@ -70,10 +70,10 @@ const PRODUCT_LINES = [
     lead: 'Invasive blood pressure cables and transducer accessories — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
     image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg',
     subs: [
-      { name: 'IBP Cables', desc: '有创血压线', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
-      { name: 'Transducers', desc: '压力传感器', image: '/assets/images/categories/patient-monitoring.jpg' },
-      { name: 'Adapters', desc: '转接头', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
-      { name: 'Accessories', desc: '配件', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
+      { name: 'IBP Cables', desc: 'IBP cables', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
+      { name: 'Transducers', desc: 'Pressure transducers', image: '/assets/images/categories/patient-monitoring.jpg' },
+      { name: 'Adapters', desc: 'Adapters', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
+      { name: 'Accessories', desc: 'Accessories', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
     ],
   },
   {
@@ -82,10 +82,10 @@ const PRODUCT_LINES = [
     lead: 'Skin & reusable temperature probes, adapter cables and accessories — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
     image: '/assets/images/products/temp-probe/temp-probe-01.jpg',
     subs: [
-      { name: 'Skin Probes', desc: '皮肤探头', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
-      { name: 'Reusable', desc: '可重复使用型', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
-      { name: 'Adapters', desc: '转接头', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Accessories', desc: '体温配件', image: '/assets/images/categories/patient-monitoring.jpg' },
+      { name: 'Skin Probes', desc: 'Skin probes', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
+      { name: 'Reusable', desc: 'Reusable type', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
+      { name: 'Adapters', desc: 'Adapters', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+      { name: 'Accessories', desc: 'Temperature accessories', image: '/assets/images/categories/patient-monitoring.jpg' },
     ],
   },
   {
@@ -94,10 +94,10 @@ const PRODUCT_LINES = [
     lead: 'EEG cables, electrodes and adapter accessories — compatible with mainstream EEG monitors and ventilators, with CE / FDA certified quality.',
     image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg',
     subs: [
-      { name: 'EEG Cables', desc: '脑电电缆', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Electrodes', desc: '脑电电极', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
-      { name: 'Adapters', desc: '转接头', image: '/assets/images/categories/ekg.jpg' },
-      { name: 'Accessories', desc: '配件', image: '/assets/images/categories/patient-monitoring.jpg' },
+      { name: 'EEG Cables', desc: 'EEG cables', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+      { name: 'Electrodes', desc: 'EEG electrodes', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
+      { name: 'Adapters', desc: 'Adapters', image: '/assets/images/categories/ekg.jpg' },
+      { name: 'Accessories', desc: 'Accessories', image: '/assets/images/categories/patient-monitoring.jpg' },
     ],
   },
 ];
@@ -115,10 +115,10 @@ const FEATURES = [
 ];
 
 const FACTORY = [
-  { name: 'Production Line', desc: '自动化产线', image: '/assets/images/about/factory-line.png' },
-  { name: 'Quality Lab', desc: '来料检验实验室', image: '/assets/images/about/quality-lab.png' },
-  { name: 'Workshop', desc: '车间实拍', image: '/assets/images/about/factory-02.jpg' },
-  { name: 'Warehouse', desc: '成品仓储', image: '/assets/images/about/factory-03.jpg' },
+  { name: 'Production Line', desc: 'Automated production line', image: '/assets/images/about/factory-line.png' },
+  { name: 'Quality Lab', desc: 'Incoming inspection lab', image: '/assets/images/about/quality-lab.png' },
+  { name: 'Workshop', desc: 'Workshop floor', image: '/assets/images/about/factory-02.jpg' },
+  { name: 'Warehouse', desc: 'Finished-goods storage', image: '/assets/images/about/factory-03.jpg' },
 ];
 
 const FAQS = [

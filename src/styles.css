@@ -150,6 +150,7 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 24px;
+    overflow-wrap: anywhere;
   }
 
   .field-label { display: block; font-size: 13px; font-weight: 500; color: var(--fg-2); margin-bottom: 6px; }
@@ -198,17 +199,20 @@
   .data-block .ok { color: #7FC4A8; font-family: var(--font-mono); }
   .data-block .no { color: #9AA5C7; font-family: var(--font-mono); }
 
-  .stat-strip { display: flex; flex-wrap: wrap; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-  .stat { padding: 18px 28px 18px 0; margin-right: 28px; }
+  .stat-strip { display: flex; flex-wrap: wrap; justify-content: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stat { padding: 18px 28px; margin-right: 0; }
   .stat:not(:last-child) { border-right: 1px solid var(--border); }
   .stat .num { font-family: var(--font-mono); font-size: 26px; font-weight: 500; color: var(--accent); }
   .stat .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--meta); margin-top: 2px; }
   @media (max-width: 640px) {
-    .stat { padding: 14px 16px 14px 0; margin-right: 16px; }
+    .stat { padding: 14px 16px; margin-right: 0; }
     .stat .num { font-size: 20px; }
   }
 
   .catalog-toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  @media (max-width: 480px) {
+    .catalog-toolbar .field-input { min-width: 0 !important; font-size: 15px; }
+  }
   .brand-pills { display: flex; flex-wrap: wrap; gap: 8px; }
   .brand-pill {
     padding: 7px 14px; border-radius: 999px;
@@ -236,6 +240,9 @@
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .wrap-anywhere { overflow-wrap: anywhere; }
+  /* override Tailwind's h-1/h-2/h-3 height utilities (0.25/0.5/0.75rem) that
+     collide with our typography classes and collapse heading boxes */
+  .h-1, .h-2, .h-3 { height: auto; }
 }
 
 /* ============ component layout styles ============ */
@@ -324,8 +331,8 @@
 @media (max-width: 640px) { .testimonial-grid { grid-template-columns: 1fr; } }
 
 /* cert wall */
-.cert-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.cert-card { padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); }
+.cert-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.cert-card { padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow-wrap: anywhere; }
 .cert-code { font-size: 26px; font-weight: 500; color: var(--accent); }
 @media (max-width: 640px) { .cert-grid { grid-template-columns: repeat(2, 1fr); } }
 
@@ -462,8 +469,8 @@
 @media (max-width: 900px) { .resource-layout { grid-template-columns: 1fr; } .resource-featured { grid-template-columns: 1fr; } }
 
 /* brand archive */
-.brand-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.brand-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px; transition: border-color 150ms, box-shadow 150ms; }
+.brand-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.brand-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px; transition: border-color 150ms, box-shadow 150ms; overflow-wrap: anywhere; }
 .brand-card:hover { border-color: var(--border-strong); box-shadow: var(--elev-raised); }
 @media (max-width: 900px) { .brand-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .brand-grid { grid-template-columns: 1fr; } }
@@ -477,7 +484,6 @@
 
 /* footer — VIS brand blue surface, white logo variant */
 .site-footer { background: #243181; color: #C6CDE0; margin-top: auto; }
-.footer-aux { height: 14px; background-image: url('/assets/images/brand/aux-white.svg'); background-repeat: repeat-x; background-size: 44px 44px; background-position: center top; opacity: 0.5; }
 .site-footer h3 { color: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 14px; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; padding: 40px 0 32px; }
 .footer-brand img { margin-bottom: 14px; width: auto; height: 46px; }

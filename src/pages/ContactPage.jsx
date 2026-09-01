@@ -5,9 +5,9 @@ import SectionHeading from '../components/common/SectionHeading';
 import { submitInquiry } from '../lib/inquiries';
 
 const CONTACT_INFO = [
-  { icon: '✉️', title: 'Email', lines: ['info@medke.com', 'sales@medke.com'] },
+  { icon: '✉️', title: 'Email', lines: ['info@medke.com', 'contact@medke.com'] },
   { icon: '📞', title: 'Phone / WhatsApp', lines: ['+86 153 0265 4212', 'Mon–Sat 9:00–18:00 (GMT+8)'] },
-  { icon: '📍', title: 'Address', lines: ['Shenzhen, Guangdong, China', '展厅可预约参观'] },
+  { icon: '📍', title: 'Address', lines: ['Shenzhen, Guangdong, China', 'Showroom visits by appointment'] },
   { icon: '🌐', title: 'Business Hours', lines: ['24/7 online inquiry', 'Email replied within 24h'] },
 ];
 

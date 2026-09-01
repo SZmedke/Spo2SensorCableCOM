@@ -5,14 +5,14 @@ import { PRODUCTS } from '../data/catalog';
 /* ---------- local data (visual-design spec: page 2 / 全部产品) ---------- */
 
 const PRODUCT_LINES = [
-  { slug: 'spo2', name: 'SpO2 Sensors', desc: 'SpO2 系列', image: '/assets/images/categories/patient-monitoring.jpg' },
-  { slug: 'esu', name: 'ESU', desc: 'ESU 系列', image: '/assets/images/categories/esu.jpg' },
-  { slug: 'aed', name: 'AED', desc: 'AED 系列', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
-  { slug: 'nibp', name: 'NIBP', desc: 'NIBP 系列', image: '/assets/images/products/nibp-hose/nibp-hose-01.jpg' },
-  { slug: 'ecg', name: 'ECG / EKG', desc: 'ECG 系列', image: '/assets/images/categories/ekg.jpg' },
-  { slug: 'ibp', name: 'IBP', desc: 'IBP 系列', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
-  { slug: 'temperature', name: 'TEMP', desc: 'TEMP 系列', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
-  { slug: 'eeg', name: 'EEG', desc: 'EEG 系列', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+  { slug: 'spo2', name: 'SpO2 Sensors', desc: '123 SKUs · Disposable & Reusable', image: '/assets/images/categories/patient-monitoring.jpg' },
+  { slug: 'esu', name: 'ESU', desc: '26 SKUs · Pads, Pencils & Cables', image: '/assets/images/categories/esu.jpg' },
+  { slug: 'aed', name: 'AED', desc: 'Pads & Electrodes · Adapter Cables', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
+  { slug: 'nibp', name: 'NIBP', desc: '27 SKUs · Cuffs, Hoses & Adapters', image: '/assets/images/products/nibp-hose/nibp-hose-01.jpg' },
+  { slug: 'ecg', name: 'ECG / EKG', desc: '149 SKUs · Cables, Leadwires & Electrodes', image: '/assets/images/categories/ekg.jpg' },
+  { slug: 'ibp', name: 'IBP', desc: '23 SKUs · Cables & Transducers', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
+  { slug: 'temperature', name: 'TEMP', desc: '48 SKUs · Skin & Reusable Probes', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
+  { slug: 'eeg', name: 'EEG', desc: 'Cables & Electrodes · Adapters', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
 ];
 
 const BRANDS = [
@@ -70,7 +70,7 @@ export default function ProductsPage() {
             <input
               className="field-input"
               style={{ flex: 1, minWidth: 220 }}
-              placeholder="Search by model, OEM#, brand…"
+              placeholder="Search by model, OEM#…"
               aria-label="Search products"
               value={query}
               onChange={(e) => setQuery(e.target.value)}

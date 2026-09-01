@@ -168,10 +168,10 @@ export default function ProductDetailPage() {
             <table style={{ marginTop: 12 }}>
               <thead>
                 <tr>
-                  <th>制造商</th>
-                  <th>探针选项</th>
-                  <th>订购代码</th>
-                  <th>兼容型号</th>
+                  <th>Manufacturer</th>
+                  <th>Probe Option</th>
+                  <th>Order Code</th>
+                  <th>Compatible Models</th>
                   <th>OEM#</th>
                 </tr>
               </thead>

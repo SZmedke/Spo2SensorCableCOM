@@ -35,7 +35,6 @@ const COLS = [
 export default function Footer() {
   return (
     <footer className="site-footer" data-component="site-footer">
-      <div className="footer-aux" aria-hidden="true" />
       <div className="container-site">
         <div className="footer-grid">
           <div className="footer-brand">

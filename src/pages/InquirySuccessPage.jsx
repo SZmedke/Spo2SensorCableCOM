@@ -3,9 +3,9 @@ import { Link, useSearchParams } from 'react-router-dom';
 
 const NEXT_STEPS = [
   { icon: '💬', title: 'WhatsApp', desc: '+86 153 0265 4212' },
-  { icon: '🏠', title: '返回首页', desc: '继续浏览 Medke 全部产品', to: '/' },
-  { icon: '📚', title: '浏览目录', desc: '查看全部产品分类', to: '/products' },
-  { icon: '📖', title: '阅读博客', desc: '查看兼容性选购指南', to: '/blog' },
+  { icon: '🏠', title: 'Back to Home', desc: 'Browse all Medke products', to: '/' },
+  { icon: '📚', title: 'Browse Catalog', desc: 'View all product categories', to: '/products' },
+  { icon: '📖', title: 'Read Blog', desc: 'Compatibility buying guides', to: '/blog' },
 ];
 
 const iconBoxStyle = {
@@ -57,10 +57,10 @@ export default function InquirySuccessPage() {
             </div>
             <h3 className="h-2">Inquiry Received</h3>
             <p style={{ marginTop: 12 }}>
-              您的询盘编号 <b style={{ color: 'var(--fg)' }}>{displayRef}</b> 已提交成功。
+              Your inquiry reference <b style={{ color: 'var(--fg)' }}>{displayRef}</b> has been submitted successfully.
             </p>
             <p style={{ marginTop: 4 }}>
-              我们承诺 <b style={{ color: 'var(--cta)' }}>24 小时内</b> 回复报价 — 请留意邮箱与 WhatsApp。
+              We reply with a quote within <b style={{ color: 'var(--cta)' }}>24 hours</b> — watch your inbox and WhatsApp.
             </p>
           </div>
 
