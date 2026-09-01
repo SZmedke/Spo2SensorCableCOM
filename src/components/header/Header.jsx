@@ -109,7 +109,7 @@ export default function Header() {
     <header className="site-header" data-component="site-header">
       <div className="container-site header-inner">
         <Link to="/" className="logo" aria-label="Medke home">
-          <img src="/assets/images/logo/medke-logo.svg" alt="Medke logo" style={{ height: 40, width: 'auto' }} />
+          <img src="/assets/images/logo/medke-logo.svg?v=2" alt="Medke logo" style={{ height: 40, width: 'auto' }} />
           <span className="logo-meta">EST. 2008</span>
         </Link>
 

@@ -38,7 +38,7 @@ export default function Footer() {
       <div className="container-site">
         <div className="footer-grid">
           <div className="footer-brand">
-            <img src="/assets/images/logo/medke-logo-white.svg" alt="Medke logo" />
+            <img src="/assets/images/logo/medke-logo-white.svg?v=2" alt="Medke logo" />
             <p className="footer-slogan">Vital links, Healthier lives.</p>
             <p className="footer-desc">
               {COMPANY.legalName} — compatible medical accessories manufacturer since 2008.
