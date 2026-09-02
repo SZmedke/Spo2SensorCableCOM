@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 const PRODUCT_LINES = [
   { slug: 'spo2', name: 'SpO2 Sensors', desc: '123 SKUs · Disposable & Reusable', image: '/assets/images/categories/patient-monitoring.jpg' },
   { slug: 'esu', name: 'ESU', desc: '26 SKUs · Pads, Pencils & Cables', image: '/assets/images/categories/esu.jpg' },
-  { slug: 'aed', name: 'AED', desc: 'Pads & Electrodes · Adapter Cables', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
-  { slug: 'nibp', name: 'NIBP', desc: '27 SKUs · Cuffs, Hoses & Adapters', image: '/assets/images/categories/ventilator.jpg' },
+  { slug: 'aed', name: 'AED', desc: 'Pads & Electrodes · Adapter Cables', image: '/assets/images/categories/category-aed.jpg' },
+  { slug: 'nibp', name: 'NIBP', desc: '27 SKUs · Cuffs, Hoses & Adapters', image: '/assets/images/categories/category-nibp.jpg' },
   { slug: 'ecg', name: 'ECG / EKG', desc: '149 SKUs · Cables, Leadwires & Electrodes', image: '/assets/images/categories/ekg.jpg' },
   { slug: 'ibp', name: 'IBP', desc: '23 SKUs · Cables & Transducers', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
   { slug: 'temperature', name: 'TEMP', desc: '48 SKUs · Skin & Reusable Probes', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
-  { slug: 'eeg', name: 'EEG', desc: 'Cables & Electrodes · Adapters', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+  { slug: 'eeg', name: 'EEG', desc: 'Cables & Electrodes · Adapters', image: '/assets/images/categories/category-eeg.jpg' },
 ];
 
 const HERO_BULLETS = [
@@ -54,7 +54,15 @@ const QUOTES = [
   { text: 'Well packed and arrived a day earlier than expected.', who: 'Chris' },
 ];
 
-const CERTS = ['TUV', 'MDD', 'ISO 13485', 'FSC', 'FDA'];
+const CERTS = [
+  { name: 'ISO 13485:2016', note: 'TÜV SÜD certified QMS (NB 0123)' },
+  { name: 'FDA 510(k)', note: 'SpO2 · BP cuff · Temp probe' },
+  { name: 'NMPA', note: 'China GMP · 5 registrations' },
+  { name: 'FSC', note: 'Free Sale Certificates' },
+  { name: 'CE MDR', note: 'EU 2017/745' },
+  { name: 'SFDA', note: 'Saudi Arabia' },
+  { name: 'RZN', note: 'Russia' },
+];
 
 function SectionHead({ title, subtitle }) {
   return (
@@ -94,8 +102,8 @@ export default function HomePage() {
             <div className="hero-media">
               <img
                 className="hero-img"
-                src="/assets/images/hero/hero-product.jpg"
-                alt="Medke patient monitor accessories"
+                src="/assets/images/hero/hero-office-v2.jpg"
+                alt="Medke corporate facility"
               />
               <div className="hero-compat">
                 <span className="chip">Philips</span>
@@ -237,14 +245,16 @@ export default function HomePage() {
             <div>
               <h2 className="h-2">Welcome to Medke</h2>
               <p className="muted" style={{ fontSize: 15, lineHeight: 1.7, marginTop: 14, maxWidth: 560 }}>
-                Established in 2008 with registered capital of RMB 10 million. Located in Shenzhen,
-                we export to 100+ countries with complete medical certifications.
+                Established in 2008 in Shenzhen, Medke is a certified manufacturer of patient monitor
+                accessories — from SpO2 sensors and ECG cables to NIBP cuffs and fetal probes. With a
+                complete design-to-production chain, ISO 13485, TÜV CE and FDA certifications, and
+                OEM/ODM support, we serve customers in 100+ countries.
               </p>
               <div style={{ marginTop: 20 }}>
                 <Link className="btn btn-secondary" to="/about">About Us</Link>
               </div>
             </div>
-            <img className="about-story-img" src="/assets/images/about/quality-lab.png" alt="Medke quality lab" />
+            <img className="about-story-img" src="/assets/images/about/about-story.jpg" alt="Medke facility" />
           </div>
         </div>
       </section>
@@ -268,18 +278,16 @@ export default function HomePage() {
       <section className="section" style={{ background: 'var(--surface)' }}>
         <div className="container-site">
           <SectionHead title="Medke Certification" />
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center' }}>
-            {CERTS.map((c) => (
-              <span
-                key={c}
-                style={{
-                  border: '1.5px solid var(--accent)', color: 'var(--accent)',
-                  borderRadius: 8, padding: '8px 18px', fontWeight: 600,
-                  fontSize: 14, background: 'var(--surface)',
-                }}
-              >
-                {c}
-              </span>
+          <div className="cert-wall">
+            {[CERTS.slice(0, 3), CERTS.slice(3)].map((row, ri) => (
+              <div className="cert-row" key={ri}>
+                {row.map((c) => (
+                  <div className="cert-badge" key={c.name}>
+                    <div className="cert-badge-name">{c.name}</div>
+                    <div className="cert-badge-note">{c.note}</div>
+                  </div>
+                ))}
+              </div>
             ))}
           </div>
         </div>

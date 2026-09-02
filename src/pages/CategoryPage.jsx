@@ -117,8 +117,8 @@ const FEATURES = [
 const FACTORY = [
   { name: 'Production Line', desc: 'Automated production line', image: '/assets/images/about/factory-line.png' },
   { name: 'Quality Lab', desc: 'Incoming inspection lab', image: '/assets/images/about/quality-lab.png' },
-  { name: 'Workshop', desc: 'Workshop floor', image: '/assets/images/about/factory-02.jpg' },
-  { name: 'Warehouse', desc: 'Finished-goods storage', image: '/assets/images/about/factory-03.jpg' },
+  { name: 'Workshop', desc: 'Workshop floor', image: '/assets/images/about/factory-workshop.jpg' },
+  { name: 'Warehouse', desc: 'Finished-goods storage', image: '/assets/images/about/factory-warehouse.jpg' },
 ];
 
 const FAQS = [
