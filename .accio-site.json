@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "siteId": "medke-site",
-  "name": "medke-site",
+  "name": "Spo2SensorCableCOM",
   "kind": "react-vite",
   "devCommand": "vite",
   "buildCommand": "vite build",
