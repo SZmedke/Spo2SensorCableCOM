@@ -68,6 +68,23 @@ for (const route of ROUTES) {
   ok += 1;
 }
 
+// Dedicated 404 document. Vercel serves it for unmatched paths, so unknown
+// URLs stop rendering as a 200 copy of the homepage (a soft 404 to Google).
+// noindex keeps it out of the index even if a crawler reaches it directly.
+{
+  const body = render('/__not-found__');
+  const head = [
+    '<title>Page not found | Medke</title>',
+    '<meta name="robots" content="noindex, follow" />',
+    `<meta name="description" content="This page does not exist. Browse compatible medical sensors and cables at ${ORIGIN}/products." />`,
+  ].join('\n    ');
+  const html = stripped
+    .replace('</head>', `  ${head}\n  </head>`)
+    .replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  writeFileSync(join(distDir, '404.html'), html, 'utf8');
+  ok += 1;
+}
+
 rmSync(ssrDir, { recursive: true, force: true });
 
 if (failures.length) {
