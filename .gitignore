@@ -11,5 +11,8 @@ vite-dev.log
 vite-dev-err.log
 preview-out.log
 preview-err.log
+preview-fix-out.log
+preview-fix-err.log
 design/
 shots/
+audit/

@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import ScrollToTop from './components/common/ScrollToTop';
@@ -83,6 +84,9 @@ export function AppShell() {
         <Footer />
         <FloatingWhatsApp />
       </div>
+      {/* Auto-tracks page views, including React Router pushState navigation.
+          No-ops during prerender: inject() bails out when there is no window. */}
+      <Analytics />
     </>
   );
 }
