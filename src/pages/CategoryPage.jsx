@@ -8,12 +8,12 @@ const PRODUCT_LINES = [
     slug: 'spo2', alias: ['spo2-sensor'], short: 'SpO2', eyebrow: 'SPO2',
     title: 'Reliable SpO2 Sensors & Cables',
     lead: 'Disposable & reusable SpO2 sensors, adapter cables and accessories — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
-    image: '/assets/images/products/spo2-sensor/spo2-sensor-01.jpg',
+    image: '/assets/images/products/spo2-sensor/spo2-scene-01.jpg',
     subs: [
-      { name: 'Disposable', desc: 'Disposable SpO2 sensors', image: '/assets/images/products/spo2-sensor/spo2-sensor-01.jpg' },
-      { name: 'Reusable', desc: 'Reusable type', image: '/assets/images/products/spo2-sensor/spo2-sensor-02.jpg' },
-      { name: 'Adapters', desc: 'Adapters / extension cables', image: '/assets/images/products/spo2-sensor/spo2-sensor-03.jpg' },
-      { name: 'Accessories', desc: 'SpO2 accessories', image: '/assets/images/categories/patient-monitoring.jpg' },
+      { name: 'Disposable SpO2 Sensor', desc: 'Single-use adhesive sensors for neonate, pediatric and adult patients', image: '/assets/images/products/spo2-sensor/spo2-disposable.jpg' },
+      { name: 'Reusable SpO2 Sensor', desc: 'Durable clip-style finger sensors for long-term and repeated use', image: '/assets/images/products/spo2-sensor/spo2-reusable.jpg' },
+      { name: 'SpO2 Adapter Cable', desc: 'Extension and adapter cables bridging sensors to monitoring equipment', image: '/assets/images/products/spo2-sensor/spo2-adapter-cable.jpg' },
+      { name: 'SpO2 Accessories', desc: 'Complementary components and spare parts for SpO2 monitoring setups', image: '/assets/images/products/spo2-sensor/spo2-accessories.jpg' },
     ],
   },
   {
@@ -56,12 +56,11 @@ const PRODUCT_LINES = [
     slug: 'ecg', alias: ['ekg'], short: 'ECG / EKG', eyebrow: 'ECG / EKG',
     title: 'ECG / EKG Cables & Electrodes',
     lead: 'ECG trunk cables, leadwires, electrodes and adapters — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
-    image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg',
+    image: '/assets/images/products/ecg-cable/ecg-scene-01.jpg',
     subs: [
-      { name: 'Trunk Cables', desc: 'Trunk cables', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Leadwires', desc: 'Leadwires', image: '/assets/images/categories/ekg.jpg' },
-      { name: 'Electrodes', desc: 'Electrodes', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
-      { name: 'Adapters', desc: 'Adapters', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
+      { name: 'EKG cables', desc: 'Lead wires with color-coded, labeled connectors', image: '/assets/images/products/ecg-cable/ecg-cables.jpg' },
+      { name: 'ECG Cables', desc: 'Trunk and extension cables with multi-pin connectors', image: '/assets/images/products/ecg-cable/ecg-trunk-cable.jpg' },
+      { name: 'EKG Accessories', desc: 'Suction-bulb electrodes and limb clamps for ECG monitoring', image: '/assets/images/products/ecg-cable/ecg-accessories.jpg' },
     ],
   },
   {
@@ -238,7 +237,7 @@ export default function CategoryPage({ slug: slugProp }) {
             title={`Our ${line.short} Product Line`}
             subtitle="Disposable · Reusable · Adapters · Accessories"
           />
-          <div className="product-grid">
+          <div className={`product-grid${line.subs.length === 3 ? ' product-grid-3' : ''}`}>
             {line.subs.map((s) => (
               <Link className="product-card" to="/contact" key={s.name}>
                 <div className="product-img-wrap">
