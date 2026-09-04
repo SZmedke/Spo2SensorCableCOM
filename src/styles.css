@@ -552,3 +552,110 @@
   .team-frame-top { flex: none; }
   .team-frame-top .team-frame-img { aspect-ratio: 1 / 1; height: auto; }
 }
+
+/* ============ /ibp product section ============ */
+.ibp-section-block {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  background: var(--surface);
+  margin-top: 32px;
+}
+.ibp-section-block:first-child { margin-top: 0; }
+
+/* Fix 1: responsive two-column grid for IBP Cables block A */
+.ibp-cable-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .ibp-cable-grid { grid-template-columns: 1fr; }
+}
+
+.ibp-transducer-gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.ibp-transducer-gallery-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-warm);
+}
+.ibp-transducer-gallery-item-img {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+.ibp-transducer-gallery-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ibp-transducer-gallery-label {
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-2);
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 640px) {
+  .ibp-section-block { padding: 20px 16px; }
+  .ibp-transducer-gallery { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============ /aed product section ============ */
+.aed-features-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 40px;
+  align-items: start;
+}
+.aed-variants-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.aed-compat-scroll { overflow-x: auto; }
+.aed-compat-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.aed-compat-table th,
+.aed-compat-table td {
+  padding: 9px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  vertical-align: top;
+}
+.aed-compat-table thead th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(255,255,255,0.55);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.aed-brand-header td {
+  background: rgba(255,255,255,0.06);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .aed-features-grid { grid-template-columns: 1fr; }
+  .aed-variants-grid  { grid-template-columns: 1fr; }
+}

@@ -1,5 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { CATEGORIES } from '../data/catalog';
+import IbpProductSection from '../components/products/IbpProductSection';
+import AedProductSection from '../components/products/AedProductSection';
 
 /* ---------- local data (visual-design spec: page 3 / 产品线页) ---------- */
 
@@ -32,24 +34,18 @@ const PRODUCT_LINES = [
     slug: 'aed', alias: [], short: 'AED', eyebrow: 'AED',
     title: 'AED & Defibrillation Accessories',
     lead: 'Defibrillation pads, electrodes and accessory cables — compatible with AED & defibrillator fleets, with CE / FDA certified quality.',
-    image: '/assets/images/products/esu-pad/esu-pad-01.jpg',
-    subs: [
-      { name: 'Pads & Electrodes', desc: 'Defibrillation pads & electrodes', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
-      { name: 'Adapter Cables', desc: 'Adapter cables', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Accessories', desc: 'Emergency accessories', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
-      { name: 'Consumables', desc: 'Consumables', image: '/assets/images/categories/esu.jpg' },
-    ],
+    image: '/assets/images/products/aed-electrode/aed-scene-01.jpg',
+    subs: [],
   },
   {
     slug: 'nibp', alias: [], short: 'NIBP', eyebrow: 'NIBP',
     title: 'NIBP Cuffs, Hoses & Adapters',
     lead: 'NIBP adapter hoses, connectors and cuffs — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
-    image: '/assets/images/products/nibp-hose/nibp-hose-01.jpg',
+    image: '/assets/images/products/nibp-hose/nibp-scene-01.jpg',
     subs: [
-      { name: 'Adapter Hoses', desc: 'Adapter hoses', image: '/assets/images/products/nibp-hose/nibp-hose-01.jpg' },
-      { name: 'Cuffs', desc: 'Cuffs', image: '/assets/images/categories/ventilator.jpg' },
-      { name: 'Connectors', desc: 'Connectors', image: '/assets/images/categories/patient-monitoring.jpg' },
-      { name: 'Accessories', desc: 'Accessories', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
+      { name: 'Disposable NIBP Cuffs', desc: 'Single-use cuffs for neonate, pediatric and adult patients — including printed styles for paediatric comfort', image: '/assets/images/products/nibp-hose/nibp-disposable-cuff.jpg' },
+      { name: 'Reusable NIBP Cuffs', desc: 'Durable adult cuffs for long-term clinical use, 25–35 cm arm circumference range', image: '/assets/images/products/nibp-hose/nibp-reusable-cuff.jpg' },
+      { name: 'NIBP Adapter Hoses', desc: 'Dual-lumen and single-lumen hoses with quick-release and screw connectors for major monitor brands', image: '/assets/images/products/nibp-hose/nibp-adapter-hose.jpg' },
     ],
   },
   {
@@ -67,7 +63,7 @@ const PRODUCT_LINES = [
     slug: 'ibp', alias: [], short: 'IBP', eyebrow: 'IBP',
     title: 'IBP Cables & Transducers',
     lead: 'Invasive blood pressure cables and transducer accessories — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
-    image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg',
+    image: '/assets/images/products/ibp-cable/ibp-scene-01.jpg',
     subs: [
       { name: 'IBP Cables', desc: 'IBP cables', image: '/assets/images/products/ibp-cable/ibp-cable-01.jpg' },
       { name: 'Transducers', desc: 'Pressure transducers', image: '/assets/images/categories/patient-monitoring.jpg' },
@@ -91,12 +87,14 @@ const PRODUCT_LINES = [
     slug: 'eeg', alias: [], short: 'EEG', eyebrow: 'EEG',
     title: 'EEG Cables & Electrodes',
     lead: 'EEG cables, electrodes and adapter accessories — compatible with mainstream EEG monitors and ventilators, with CE / FDA certified quality.',
-    image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg',
+    image: '/assets/images/products/eeg-electrode/eeg-scene-01.jpg',
     subs: [
-      { name: 'EEG Cables', desc: 'EEG cables', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Electrodes', desc: 'EEG electrodes', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
-      { name: 'Adapters', desc: 'Adapters', image: '/assets/images/categories/ekg.jpg' },
-      { name: 'Accessories', desc: 'Accessories', image: '/assets/images/categories/patient-monitoring.jpg' },
+      { name: 'Casted Golden',    desc: 'Highest signal stability & conductivity',             image: '/assets/images/products/eeg-electrode/eeg-casted-golden.jpg' },
+      { name: 'Casted Ag/AgCl',   desc: 'Balanced performance, anti-interference',             image: '/assets/images/products/eeg-electrode/eeg-casted-ag-agcl.jpg' },
+      { name: 'Casted Silver',    desc: 'Sensitive response, suitable for ICU use',            image: '/assets/images/products/eeg-electrode/eeg-casted-silver.jpg' },
+      { name: 'Needle Type',      desc: 'Invasive, for neurosurgery application',              image: '/assets/images/products/eeg-electrode/eeg-needle.jpg' },
+      { name: 'Alligator Clip',   desc: 'Quick-connect in ICU / monitoring stations',         image: '/assets/images/products/eeg-electrode/eeg-alligator-clip.jpg' },
+      { name: 'Snap',             desc: 'Compatible with most adhesive sensor pads',           image: '/assets/images/products/eeg-electrode/eeg-snap.jpg' },
     ],
   },
 ];
@@ -230,26 +228,32 @@ export default function CategoryPage({ slug: slugProp }) {
         </div>
       </section>
 
-      {/* 2. Product sub-lines — 4 cards */}
+      {/* 2. Product sub-lines — 4 cards / ibp specialist section */}
       <section className="section" style={{ background: 'var(--surface)' }}>
         <div className="container-site">
           <SectionHead
             title={`Our ${line.short} Product Line`}
-            subtitle="Disposable · Reusable · Adapters · Accessories"
+            subtitle={line.slug === 'ibp' ? 'IBP Cables · Disposable Transducers' : line.slug === 'aed' ? 'Adult · Pediatric · 20 Monitor Brands' : 'Disposable · Reusable · Adapters · Accessories'}
           />
-          <div className={`product-grid${line.subs.length === 3 ? ' product-grid-3' : ''}`}>
-            {line.subs.map((s) => (
-              <Link className="product-card" to="/contact" key={s.name}>
-                <div className="product-img-wrap">
-                  <img src={s.image} alt={s.name} loading="lazy" />
-                </div>
-                <div className="product-body">
-                  <h3 className="product-name">{s.name}</h3>
-                  <p className="product-pn">{s.desc}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {line.slug === 'ibp' ? (
+            <IbpProductSection />
+          ) : line.slug === 'aed' ? (
+            <AedProductSection />
+          ) : (
+            <div className={`product-grid${[3, 6].includes(line.subs.length) ? ' product-grid-3' : ''}`}>
+              {line.subs.map((s) => (
+                <Link className="product-card" to="/contact" key={s.name}>
+                  <div className="product-img-wrap">
+                    <img src={s.image} alt={s.name} loading="lazy" />
+                  </div>
+                  <div className="product-body">
+                    <h3 className="product-name">{s.name}</h3>
+                    <p className="product-pn">{s.desc}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
