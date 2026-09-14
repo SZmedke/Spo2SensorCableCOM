@@ -22,12 +22,13 @@ const PRODUCT_LINES = [
     slug: 'esu', alias: [], short: 'ESU', eyebrow: 'ESU',
     title: 'ESU Accessories for Electrosurgery',
     lead: 'Grounding pads, pencils, electrocoagulation cables and electrodes — compatible with mainstream electrosurgical units, with CE / FDA certified quality.',
-    image: '/assets/images/products/esu-pad/esu-pad-01.jpg',
+    image: '/assets/images/products/esu-pad/esu-scene-01.jpg',
     subs: [
-      { name: 'Grounding Pads', desc: 'Return electrode pads', image: '/assets/images/products/esu-pad/esu-pad-01.jpg' },
-      { name: 'Pencils', desc: 'Electrosurgical pencils', image: '/assets/images/categories/esu.jpg' },
-      { name: 'Cables', desc: 'Coagulation cables', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Electrodes', desc: 'Electrodes', image: '/assets/images/products/foam-electrode/foam-electrode-01.jpg' },
+      { name: 'Bipolar Forceps Cables',   desc: 'Cables with shrouded banana connectors for bipolar forceps',                        image: '/assets/images/products/esu-pad/esu-bipolar-cables.jpg' },
+      { name: 'ESU Pencils',              desc: 'Handheld pencils with CUT / COAG controls and 3-pin plugs',                         image: '/assets/images/products/esu-pad/esu-pencil.jpg' },
+      { name: 'Reusable Bipolar Forceps', desc: 'Reusable bayonet forceps with insulated 2-pin connection',            image: '/assets/images/products/esu-pad/esu-bipolar-forceps.jpg' },
+      { name: 'Reusable Patient Plates',  desc: 'Reusable silicone return plates with 1/4-inch connector',                           image: '/assets/images/products/esu-pad/esu-patient-plate.jpg' },
+      { name: 'Grounding Pads & Cables',  desc: 'Dispersive grounding pads with attached cables for electrosurgery',                 image: '/assets/images/products/esu-pad/esu-grounding-pad.jpg' },
     ],
   },
   {
@@ -75,12 +76,11 @@ const PRODUCT_LINES = [
     slug: 'temperature', alias: ['temp', 'temperature-probe'], short: 'TEMP', eyebrow: 'TEMP',
     title: 'Temperature Probes & Sensors',
     lead: 'Skin & reusable temperature probes, adapter cables and accessories — compatible with Philips, GE, Mindray, Drager and 90%+ mainstream monitors, with CE / FDA certified quality.',
-    image: '/assets/images/products/temp-probe/temp-probe-01.jpg',
+    image: '/assets/images/products/temp-probe/temperature-scene-01.jpg',
     subs: [
-      { name: 'Skin Probes', desc: 'Skin probes', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
-      { name: 'Reusable', desc: 'Reusable type', image: '/assets/images/products/temp-probe/temp-probe-01.jpg' },
-      { name: 'Adapters', desc: 'Adapters', image: '/assets/images/products/ecg-cable/ecg-cable-01.jpg' },
-      { name: 'Accessories', desc: 'Temperature accessories', image: '/assets/images/categories/patient-monitoring.jpg' },
+      { name: 'Disposable Temperature Probes', desc: 'Single-use skin temperature probes for accurate surface temperature monitoring', image: '/assets/images/products/temp-probe/temperature-disposable.jpg' },
+      { name: 'Reusable Temperature Probes',   desc: 'Durable probes designed for repeated clinical use across a range of patient monitoring applications', image: '/assets/images/products/temp-probe/temperature-reusable.jpg' },
+      { name: 'Temperature Adapter Cables',    desc: 'Adapter cables connecting temperature probes to patient monitors with various multi-pin connectors', image: '/assets/images/products/temp-probe/temperature-adapter.jpg' },
     ],
   },
   {
@@ -100,7 +100,18 @@ const PRODUCT_LINES = [
 ];
 
 const BRAND_CHIPS = ['Philips', 'GE', 'Mindray', 'Drager', 'Nihon Kohden'];
-const CLIENT_CHIPS = ['Philips', 'GE', 'Mindray', 'Drager', 'Fukuda', 'Nihon Kohden', 'Bionet', 'Aeon'];
+const CLIENT_LOGOS = [
+  { name: 'Philips',      src: '/assets/images/clients/client-logo-philips.png',      alt: 'Philips Healthcare' },
+  { name: 'Mindray',      src: '/assets/images/clients/client-logo-mindray.png',      alt: 'Mindray medical equipment' },
+  { name: 'Drager',       src: '/assets/images/clients/client-logo-drager.png',       alt: 'Dräger medical devices' },
+  { name: 'Bionet',       src: '/assets/images/clients/client-logo-bionet.png',       alt: 'Bionet patient monitoring' },
+  { name: 'Schiller',     src: '/assets/images/clients/client-logo-schiller.png',     alt: 'Schiller Medical' },
+  { name: 'Biolight',     src: '/assets/images/clients/client-logo-biolight.png',     alt: 'Biolight patient monitors' },
+  { name: 'Comen',        src: '/assets/images/clients/client-logo-comen.png',        alt: 'Comen patient monitors' },
+  { name: 'Edan',         src: '/assets/images/clients/client-logo-edan.png',         alt: 'Edan Instruments' },
+  { name: 'Huntleigh',    src: '/assets/images/clients/client-logo-huntleigh.png',    alt: 'Huntleigh healthcare' },
+  { name: 'Nokia Health', src: '/assets/images/clients/client-logo-nokia-health.png', alt: 'Nokia for Health' },
+];
 
 const FEATURES = [
   { title: 'Direct Factory', desc: 'Source pricing, no middleman markup.' },
@@ -240,7 +251,7 @@ export default function CategoryPage({ slug: slugProp }) {
           ) : line.slug === 'aed' ? (
             <AedProductSection />
           ) : (
-            <div className={`product-grid${[3, 6].includes(line.subs.length) ? ' product-grid-3' : ''}`}>
+            <div className={`product-grid${[3, 6].includes(line.subs.length) ? ' product-grid-3' : line.subs.length === 5 ? ' product-grid-5' : ''}`}>
               {line.subs.map((s) => (
                 <Link className="product-card" to="/contact" key={s.name}>
                   <div className="product-img-wrap">
@@ -296,9 +307,11 @@ export default function CategoryPage({ slug: slugProp }) {
       <section className="section" style={{ background: 'var(--accent-soft)' }}>
         <div className="container-site">
           <SectionHead title="Our Awesome Clients" />
-          <div className="brand-pills" style={{ justifyContent: 'center' }}>
-            {CLIENT_CHIPS.map((c) => (
-              <span className="brand-pill" key={c}>{c}</span>
+          <div className="client-logo-grid">
+            {CLIENT_LOGOS.map((logo) => (
+              <div className="client-logo-card" key={logo.name}>
+                <img src={logo.src} alt={logo.alt} loading="lazy" draggable="false" />
+              </div>
             ))}
           </div>
         </div>
