@@ -1,20 +1,6 @@
 import { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-const AED_FEATURES = [
-  'Defibrillation electrodes use to defibrillation resuscitation, monitoring and pacing',
-  'The conductive gel prevent burns caused by current overload',
-  'High efficiency of rescue and treatment, fast action and easy operation',
-  'OEM/ODM supported',
-];
-
-const AED_CERTIFICATIONS = [
-  'ISO 10993-1:2025',
-  'ISO 10993-5:2009',
-  'ISO 10993-10:2021',
-  'IEC 62366-1:2020',
-  'EN 60601-2-4:2018',
-];
 
 const AED_VARIANTS = [
   {
@@ -88,41 +74,6 @@ export default function AedProductSection() {
           </button>
         </div>
       )}
-
-      {/* Block A: Features + Certifications */}
-      <div className="ibp-section-block">
-        <h3 className="h-3" style={{ color: 'var(--accent)', marginBottom: 20 }}>
-          Disposable Defibrillation Electrode Pads
-        </h3>
-        <div className="aed-features-grid">
-          <div>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {AED_FEATURES.map((f, i) => (
-                <li key={i} style={{ fontSize: 15, lineHeight: 1.8, color: 'var(--fg-2)', paddingLeft: 16, position: 'relative', marginBottom: 4 }}>
-                  <span style={{ position: 'absolute', left: 0, color: 'var(--accent)' }}>·</span>
-                  {f}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <p style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--muted)', marginBottom: 10 }}>
-              Compliance with
-            </p>
-            <div className="product-chips">
-              {AED_CERTIFICATIONS.map((c) => (
-                <span key={c} className="chip">{c}</span>
-              ))}
-            </div>
-            <div className="product-chips" style={{ marginTop: 10 }}>
-              <span className="chip">CE</span>
-              <span className="chip">FDA</span>
-              <span className="chip">OEM / ODM</span>
-              <span className="chip">1 pair / bag</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Block B: Adult / Pediatric variant cards */}
       <div className="ibp-section-block">
@@ -208,35 +159,6 @@ export default function AedProductSection() {
         </div>
       </div>
 
-      {/* Block D: Product overview image + CTA */}
-      <div className="ibp-section-block">
-        <div className="ibp-cable-grid">
-          <div style={{ aspectRatio: '3/2', borderRadius: 'var(--radius-md)', overflow: 'hidden', background: '#f8f9fb' }}>
-            <img
-              src="/assets/images/products/aed-electrode/aed-product-overview.jpg"
-              alt="AED Electrode Pads — Adult, Pediatric and Connector Variants"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-          </div>
-          <div>
-            <h3 className="h-3" style={{ color: 'var(--accent)', marginBottom: 8 }}>
-              Disposable Defibrillation Electrode Pads
-            </h3>
-            <div className="product-chips" style={{ marginBottom: 14 }}>
-              <span className="chip">Adult & Pediatric</span>
-              <span className="chip">20 Monitor Brands</span>
-              <span className="chip">CE · FDA</span>
-              <span className="chip">OEM Available</span>
-            </div>
-            <p style={{ fontSize: 15, lineHeight: 1.6, color: 'var(--fg-2)', marginBottom: 20 }}>
-              Single-use defibrillation electrode pads for adult and pediatric patients.
-              Compatible with 20+ mainstream AED and defibrillator monitor brands.
-              Conductive gel prevents burns; ISO 10993 biocompatibility certified.
-            </p>
-            <Link className="btn btn-primary" to="/contact">Request a Quote →</Link>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

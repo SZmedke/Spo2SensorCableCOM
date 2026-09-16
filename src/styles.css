@@ -616,12 +616,6 @@
 }
 
 /* ============ /aed product section ============ */
-.aed-features-grid {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 40px;
-  align-items: start;
-}
 .aed-variants-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -658,7 +652,6 @@
   font-weight: 600;
 }
 @media (max-width: 768px) {
-  .aed-features-grid { grid-template-columns: 1fr; }
   .aed-variants-grid  { grid-template-columns: 1fr; }
 }
 
