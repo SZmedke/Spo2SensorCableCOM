@@ -19,6 +19,8 @@ import TeamPage from './pages/TeamPage';
 import FaqPage from './pages/FaqPage';
 import ContactPage from './pages/ContactPage';
 import InquirySuccessPage from './pages/InquirySuccessPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsOfServicePage from './pages/TermsOfServicePage';
 
 function NotFound() {
   return (
@@ -74,6 +76,8 @@ export function AppShell() {
             <Route path="/team" element={<TeamPage />} />
             <Route path="/faq" element={<FaqPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
             <Route path="/inquiry/success" element={<InquirySuccessPage />} />
             {PRODUCT_LINE_PATHS.map((p) => (
               <Route key={p} path={p} element={<CategoryPage slug={p.slice(1)} />} />

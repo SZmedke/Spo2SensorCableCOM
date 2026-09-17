@@ -101,6 +101,14 @@ function build() {
     `Answers on compatibility, MOQ, lead times, certification, warranty and shipping for compatible medical accessories.`,
     0.6, 'monthly');
 
+  add('/privacy-policy', `Privacy Policy | ${BRAND}`,
+    `Privacy Policy for ${COMPANY.legalName} (${ORIGIN}). Learn how we collect, use, and protect your personal information and B2B inquiry data.`,
+    0.3, 'yearly');
+
+  add('/terms-of-service', `Terms of Service | ${BRAND}`,
+    `Terms of Service for ${COMPANY.legalName} (${ORIGIN}). Review terms governing B2B product inquiries, communications, intellectual property, and use of this website.`,
+    0.3, 'yearly');
+
   for (const [path, [name, desc]] of Object.entries(PRODUCT_LINE_META)) {
     add(path, `${name} — Compatible Replacements | ${BRAND}`, desc, 0.8, 'monthly');
   }

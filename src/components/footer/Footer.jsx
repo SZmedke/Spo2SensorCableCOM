@@ -64,7 +64,12 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} {COMPANY.legalName}. All rights reserved.</p>
+          <div className="footer-legal-links">
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <span className="footer-legal-sep" aria-hidden="true">·</span>
+            <Link to="/terms-of-service">Terms of Service</Link>
+          </div>
+          <p>© {new Date().getFullYear()} {COMPANY.legalName} All rights reserved.</p>
           <p className="footer-disclaimer">
             All third-party brand names and logos are trademarks of their respective owners. Medke products are compatible replacement parts, not OEM parts.
           </p>
