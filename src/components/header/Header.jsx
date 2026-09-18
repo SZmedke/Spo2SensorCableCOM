@@ -16,6 +16,7 @@ const PRODUCT_LINES = [
 
 const ABOUT_LINKS = [
   { to: '/about-us', label: 'About Us' },
+  { to: '/certificates', label: 'Certificates' },
   { to: '/team', label: 'Team' },
   { to: '/faq', label: 'FAQ' },
 ];
@@ -100,6 +101,7 @@ export default function Header() {
     { to: '/applications', label: 'Applications' },
     { to: '/blog', label: 'Blog' },
     { to: '/about-us', label: 'About Us' },
+    { to: '/certificates', label: 'Certificates', indent: true },
     { to: '/team', label: 'Team', indent: true },
     { to: '/faq', label: 'FAQ', indent: true },
     { to: '/contact', label: 'Contact' },

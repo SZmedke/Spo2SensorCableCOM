@@ -21,6 +21,7 @@ import ContactPage from './pages/ContactPage';
 import InquirySuccessPage from './pages/InquirySuccessPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
+import CertificatesPage from './pages/CertificatesPage';
 
 function NotFound() {
   return (
@@ -78,6 +79,7 @@ export function AppShell() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+            <Route path="/certificates" element={<CertificatesPage />} />
             <Route path="/inquiry/success" element={<InquirySuccessPage />} />
             {PRODUCT_LINE_PATHS.map((p) => (
               <Route key={p} path={p} element={<CategoryPage slug={p.slice(1)} />} />

@@ -28,6 +28,7 @@ const COLS = [
     links: [
       { to: '/resources', label: 'Buying guides' },
       { to: '/applications', label: 'Applications' },
+      { to: '/certificates', label: 'Certificates' },
     ],
   },
 ];

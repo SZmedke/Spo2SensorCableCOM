@@ -109,6 +109,10 @@ function build() {
     `Terms of Service for ${COMPANY.legalName} (${ORIGIN}). Review terms governing B2B product inquiries, communications, intellectual property, and use of this website.`,
     0.3, 'yearly');
 
+  add('/certificates', `Certifications & Regulatory Compliance | ${BRAND}`,
+    `Official regulatory compliance, ISO 13485:2016 certification, EU MDR CE certificates, US FDA 510(k) clearances, and global market authorizations for Medke patient monitoring accessories.`,
+    0.8, 'monthly');
+
   for (const [path, [name, desc]] of Object.entries(PRODUCT_LINE_META)) {
     add(path, `${name} — Compatible Replacements | ${BRAND}`, desc, 0.8, 'monthly');
   }
