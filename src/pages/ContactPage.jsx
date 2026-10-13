@@ -58,13 +58,15 @@ export default function ContactPage() {
         name: values.name.trim(),
         email: values.email.trim(),
         phone: values.tel.trim() || undefined,
+        product_name: 'General Business & OEM/ODM Inquiry',
+        inquiry_type: 'General Contact / Business Inquiry',
         message: [
           values.message.trim(),
           values.businessType ? `Business Type: ${values.businessType}` : '',
           values.website ? `Website: ${values.website}` : '',
         ]
           .filter(Boolean)
-          .join('\n'),
+          .join('\n\n'),
       });
       if (res.ok) {
         navigate(`/inquiry/success?ref=${res.ref}`);

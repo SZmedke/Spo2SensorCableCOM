@@ -40,7 +40,17 @@ export default function InquiryForm({ productName = '', variant = 'full' }) {
     if (!validate()) return;
     setStatus('submitting');
     try {
-      const res = await submitInquiry(values);
+      const res = await submitInquiry({
+        ...values,
+        name: values.name.trim(),
+        company: values.company.trim() || undefined,
+        country: values.country.trim() || undefined,
+        email: values.email.trim(),
+        phone: values.phone.trim() || undefined,
+        product_name: values.product_name.trim() || undefined,
+        message: values.message.trim(),
+        inquiry_type: productName ? 'Product Quote Inquiry' : 'General Quote Inquiry',
+      });
       if (res.ok) {
         navigate(`/inquiry/success?ref=${res.ref}`);
       } else {

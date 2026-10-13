@@ -83,12 +83,13 @@ export default function ProductDetailPage() {
     try {
       const res = await submitInquiry({
         business_type: form.businessType,
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        message: form.message,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim() || undefined,
+        message: form.message.trim(),
         product_name: product.name,
         part_number: product.partNumber,
+        inquiry_type: 'Product Quote Inquiry',
       });
       if (res.ok) {
         navigate(`/inquiry/success?ref=${res.ref}`);

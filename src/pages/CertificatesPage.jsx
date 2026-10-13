@@ -193,19 +193,20 @@ export default function CertificatesPage() {
     try {
       const res = await submitInquiry({
         name: values.name.trim(),
+        company: values.company.trim() || undefined,
+        country: values.country.trim() || undefined,
         email: values.email.trim(),
         phone: values.phone.trim() || undefined,
-        company: values.company.trim() || undefined,
+        product_name: 'Certificates & Compliance Dossiers',
+        inquiry_type: 'Certificate & Compliance Dossier Request',
+        quantity_text: values.quantity.trim() || undefined,
         message: [
-          '[Certificate & Compliance Dossier Request]',
-          `Company: ${values.company.trim()}`,
-          `Country/Region: ${values.country.trim()}`,
-          values.quantity.trim() ? `Est. Annual Quantity / Target Line: ${values.quantity.trim()}` : '',
-          'Requested Certificates/Dossiers:',
+          values.quantity.trim() ? `Target Line / Est. Quantity: ${values.quantity.trim()}` : '',
+          'Requested Certificates & Compliance Dossiers:',
           values.message.trim(),
         ]
           .filter(Boolean)
-          .join('\n'),
+          .join('\n\n'),
       });
       if (res.ok) {
         navigate(`/inquiry/success?ref=${res.ref}`);
