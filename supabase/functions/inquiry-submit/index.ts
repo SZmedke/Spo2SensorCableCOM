@@ -126,9 +126,10 @@ Deno.serve(async (request) => {
     });
 
     // 快速跟进动作链接
-    const replySubject = encodeURIComponent(`Re: Your Medke Inquiry (${ref}) - ${product_name || 'Medical Accessories'}`);
-    const replyBody = encodeURIComponent(`Dear ${name},\n\nThank you for reaching out to Shenzhen Medke Technology regarding ${product_name || 'our medical cable and sensor solutions'}.\n\n`);
-    const mailtoUrl = `mailto:${encodeURIComponent(email)}?subject=${replySubject}&body=${replyBody}`;
+    // 邮件客户端兼容性处理：避免强行对 email 及 subject 做百分号转义导致腾讯企业邮等 Webmail 解析成 %40 / %20 乱码
+    // 且坚决不注入 body，避免冲掉业务员在客户端预设的公司签名档 (Signature)
+    const rawSubject = `Re: Your Medke Inquiry (${ref}) - ${product_name || 'Medical Accessories'}`;
+    const mailtoUrl = `mailto:${email}?subject=${rawSubject}`;
 
     const cleanPhoneDigits = phone ? phone.replace(/[^\d]/g, '') : '';
     const waText = encodeURIComponent(`Hello ${name}, this is Medke Technology regarding your recent inquiry (${ref}). How may we assist you with medical accessories?`);
@@ -294,7 +295,11 @@ Deno.serve(async (request) => {
                 </tr>
               </table>
 
-              <div style="margin-top:16px;font-size:12px;color:#94a3b8;">
+              <div style="margin-top:14px;font-size:13px;color:#475569;">
+                直达客户邮箱：<a href="mailto:${escapeHtml(email)}" style="color:#0047ff;font-weight:600;text-decoration:underline;">${escapeHtml(email)}</a>
+              </div>
+
+              <div style="margin-top:14px;font-size:12px;color:#94a3b8;">
                 Lead archived in database. View all leads in 
                 <a href="https://supabase.com/dashboard/project/qfunwqytvbjyhhpxetsm/editor" target="_blank" rel="noopener noreferrer" style="color:#64748b;text-decoration:underline;">
                   Supabase Dashboard &rarr;
