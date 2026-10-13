@@ -126,10 +126,9 @@ Deno.serve(async (request) => {
     });
 
     // 快速跟进动作链接
-    // 邮件客户端兼容性处理：避免强行对 email 及 subject 做百分号转义导致腾讯企业邮等 Webmail 解析成 %40 / %20 乱码
-    // 且坚决不注入 body，避免冲掉业务员在客户端预设的公司签名档 (Signature)
-    const rawSubject = `Re: Your Medke Inquiry (${ref}) - ${product_name || 'Medical Accessories'}`;
-    const mailtoUrl = `mailto:${email}?subject=${rawSubject}`;
+    // 根除 Webmail 转义缺陷：不拼接带空格的 ?subject= 参数，直接使用纯净的 mailto:${email}
+    // 配合 Resend 的 reply_to: email 设置，业务员既可点按钮发信，也可直接点邮件顶部的“回复”按钮
+    const mailtoUrl = `mailto:${email}`;
 
     const cleanPhoneDigits = phone ? phone.replace(/[^\d]/g, '') : '';
     const waText = encodeURIComponent(`Hello ${name}, this is Medke Technology regarding your recent inquiry (${ref}). How may we assist you with medical accessories?`);
@@ -299,6 +298,10 @@ Deno.serve(async (request) => {
                 直达客户邮箱：<a href="mailto:${escapeHtml(email)}" style="color:#0047ff;font-weight:600;text-decoration:underline;">${escapeHtml(email)}</a>
               </div>
 
+              <div style="margin-top:10px;font-size:12px;color:#0369a1;background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:8px 12px;line-height:1.5;">
+                💡 <strong>高效回信推荐</strong>：本通知已设置 <code>reply_to</code> 回复头。在企业邮箱中直接点击顶部自带的<strong>“回复 (Reply)”</strong>按钮，即可自动填入客户真实邮箱并带上原邮件内容与您的公司签名档，无任何字符转义。
+              </div>
+
               <div style="margin-top:14px;font-size:12px;color:#94a3b8;">
                 Lead archived in database. View all leads in 
                 <a href="https://supabase.com/dashboard/project/qfunwqytvbjyhhpxetsm/editor" target="_blank" rel="noopener noreferrer" style="color:#64748b;text-decoration:underline;">
@@ -336,6 +339,7 @@ Deno.serve(async (request) => {
       body: JSON.stringify({
         from: 'SpO2SensorCable <noreply@spo2sensorcable.com>',
         to: ['contact@medke.com'],
+        reply_to: email,
         subject: emailSubject,
         html: emailHtml,
       }),
