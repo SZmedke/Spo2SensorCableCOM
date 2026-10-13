@@ -200,13 +200,7 @@ export default function CertificatesPage() {
         product_name: 'Certificates & Compliance Dossiers',
         inquiry_type: 'Certificate & Compliance Dossier Request',
         quantity_text: values.quantity.trim() || undefined,
-        message: [
-          values.quantity.trim() ? `Target Line / Est. Quantity: ${values.quantity.trim()}` : '',
-          'Requested Certificates & Compliance Dossiers:',
-          values.message.trim(),
-        ]
-          .filter(Boolean)
-          .join('\n\n'),
+        message: values.message.trim(),
       });
       if (res.ok) {
         navigate(`/inquiry/success?ref=${res.ref}`);

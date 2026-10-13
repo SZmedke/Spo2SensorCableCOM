@@ -28,9 +28,29 @@ function escapeHtml(text: string): string {
     .replace(/'/g, '&#39;');
 }
 
+function cleanCustomerMessage(raw: string): string {
+  if (!raw) return '';
+  const lines = raw.split(/\r?\n/);
+  const filtered = lines.filter((line) => {
+    const trimmed = line.trim();
+    if (!trimmed) return true; // keep blank lines for paragraph spacing
+    // 过滤掉与上方客户档案/类型重复的系统拼接固定标签
+    if (/^\[.*request.*\]$/i.test(trimmed)) return false;
+    if (/^company\s*:/i.test(trimmed)) return false;
+    if (/^country(\/region)?\s*:/i.test(trimmed)) return false;
+    if (/^requested certificates(\/dossiers| & compliance dossiers)?\s*:/i.test(trimmed)) return false;
+    if (/^(est\.? annual quantity|target line \/ est\.? quantity)\s*:/i.test(trimmed)) return false;
+    return true;
+  });
+
+  // 去除首尾连续空行
+  return filtered.join('\n').trim();
+}
+
 function formatMessageHtml(raw: string): string {
-  if (!raw) return '-';
-  const escaped = escapeHtml(raw);
+  const cleaned = cleanCustomerMessage(raw);
+  if (!cleaned) return '<span style="color:#94a3b8;font-style:italic;">No additional message specified.</span>';
+  const escaped = escapeHtml(cleaned);
   return escaped.replace(/\r\n/g, '<br/>').replace(/[\r\n]/g, '<br/>');
 }
 
@@ -44,6 +64,14 @@ Deno.serve(async (request) => {
     return jsonResponse({ error: 'Server is missing Supabase environment variables' }, 500);
   }
 
+  // 获取访客发件的真实公网 IP 与地理位置（优先从 Cloudflare/代理头获取）
+  const clientIp = 
+    request.headers.get('cf-connecting-ip') ||
+    request.headers.get('x-real-ip') ||
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    'Unknown';
+  const clientGeoCountry = request.headers.get('cf-ipcountry') || null;
+
   let payload: Record<string, unknown>;
   try {
     payload = await request.json();
@@ -53,21 +81,45 @@ Deno.serve(async (request) => {
 
   const name = str(payload.name, 120);
   const email = str(payload.email, 200);
-  const message = str(payload.message, 5000);
-  if (!name || !email || !message) {
+  const rawMessage = str(payload.message, 5000);
+  if (!name || !email || !rawMessage) {
     return jsonResponse({ error: 'name, email and message are required' }, 400);
   }
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return jsonResponse({ error: 'Invalid email address' }, 400);
   }
 
-  // 提取其余字段
-  const company = str(payload.company, 200) || null;
-  const country = str(payload.country, 100) || null;
+  // 提取其余字段并提供容错解析（如果顶层未传，从 message 中智能挽救）
+  let company = str(payload.company, 200) || null;
+  let country = str(payload.country, 100) || null;
+
+  if (!company) {
+    const compMatch = rawMessage.match(/Company\s*:\s*([^\r\n]+)/i);
+    if (compMatch && compMatch[1]?.trim()) {
+      company = compMatch[1].trim();
+    }
+  }
+
+  if (!country) {
+    const countryMatch = rawMessage.match(/Country(?:\/Region)?\s*:\s*([^\r\n]+)/i);
+    if (countryMatch && countryMatch[1]?.trim()) {
+      country = countryMatch[1].trim();
+    } else if (clientGeoCountry && clientGeoCountry !== 'XX') {
+      country = clientGeoCountry;
+    }
+  }
+
   const phone = str(payload.phone, 60) || null;
   const product_name = str(payload.product_name, 300) || null;
   const inquiry_type = str(payload.inquiry_type, 150) || null;
-  const quantity_text = str(payload.quantity_text, 100) || null;
+  let quantity_text = str(payload.quantity_text, 100) || null;
+
+  if (!quantity_text) {
+    const qtyMatch = rawMessage.match(/(?:Quantity|Target Line \/ Est\.? Quantity)\s*:\s*([^\r\n]+)/i);
+    if (qtyMatch && qtyMatch[1]?.trim()) {
+      quantity_text = qtyMatch[1].trim();
+    }
+  }
 
   let quantity: number | null = null;
   if (payload.quantity !== '' && payload.quantity != null) {
@@ -96,7 +148,7 @@ Deno.serve(async (request) => {
     phone,
     product_name,
     quantity,
-    message,
+    message: rawMessage,
     status: 'new',
   });
 
@@ -126,8 +178,6 @@ Deno.serve(async (request) => {
     });
 
     // 快速跟进动作链接
-    // 根除 Webmail 转义缺陷：不拼接带空格的 ?subject= 参数，直接使用纯净的 mailto:${email}
-    // 配合 Resend 的 reply_to: email 设置，业务员既可点按钮发信，也可直接点邮件顶部的“回复”按钮
     const mailtoUrl = `mailto:${email}`;
 
     const cleanPhoneDigits = phone ? phone.replace(/[^\d]/g, '') : '';
@@ -259,13 +309,13 @@ Deno.serve(async (request) => {
                 ` : ''}
               </table>
 
-              <!-- Detailed Message Box -->
+              <!-- Detailed Message Box (已清洗去重) -->
               <div style="background:#f8fafc;border-left:4px solid #243181;border-radius:4px 8px 8px 4px;padding:16px 18px;border-top:1px solid #e2e8f0;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;">
                 <div style="font-size:12px;font-weight:700;color:#475569;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em;">
                   Customer Message / Requested Items:
                 </div>
                 <div style="font-size:14px;line-height:1.65;color:#1e293b;word-break:break-word;">
-                  ${formatMessageHtml(message)}
+                  ${formatMessageHtml(rawMessage)}
                 </div>
               </div>
             </td>
@@ -273,7 +323,7 @@ Deno.serve(async (request) => {
 
           <!-- Follow-up Action CTAs -->
           <tr>
-            <td style="padding:20px 32px 28px;background:#f8fafc;border-top:1px solid #e2e8f0;">
+            <td style="padding:20px 32px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;">
               <div style="font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:14px;">
                 Direct Sales Follow-up Actions · 业务一键跟进
               </div>
@@ -294,19 +344,17 @@ Deno.serve(async (request) => {
                 </tr>
               </table>
 
-              <div style="margin-top:14px;font-size:13px;color:#475569;">
-                直达客户邮箱：<a href="mailto:${escapeHtml(email)}" style="color:#0047ff;font-weight:600;text-decoration:underline;">${escapeHtml(email)}</a>
-              </div>
-
-              <div style="margin-top:10px;font-size:12px;color:#0369a1;background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:8px 12px;line-height:1.5;">
-                💡 <strong>高效回信推荐</strong>：本通知已设置 <code>reply_to</code> 回复头。在企业邮箱中直接点击顶部自带的<strong>“回复 (Reply)”</strong>按钮，即可自动填入客户真实邮箱并带上原邮件内容与您的公司签名档，无任何字符转义。
-              </div>
-
-              <div style="margin-top:14px;font-size:12px;color:#94a3b8;">
-                Lead archived in database. View all leads in 
-                <a href="https://supabase.com/dashboard/project/qfunwqytvbjyhhpxetsm/editor" target="_blank" rel="noopener noreferrer" style="color:#64748b;text-decoration:underline;">
-                  Supabase Dashboard &rarr;
-                </a>
+              <!-- 访客实际发件公网 IP 地址展示栏 -->
+              <div style="margin-top:18px;padding-top:14px;border-top:1px dashed #cbd5e1;font-size:12px;color:#64748b;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td style="color:#64748b;">
+                      <strong>访客实际发件 IP：</strong>
+                      <span style="font-family:ui-monospace,Menlo,Consolas,monospace;background:#e2e8f0;color:#0f172a;padding:2px 6px;border-radius:4px;font-weight:600;">${escapeHtml(clientIp)}</span>
+                      ${clientGeoCountry ? `<span style="margin-left:6px;color:#475569;font-weight:600;">(${escapeHtml(clientGeoCountry)})</span>` : ''}
+                    </td>
+                  </tr>
+                </table>
               </div>
             </td>
           </tr>
