@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Download, FileText, CheckCircle2, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
+import { submitInquiry } from '../../lib/inquiries';
 
 const BLOCKED_DOMAINS = [
   'tempmail.com', 'mailinator.com', '10minutemail.com', 'guerrillamail.com',
@@ -25,7 +26,7 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
     }
   };
 
-  const handleDownloadSubmit = (e) => {
+  const handleDownloadSubmit = async (e) => {
     e.preventDefault();
     const trimmed = email.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,26 +45,40 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
     setError('');
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      // Trigger browser native download
-      triggerDownload();
+    // 1. Submit lead to Supabase & trigger email notification to contact@medke.com
+    try {
+      const sourcePage = typeof window !== 'undefined' ? window.location.pathname : 'Landing Page';
+      await submitInquiry({
+        name: 'Brochure Downloader',
+        email: trimmed,
+        product_name: 'Medke Brochure 2026 (PDF)',
+        company: 'Website E-Catalog Visitor',
+        inquiry_type: 'E-Catalog Download',
+        message: `Visitor requested and downloaded the 2026 Medke Medical Cable Product Brochure (20.8 MB) from ${sourcePage}. Please follow up with technical catalog and pricing.`
+      });
+    } catch (err) {
+      console.warn('Lead capture notification warning:', err);
+      // Even if network or Supabase has a temporary hiccup, do not block file download
+    }
 
-      // GTM Telemetry event
-      if (typeof window !== 'undefined') {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'download_datasheet_lead',
-          asset_name: 'Medke Brochure 2026 (PDF)',
-          file_size: '20.8 MB',
-          user_email: trimmed,
-          timestamp: new Date().toISOString()
-        });
-        console.log('[GTM] Event fired: download_datasheet_lead', trimmed);
-      }
+    // 2. Trigger browser native download
+    triggerDownload();
 
-      setIsSubmitting(false);
-      setIsDownloaded(true);
-    }, 600);
+    // 3. GTM Telemetry event
+    if (typeof window !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'download_datasheet_lead',
+        asset_name: 'Medke Brochure 2026 (PDF)',
+        file_size: '20.8 MB',
+        user_email: trimmed,
+        timestamp: new Date().toISOString()
+      });
+      console.log('[GTM] Event fired: download_datasheet_lead', trimmed);
+    }
+
+    setIsSubmitting(false);
+    setIsDownloaded(true);
   };
 
   const handleClose = () => {
