@@ -6,7 +6,7 @@
 const URL = import.meta.env.VITE_SUPABASE_URL;
 const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export async function submitInquiry(payload) {
+export async function submitInquiry(payload, options = {}) {
   if (!URL || !ANON_KEY) {
     throw new Error('Inquiry service is not configured yet.');
   }
@@ -22,7 +22,13 @@ export async function submitInquiry(payload) {
   if (!res.ok || !data.ok) {
     throw new Error(data.error || 'Failed to save inquiry');
   }
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: 'submit_inquiry', inquiry_ref: data.ref });
+
+  // Allow callers to bypass the default submit_inquiry event (e.g. for e-catalog downloads)
+  const shouldSkipDataLayer = options.skipDataLayer || payload?.inquiry_type === 'E-Catalog Download';
+  if (!shouldSkipDataLayer && typeof window !== 'undefined') {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'submit_inquiry', inquiry_ref: data.ref });
+  }
+
   return { ok: true, ref: data.ref };
 }

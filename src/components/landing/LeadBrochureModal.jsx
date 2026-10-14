@@ -55,7 +55,7 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
         company: 'Website E-Catalog Visitor',
         inquiry_type: 'E-Catalog Download',
         message: `Visitor requested and downloaded the 2026 Medke Medical Cable Product Brochure (20.8 MB) from ${sourcePage}. Please follow up with technical catalog and pricing.`
-      });
+      }, { skipDataLayer: true });
     } catch (err) {
       console.warn('Lead capture notification warning:', err);
       // Even if network or Supabase has a temporary hiccup, do not block file download
