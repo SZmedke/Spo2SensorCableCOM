@@ -22,6 +22,8 @@ import InquirySuccessPage from './pages/InquirySuccessPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import CertificatesPage from './pages/CertificatesPage';
+import SpO2LandingPage from './pages/SpO2LandingPage';
+import EcgLandingPage from './pages/EcgLandingPage';
 
 function NotFound() {
   return (
@@ -81,7 +83,9 @@ export function AppShell() {
             <Route path="/terms-of-service" element={<TermsOfServicePage />} />
             <Route path="/certificates" element={<CertificatesPage />} />
             <Route path="/inquiry/success" element={<InquirySuccessPage />} />
-            {PRODUCT_LINE_PATHS.map((p) => (
+            <Route path="/spo2" element={<SpO2LandingPage />} />
+            <Route path="/ecg" element={<EcgLandingPage />} />
+            {PRODUCT_LINE_PATHS.filter((p) => p !== '/spo2' && p !== '/ecg').map((p) => (
               <Route key={p} path={p} element={<CategoryPage slug={p.slice(1)} />} />
             ))}
             <Route path="*" element={<NotFound />} />
