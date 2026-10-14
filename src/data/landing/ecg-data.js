@@ -1,4 +1,5 @@
 export const ecgLandingData = {
+  categoryType: 'ECG',
   eyebrow: 'DEFIBRILLATION-PROOF · CE MDR CERTIFIED · ISO 13485:2016',
   title: 'Medical-Grade ECG & EKG Cables & Leadwires',
   lead: 'Source manufacturer of 3-lead, 5-lead, and 12-lead patient monitoring cables. Compatible with GE Marquette, Philips, Mindray, Nihon Kohden, and Schiller. Built with low-noise TPU and 5000V high-pot defibrillation protection.',

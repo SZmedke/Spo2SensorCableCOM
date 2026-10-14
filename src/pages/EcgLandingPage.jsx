@@ -45,21 +45,19 @@ export default function EcgLandingPage() {
       <LandingHero
         data={ecgLandingData}
         onOpenBrochure={() => setIsBrochureOpen(true)}
-      />
-
-      <BrandMarqueeStrip
-        brands={ecgLandingData.brands}
-        guarantee={ecgLandingData.brandGuarantee}
+        onPrefillModel={handleSelectModel}
       />
 
       <CompatibilityMatrix
         data={ecgLandingData.compatibility}
         onSelectModel={handleSelectModel}
+        categoryType="ECG"
       />
 
       <ProductCategoryGrid
         categories={ecgLandingData.categories}
         onSelectCategory={handleSelectCategory}
+        categoryType="ECG"
       />
 
       <TrustAuthorityProof

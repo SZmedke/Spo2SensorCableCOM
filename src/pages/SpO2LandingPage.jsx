@@ -45,21 +45,19 @@ export default function SpO2LandingPage() {
       <LandingHero
         data={spo2LandingData}
         onOpenBrochure={() => setIsBrochureOpen(true)}
-      />
-
-      <BrandMarqueeStrip
-        brands={spo2LandingData.brands}
-        guarantee={spo2LandingData.brandGuarantee}
+        onPrefillModel={handleSelectModel}
       />
 
       <CompatibilityMatrix
         data={spo2LandingData.compatibility}
         onSelectModel={handleSelectModel}
+        categoryType="SpO2"
       />
 
       <ProductCategoryGrid
         categories={spo2LandingData.categories}
         onSelectCategory={handleSelectCategory}
+        categoryType="SpO2"
       />
 
       <TrustAuthorityProof

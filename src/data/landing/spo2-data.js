@@ -1,4 +1,5 @@
 export const spo2LandingData = {
+  categoryType: 'SpO2',
   eyebrow: 'FDA 510(k) CLEARED · CE MDR CERTIFIED · ISO 13485:2016',
   title: 'Reliable SpO2 Sensors & Adapter Cables',
   lead: 'Source manufacturer with 17 years of patient monitoring cable expertise. 90%+ OEM monitor compatibility, medical-grade TPU jackets, and flexible low MOQ for global distributors.',

@@ -16,6 +16,16 @@ export default {
         success: 'var(--success)',
         warn: 'var(--warn)',
         danger: 'var(--danger)',
+        medkeNavy: '#243181',
+        medkeBlue: '#0047FF',
+        medkeBlueHover: '#0038CC',
+        medkeSoft: '#EBF2FF',
+        medkeGreen: '#0E8345',
+        medkeMuted: '#64748B',
+      },
+      boxShadow: {
+        'glow-cta': '0 10px 25px -5px rgba(0, 71, 255, 0.4)',
+        'card-subtle': '0 8px 30px rgba(15, 23, 42, 0.08)',
       },
       fontFamily: {
         display: ['var(--font-display)'],

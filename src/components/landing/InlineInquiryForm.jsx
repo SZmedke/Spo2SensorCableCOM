@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Send, Loader2, CheckCircle2, MessageCircle, ShieldCheck, Sparkles, AlertCircle } from 'lucide-react';
+import { Loader2, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { submitInquiry } from '../../lib/inquiries';
-import { COMPANY } from '../../data/catalog';
 
 const BLOCKED_DOMAINS = [
   'tempmail.com', 'mailinator.com', '10minutemail.com', 'guerrillamail.com',
@@ -40,7 +39,7 @@ export default function InlineInquiryForm({ pageCategory = 'SpO2', selectedModel
     } else {
       const domain = emailTrimmed.split('@')[1]?.toLowerCase();
       if (domain && BLOCKED_DOMAINS.includes(domain)) {
-        errs.workEmail = 'Please provide a valid corporate or institutional email address.';
+        errs.workEmail = 'Please provide a valid corporate or hospital work email address.';
       }
     }
 
@@ -118,264 +117,233 @@ export default function InlineInquiryForm({ pageCategory = 'SpO2', selectedModel
   };
 
   const waUrl = `https://wa.me/8615302654212?text=${encodeURIComponent(
-    `Hello Medke, I need an urgent wholesale quote for ${values.targetModel || pageCategory} cables.`
+    `Hello Medke, I need an urgent factory quote for ${values.targetModel || pageCategory} cables.`
   )}`;
 
   return (
-    <section id="inquiry-form" className="bg-white py-16 sm:py-24 border-b border-slate-200 scroll-mt-6">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="inquiry-form" className="py-16 bg-[#EDF2FE] scroll-mt-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold uppercase tracking-wide mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Fast B2B Turnaround</span>
-          </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Request Direct Factory Pricing & Free Samples
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 mt-2">
-            Connect directly with Medke medical engineering specialists. We respond to wholesale & OEM requests within 2.4 hours.
-          </p>
-        </div>
+        {/* Card Container with High-Focus Styling: 1:1 Matching Preview HTML */}
+        <div id="form-card-container" className="bg-white rounded-2xl shadow-xl border-2 border-medkeNavy/20 overflow-hidden transition-all duration-300">
+          
+          {/* Gradient Accent Bar */}
+          <div className="h-2 bg-gradient-to-r from-medkeNavy via-medkeBlue to-emerald-500"></div>
 
-        {/* Main Card Container */}
-        <div
-          id="form-card-container"
-          className="rounded-3xl bg-slate-50 border border-slate-200/90 shadow-xl overflow-hidden transition-all duration-300"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12">
+          <div className="p-6 sm:p-10">
             
-            {/* Left 4 Cols: Factory Trust & Fast Contact Panel */}
-            <div className="lg:col-span-4 bg-gradient-to-b from-slate-900 to-slate-850 text-white p-8 sm:p-10 flex flex-col justify-between">
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-blue-500/20 text-blue-300 text-xs font-bold mb-6">
-                  <ShieldCheck className="w-4 h-4 text-blue-400" />
-                  <span>ISO 13485 & CE MDR Verified</span>
-                </div>
-
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-4">
-                  Partner with Shenzhen Source Factory
-                </h3>
-
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
-                  Skip middleman markups. Receive factory-direct tiered quotations, free sample kits, and customized private-label pinouts.
-                </p>
-
-                <div className="space-y-4 pt-4 border-t border-slate-800 text-xs sm:text-sm text-slate-300">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Average response time: <strong>&lt; 2.4 hours</strong></span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Free sample clinical evaluation sets</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span>NDA & confidentiality agreements supported</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Instant WhatsApp Channel */}
-              <div className="mt-8 pt-6 border-t border-slate-800">
-                <div className="text-xs text-slate-400 mb-2 font-medium">Need immediate reply?</div>
-                <a
-                  href={waUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors shadow-lg shadow-emerald-900/30"
-                >
-                  <MessageCircle className="w-4 h-4 fill-current" />
-                  <span>Chat on WhatsApp (+86 153 0265 4212)</span>
-                </a>
-              </div>
+            {/* Form Header */}
+            <div className="text-center max-w-2xl mx-auto mb-8">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 font-bold text-xs uppercase tracking-wide border border-emerald-200">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                ⚡ Guaranteed 2.4-Hour Medical Engineering Response
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-medkeNavy mt-3">
+                Request Direct Factory Pricing & Specifications
+              </h2>
+              <p className="mt-2 text-sm text-slate-600">
+                Get tiered wholesale pricing, technical pinout diagrams, and free evaluation samples directly from our engineering sales team.
+              </p>
             </div>
 
-            {/* Right 8 Cols: Form or Success Card */}
-            <div className="lg:col-span-8 p-8 sm:p-12 bg-white flex flex-col justify-center">
-              {submittedData ? (
-                /* In-Place Success Card */
-                <div className="text-center py-6 px-4 space-y-5 animate-in fade-in duration-300">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
-                    <CheckCircle2 className="w-9 h-9" />
+            {/* SUCCESS STATE */}
+            {submittedData ? (
+              <div className="p-6 rounded-xl bg-emerald-50 border-2 border-emerald-500 text-center space-y-3 animate-fade-in">
+                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center text-2xl font-bold">
+                  ✓
+                </div>
+                <h3 className="text-xl font-extrabold text-emerald-900">Inquiry Received Successfully!</h3>
+                <p className="text-sm text-emerald-800 max-w-md mx-auto">
+                  Thank you for choosing Medke! Our medical accessories engineering team has received your request and will send official quotation & technical drawings to <strong>{submittedData.email}</strong> within <strong>2.4 hours</strong>.
+                </p>
+                <div className="pt-3 flex flex-wrap items-center justify-center gap-3 text-xs text-emerald-900 font-semibold">
+                  <span>Reference Ticket: <strong className="font-mono">#{submittedData.ref}</strong></span>
+                  <span>&bull;</span>
+                  <a href={waUrl} target="_blank" rel="noopener noreferrer" className="text-medkeBlue underline">
+                    Fast-track via WhatsApp Now &rarr;
+                  </a>
+                </div>
+                <div className="pt-4">
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="px-4 py-2 text-xs font-bold text-emerald-700 bg-white border border-emerald-300 rounded-lg hover:bg-emerald-100 transition"
+                  >
+                    Submit Another Inquiry
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* ACTUAL FORM */
+              <form onSubmit={handleSubmit} className="space-y-5">
+                
+                {errors.form && (
+                  <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs">
+                    {errors.form}
                   </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  
+                  {/* Field 1: Full Name */}
                   <div>
-                    <h3 className="text-2xl font-extrabold text-slate-900">
-                      Inquiry Successfully Received!
-                    </h3>
-                    <p className="text-sm text-slate-600 mt-2 max-w-md mx-auto">
-                      Thank you. Your inquiry ticket <strong className="text-blue-600 font-mono text-base">{submittedData.ref}</strong> has been assigned to our medical cable engineering team.
-                    </p>
+                    <label htmlFor="contact-name" className="block text-xs font-bold text-medkeNavy uppercase tracking-wider mb-1.5">
+                      Full Name <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                      </div>
+                      <input
+                        type="text"
+                        id="contact-name"
+                        required
+                        value={values.fullName}
+                        onChange={(e) => setValues({ ...values, fullName: e.target.value })}
+                        placeholder="e.g. Dr. Alex Mercer / Sarah Jenkins"
+                        className="w-full pl-9 pr-3 py-3 rounded-lg border border-slate-300 focus:border-medkeBlue focus:ring-2 focus:ring-medkeBlue/20 text-sm transition outline-none"
+                      />
+                    </div>
+                    {errors.fullName ? (
+                      <p className="text-[11px] text-red-500 mt-1">{errors.fullName}</p>
+                    ) : (
+                      <p className="text-[11px] text-slate-400 mt-1">Primary contact for engineering follow-up.</p>
+                    )}
                   </div>
 
-                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 max-w-md mx-auto text-left text-xs space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-slate-500">Contact Email:</span>
-                      <span className="font-semibold text-slate-800">{submittedData.email}</span>
+                  {/* Field 2: Work Email */}
+                  <div>
+                    <label htmlFor="work-email" className="block text-xs font-bold text-medkeNavy uppercase tracking-wider mb-1.5">
+                      Business / Work Email <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/></svg>
+                      </div>
+                      <input
+                        type="email"
+                        id="work-email"
+                        required
+                        value={values.workEmail}
+                        onChange={(e) => setValues({ ...values, workEmail: e.target.value })}
+                        placeholder="purchasing@hospital-distributor.com"
+                        className="w-full pl-9 pr-3 py-3 rounded-lg border border-slate-300 focus:border-medkeBlue focus:ring-2 focus:ring-medkeBlue/20 text-sm transition outline-none"
+                      />
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-500">Target Equipment:</span>
-                      <span className="font-semibold text-slate-800 line-clamp-1">{submittedData.model}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-500">Guaranteed Reply:</span>
-                      <span className="font-semibold text-emerald-600">Within 2.4 Hours</span>
-                    </div>
+                    {errors.workEmail ? (
+                      <p className="text-[11px] text-red-500 mt-1">{errors.workEmail}</p>
+                    ) : (
+                      <p className="text-[11px] text-slate-400 mt-1">Official tiered pricing & spec sheets sent here.</p>
+                    )}
                   </div>
 
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
+                  {/* Field 3: Target Brand / Equipment Model */}
+                  <div>
+                    <label htmlFor="target-model" className="block text-xs font-bold text-medkeNavy uppercase tracking-wider mb-1.5">
+                      Target Brand / Equipment Model <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                      </div>
+                      <input
+                        type="text"
+                        id="target-model"
+                        required
+                        value={values.targetModel}
+                        onChange={(e) => setValues({ ...values, targetModel: e.target.value })}
+                        placeholder="e.g. Philips IntelliVue MP50, GE Dash 4000, or Mindray"
+                        className="w-full pl-9 pr-3 py-3 rounded-lg border border-slate-300 focus:border-medkeBlue focus:ring-2 focus:ring-medkeBlue/20 text-sm transition outline-none"
+                      />
+                    </div>
+                    {errors.targetModel ? (
+                      <p className="text-[11px] text-red-500 mt-1">{errors.targetModel}</p>
+                    ) : (
+                      <p className="text-[11px] text-slate-400 mt-1">Auto-filled when clicking any brand row or product above.</p>
+                    )}
+                  </div>
+
+                  {/* Field 4: Company / Organization / Country */}
+                  <div>
+                    <label htmlFor="company-name" className="block text-xs font-bold text-medkeNavy uppercase tracking-wider mb-1.5">
+                      Company / Hospital / Country <span className="text-slate-400 font-normal">(Optional)</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                      </div>
+                      <input
+                        type="text"
+                        id="company-name"
+                        value={values.companyCountry}
+                        onChange={(e) => setValues({ ...values, companyCountry: e.target.value })}
+                        placeholder="e.g. MedSupply Global / UAE / Germany"
+                        className="w-full pl-9 pr-3 py-3 rounded-lg border border-slate-300 focus:border-medkeBlue focus:ring-2 focus:ring-medkeBlue/20 text-sm transition outline-none"
+                      />
+                    </div>
+                    <p className="text-[11px] text-slate-400 mt-1">Helps calculate regional delivery time & tax rates.</p>
+                  </div>
+
+                </div>
+
+                {/* Field 5: Message / Quantity */}
+                <div>
+                  <label htmlFor="inquiry-message" className="block text-xs font-bold text-medkeNavy uppercase tracking-wider mb-1.5">
+                    Estimated Order Quantity & Specific Technical Requests (Optional)
+                  </label>
+                  <textarea
+                    id="inquiry-message"
+                    rows={3}
+                    value={values.message}
+                    onChange={(e) => setValues({ ...values, message: e.target.value })}
+                    placeholder="e.g. Looking for 300 pcs reusable SpO2 sensors compatible with Philips M1191A. Need pricing tier (100 / 300 / 500 pcs) and sample testing to Dubai / Houston."
+                    className="w-full p-3 rounded-lg border border-slate-300 focus:border-medkeBlue focus:ring-2 focus:ring-medkeBlue/20 text-sm transition outline-none"
+                  ></textarea>
+                </div>
+
+                {/* Submit Action & WhatsApp Split: 1:1 Parallel Layout */}
+                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                  <button
+                    type="submit"
+                    id="submit-btn"
+                    disabled={isSubmitting}
+                    className="flex-1 py-4 px-6 rounded-xl bg-medkeBlue hover:bg-medkeBlueHover text-white font-extrabold text-base shadow-glow-cta transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="animate-spin h-5 w-5 text-white" />
+                        <span>Sending Request...</span>
+                      </>
+                    ) : (
+                      <span>Submit Factory Quote Request 🚀</span>
+                    )}
+                  </button>
+
+                  <div className="flex items-center justify-center sm:justify-start">
+                    <span className="text-xs text-slate-400 px-2 hidden sm:inline">OR</span>
                     <a
                       href={waUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-md transition-colors"
+                      className="w-full sm:w-auto px-5 py-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition"
                     >
-                      <MessageCircle className="w-4 h-4 fill-current" />
-                      <span>Expedite via WhatsApp</span>
+                      <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
+                      <span>Chat on WhatsApp</span>
                     </a>
-                    <button
-                      type="button"
-                      onClick={handleReset}
-                      className="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs sm:text-sm transition-colors cursor-pointer"
-                    >
-                      Submit Another Inquiry
-                    </button>
                   </div>
                 </div>
-              ) : (
-                /* 4+1 Field Form */
-                <form onSubmit={handleSubmit} noValidate className="space-y-6">
-                  {errors.form && (
-                    <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4 shrink-0" />
-                      <span>{errors.form}</span>
-                    </div>
-                  )}
 
-                  {/* 2x2 Grid of Fields */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    
-                    {/* 1. Full Name */}
-                    <div>
-                      <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                        Full Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={values.fullName}
-                        onChange={(e) => setValues({ ...values, fullName: e.target.value })}
-                        placeholder="e.g. Dr. Alex Mercer / John Doe"
-                        className={`w-full px-4 py-3 rounded-xl bg-slate-50 border text-slate-900 text-sm focus:bg-white focus:outline-none focus:ring-2 transition-all ${
-                          errors.fullName
-                            ? 'border-red-400 focus:ring-red-400'
-                            : 'border-slate-200 focus:border-blue-600 focus:ring-blue-600/20'
-                        }`}
-                      />
-                      {errors.fullName && (
-                        <p className="text-xs text-red-500 mt-1 font-medium">{errors.fullName}</p>
-                      )}
-                    </div>
+                {/* Micro-Trust Footer */}
+                <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+                  <span className="flex items-center gap-1.5">
+                    <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    100% Privacy Protected &bull; NDA Available
+                  </span>
+                  <span>Direct Manufacturer Wholesale &bull; Zero Middleman Markups</span>
+                </div>
 
-                    {/* 2. Work Email */}
-                    <div>
-                      <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                        Business / Work Email <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        value={values.workEmail}
-                        onChange={(e) => setValues({ ...values, workEmail: e.target.value })}
-                        placeholder="e.g. alex@hospital-procurement.com"
-                        className={`w-full px-4 py-3 rounded-xl bg-slate-50 border text-slate-900 text-sm focus:bg-white focus:outline-none focus:ring-2 transition-all ${
-                          errors.workEmail
-                            ? 'border-red-400 focus:ring-red-400'
-                            : 'border-slate-200 focus:border-blue-600 focus:ring-blue-600/20'
-                        }`}
-                      />
-                      {errors.workEmail && (
-                        <p className="text-xs text-red-500 mt-1 font-medium">{errors.workEmail}</p>
-                      )}
-                    </div>
-
-                    {/* 3. Target Model */}
-                    <div>
-                      <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                        Target Brand / Model <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={values.targetModel}
-                        onChange={(e) => setValues({ ...values, targetModel: e.target.value })}
-                        placeholder="e.g. Philips M1191B, GE Dash, Mindray N12"
-                        className={`w-full px-4 py-3 rounded-xl bg-slate-50 border text-slate-900 text-sm focus:bg-white focus:outline-none focus:ring-2 transition-all ${
-                          errors.targetModel
-                            ? 'border-red-400 focus:ring-red-400'
-                            : 'border-slate-200 focus:border-blue-600 focus:ring-blue-600/20'
-                        }`}
-                      />
-                      {errors.targetModel && (
-                        <p className="text-xs text-red-500 mt-1 font-medium">{errors.targetModel}</p>
-                      )}
-                    </div>
-
-                    {/* 4. Company / Country (Optional) */}
-                    <div>
-                      <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                        Company / Hospital / Country <span className="text-slate-400 font-normal">(Optional)</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={values.companyCountry}
-                        onChange={(e) => setValues({ ...values, companyCountry: e.target.value })}
-                        placeholder="e.g. Apex HealthCare Ltd, United States"
-                        className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  {/* 5. Message / Estimated Quantity (Optional) */}
-                  <div>
-                    <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                      Lead Configuration & Estimated Order Quantity <span className="text-slate-400 font-normal">(Optional)</span>
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={values.message}
-                      onChange={(e) => setValues({ ...values, message: e.target.value })}
-                      placeholder="e.g. Need 500 pcs adult finger clip sensors with 8-Pin connector. Please include shipping to Miami port and ISO 13485 dossier."
-                      className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition-all"
-                    />
-                  </div>
-
-                  {/* Submit Button */}
-                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full sm:w-auto px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:bg-blue-400 text-white font-bold text-base shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="w-5 h-5 animate-spin" />
-                          <span>Sending Inquiry Request...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-5 h-5" />
-                          <span>Get Direct Factory Quote (Within 2.4h)</span>
-                        </>
-                      )}
-                    </button>
-
-                    <p className="text-xs text-slate-500 text-center sm:text-right">
-                      🔒 Strictly Confidential. No spam guarantee.
-                    </p>
-                  </div>
-                </form>
-              )}
-            </div>
+              </form>
+            )}
 
           </div>
         </div>
