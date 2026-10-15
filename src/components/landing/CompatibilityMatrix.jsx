@@ -259,17 +259,23 @@ export default function CompatibilityMatrix({ data, onSelectModel, categoryType 
             {categoryType === 'ECG' ? 'Diagnostic & Monitoring Cross-Reference' : 'Fast OEM Cross-Reference'}
           </div>
           <h2 className="text-3xl font-extrabold text-medkeNavy tracking-tight sm:text-4xl">
-            {categoryType === 'ECG' ? 'Find Your ECG / EKG Equipment Compatibility' : 'Find Your Patient Monitor Compatibility'}
+            {categoryType === 'AED'
+              ? 'Find Your Defibrillator & AED Pad Compatibility'
+              : categoryType === 'ECG'
+              ? 'Find Your ECG / EKG Equipment Compatibility'
+              : 'Find Your Patient Monitor Compatibility'}
           </h2>
           <p className="mt-3 text-base text-slate-600">
-            {categoryType === 'ECG'
+            {categoryType === 'AED'
+              ? 'Select your AED brand or defibrillator series to inspect terminal types, pinout codes, active conductive surface, and exact pad replacements. Click [Get Quote ⚡] to prefill your inquiry instantly.'
+              : categoryType === 'ECG'
               ? 'Select your monitor or electrocardiograph brand below to check trunk cable pinouts, leadwire options (Snap/Pinch/Banana), and built-in resistor configurations. Click [Get Quote] to prefill your inquiry instantly.'
               : 'Select your monitor brand to inspect connector types, pin configurations, and exact sensor replacements. Click [Get Quote] to prefill your inquiry instantly.'}
           </p>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
           <button
             type="button"
             onClick={() => setActiveBrand('all')}
@@ -304,11 +310,21 @@ export default function CompatibilityMatrix({ data, onSelectModel, categoryType 
             <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
               <thead className="bg-slate-50 text-slate-600 font-bold uppercase text-[11px] tracking-wider">
                 <tr>
-                  <th scope="col" className="py-3.5 px-4 sm:px-6">Brand / Manufacturer</th>
-                  <th scope="col" className="py-3.5 px-4 sm:px-6">Monitor Series / Models</th>
-                  <th scope="col" className="py-3.5 px-4 sm:px-6">Connector &amp; Pin Configuration</th>
-                  <th scope="col" className="py-3.5 px-4 sm:px-6">{matrixData.columnTypeLabel || 'Available Sensor Types'}</th>
-                  <th scope="col" className="py-3.5 px-4 sm:px-6 text-right">Direct Action</th>
+                  <th scope="col" className="py-3.5 px-4 sm:px-6">
+                    {categoryType === 'AED' ? 'Brand / OEM Model' : 'Brand / Manufacturer'}
+                  </th>
+                  <th scope="col" className="py-3.5 px-4 sm:px-6">
+                    {categoryType === 'AED' ? 'Compatible Defibrillator Series' : categoryType === 'ECG' ? 'ECG / EKG Device Models' : 'Monitor Series / Models'}
+                  </th>
+                  <th scope="col" className="py-3.5 px-4 sm:px-6">
+                    {categoryType === 'AED' ? 'Connector / Terminal Mold & Pinout' : 'Connector & Pin Configuration'}
+                  </th>
+                  <th scope="col" className="py-3.5 px-4 sm:px-6">
+                    {matrixData.columnTypeLabel || (categoryType === 'AED' ? 'Clinical Application & Specs' : 'Available Sensor Types')}
+                  </th>
+                  <th scope="col" className="py-3.5 px-4 sm:px-6 text-right">
+                    {categoryType === 'AED' ? 'Inquiry Action' : 'Direct Action'}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">

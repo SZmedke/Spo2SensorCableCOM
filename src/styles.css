@@ -244,6 +244,24 @@
   /* override Tailwind's h-1/h-2/h-3 height utilities (0.25/0.5/0.75rem) that
      collide with our typography classes and collapse heading boxes */
   .h-1, .h-2, .h-3 { height: auto; }
+
+  /* Continuous Marquee Animation for Brand Showcase */
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    display: flex !important;
+    width: max-content !important;
+    animation: marquee 35s linear infinite !important;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused !important;
+  }
+  .mask-fade-edges {
+    mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  }
 }
 
 /* ============ component layout styles ============ */

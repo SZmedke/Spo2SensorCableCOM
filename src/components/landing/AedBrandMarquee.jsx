@@ -7,6 +7,24 @@ export default function AedBrandMarquee({ brands, guarantee }) {
 
   return (
     <section className="bg-white border-y border-slate-200/80 py-10 sm:py-12 overflow-hidden">
+      <style>{`
+        @keyframes aedMarquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          display: flex !important;
+          width: max-content !important;
+          animation: aedMarquee 35s linear infinite !important;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused !important;
+        }
+        .mask-fade-edges {
+          mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+        }
+      `}</style>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
