@@ -19,7 +19,7 @@ const PRODUCT_LINE_META = {
   '/ibp': ['IBP Cables & Transducers', 'Compatible invasive blood pressure cables and transducer interfaces for ICU and operating-room monitors.'],
   '/temperature': ['Temperature Probes', 'Compatible reusable and disposable temperature probes: skin surface, oesophageal and rectal, YSI 400/700 series.'],
   '/esu': ['ESU & Electrosurgical Accessories', 'Compatible electrosurgical pencils, grounding pads, forceps and electrocoagulation cables for ESU generators.'],
-  '/aed': ['AED & Defibrillator Accessories', 'Compatible defibrillator pads, cables and AED accessories for emergency and transport use.'],
+  '/aed': ['Medical-Grade AED Defibrillation Electrode Pads & Cables', 'Medical-grade AED defibrillation electrode pads and adapter cables compatible with ZOLL, Philips, LIFEPAK, Mindray, and Nihon Kohden. EU MDR Class I certified, 24-month shelf life.'],
   '/eeg': ['EEG Cables & Electrodes', 'Compatible EEG cables and electrode accessories for neurological monitoring.'],
 };
 
