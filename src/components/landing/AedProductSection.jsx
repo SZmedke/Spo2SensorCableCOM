@@ -1,18 +1,71 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ArrowRight, FileText, CheckCircle2 } from 'lucide-react';
 
 export default function AedProductSection({ onPrefillModel, onOpenBrochure }) {
+  const playerRef = useRef(null);
+
   useEffect(() => {
-    // Dynamically inject Kingsway SDK script if not already on the page
-    if (typeof window !== 'undefined' && !document.getElementById('kingsway-sdk-script')) {
-      const script = document.createElement('script');
-      script.id = 'kingsway-sdk-script';
-      script.type = 'text/javascript';
-      script.defer = true;
-      script.charset = 'utf-8';
-      script.src = 'https://websdk.kingswayvideo.com/vod-player/latest/vod-player.min.js';
-      document.head.appendChild(script);
-    }
+    let timer;
+
+    const initPlayer = () => {
+      if (typeof window === 'undefined') return;
+
+      const container = playerRef.current;
+      if (!container) return;
+
+      // If player element is already rendered inside, do not duplicate
+      if (container.querySelector('.kplayer, .kplayer-popover-placeholder, iframe')) {
+        return;
+      }
+
+      // If VodPlayer constructor is loaded on window
+      if (window.VodPlayer) {
+        try {
+          if (window.__KINGSWAY_EMBED_INIT_DONE__) {
+            window.__KINGSWAY_EMBED_INIT_DONE__ = false;
+          }
+          if (typeof window.VodPlayer.initEmbed === 'function') {
+            window.VodPlayer.initEmbed(window.VodPlayer);
+          } else {
+            new window.VodPlayer(container, {
+              vid: '88290bc0c8',
+              width: '100%',
+              height: '100%',
+              isEmbed: true,
+              popoverPlay: true,
+              fixedRatio: '16 / 9'
+            });
+          }
+          return;
+        } catch (e) {
+          console.warn('Kingsway VodPlayer init warning:', e);
+        }
+      }
+
+      // Ensure script tag exists if not already present
+      let script = document.getElementById('kingsway-sdk-script');
+      if (!script) {
+        script = document.createElement('script');
+        script.id = 'kingsway-sdk-script';
+        script.type = 'text/javascript';
+        script.charset = 'utf-8';
+        script.src = 'https://websdk.kingswayvideo.com/vod-player/latest/vod-player.min.js';
+        document.head.appendChild(script);
+      }
+
+      const onLoad = () => {
+        setTimeout(initPlayer, 50);
+      };
+      script.addEventListener('load', onLoad);
+
+      timer = setTimeout(initPlayer, 200);
+    };
+
+    initPlayer();
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   return (
@@ -293,6 +346,7 @@ export default function AedProductSection({ onPrefillModel, onOpenBrochure }) {
               <div className="relative rounded-2xl overflow-hidden bg-black border-2 border-white/20 shadow-2xl">
                 {/* Kingsway Player Embed Code */}
                 <div
+                  ref={playerRef}
                   data-kingsway-player="88290bc0c8"
                   data-width="100%"
                   data-height="100%"
