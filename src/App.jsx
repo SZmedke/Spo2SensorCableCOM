@@ -25,6 +25,7 @@ import CertificatesPage from './pages/CertificatesPage';
 import SpO2LandingPage from './pages/SpO2LandingPage';
 import EcgLandingPage from './pages/EcgLandingPage';
 import AedLandingPage from './pages/AedLandingPage';
+import EegLandingPage from './pages/EegLandingPage';
 
 function NotFound() {
   return (
@@ -87,7 +88,8 @@ export function AppShell() {
             <Route path="/spo2" element={<SpO2LandingPage />} />
             <Route path="/ecg" element={<EcgLandingPage />} />
             <Route path="/aed" element={<AedLandingPage />} />
-            {PRODUCT_LINE_PATHS.filter((p) => p !== '/spo2' && p !== '/ecg' && p !== '/aed').map((p) => (
+            <Route path="/eeg" element={<EegLandingPage />} />
+            {PRODUCT_LINE_PATHS.filter((p) => p !== '/spo2' && p !== '/ecg' && p !== '/aed' && p !== '/eeg').map((p) => (
               <Route key={p} path={p} element={<CategoryPage slug={p.slice(1)} />} />
             ))}
             <Route path="*" element={<NotFound />} />

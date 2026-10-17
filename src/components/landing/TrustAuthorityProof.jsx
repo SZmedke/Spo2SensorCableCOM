@@ -102,89 +102,123 @@ export default function TrustAuthorityProof({ data, onOpenCert }) {
             {/* Left 5 Cols: Factory Metrics */}
             <div className="lg:col-span-5 space-y-4">
               <span className="px-3 py-1 rounded bg-white/10 text-emerald-300 font-mono text-xs uppercase tracking-wider font-semibold">
-                Manufacturing Infrastructure
+                {data?.factory?.tag || 'Manufacturing Infrastructure'}
               </span>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                4,000 sqm Intelligent Factory in Shenzhen
+                {data?.factory?.title || '4,000 sqm Intelligent Factory in Shenzhen'}
               </h3>
               <p className="text-sm text-slate-300 leading-relaxed">
-                Established in 2008 with 100+ skilled technicians, Class 100,000 cleanrooms, and fully automated wire-stripping and terminal-crimping lines.
+                {data?.factory?.description || 'Established in 2008 with 100+ skilled technicians, Class 100,000 cleanrooms, and fully automated wire-stripping and terminal-crimping lines.'}
               </p>
               <div className="pt-2 grid grid-cols-2 gap-4 border-t border-white/10 text-xs">
-                <div>
-                  <span className="block text-xl font-extrabold text-white">100%</span>
-                  <span className="text-slate-400">High-pot, Pinout & Continuity QC</span>
-                </div>
-                <div>
-                  <span className="block text-xl font-extrabold text-white">&gt;10,000</span>
-                  <span className="text-slate-400">Cycles Dynamic Flex Testing</span>
-                </div>
+                {data?.factory?.stats ? (
+                  data.factory.stats.map((st, i) => (
+                    <div key={i}>
+                      <span className="block text-xl font-extrabold text-white">{st.value}</span>
+                      <span className="text-slate-400">{st.label}</span>
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    <div>
+                      <span className="block text-xl font-extrabold text-white">100%</span>
+                      <span className="text-slate-400">High-pot, Pinout & Continuity QC</span>
+                    </div>
+                    <div>
+                      <span className="block text-xl font-extrabold text-white">&gt;10,000</span>
+                      <span className="text-slate-400">Cycles Dynamic Flex Testing</span>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
             {/* Right 7 Cols: 3 Real Factory Photos */}
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              
-              {/* Cleanroom Card */}
-              <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur hover:bg-white/20 transition group flex flex-col justify-between">
-                <div>
-                  <div className="h-32 sm:h-36 rounded-lg overflow-hidden relative shadow-md">
-                    <img
-                      src="https://sc02.alicdn.com/kf/Hb48abb180ecf4e0eb0db9aeed915d8ddz.jpg"
-                      alt="Medke Class 100,000 Cleanroom Workshop"
-                      className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-                    <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-medkeNavy/85 backdrop-blur text-[10px] font-bold text-emerald-300 border border-white/20">
-                      Cleanroom
-                    </span>
+              {data?.factory?.photos ? (
+                data.factory.photos.map((photo, i) => (
+                  <div key={i} className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur hover:bg-white/20 transition group flex flex-col justify-between">
+                    <div>
+                      <div className="h-32 sm:h-36 rounded-lg overflow-hidden relative shadow-md">
+                        <img
+                          src={photo.image}
+                          alt={photo.title}
+                          className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                        <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-medkeNavy/85 backdrop-blur text-[10px] font-bold text-emerald-300 border border-white/20">
+                          {photo.tag}
+                        </span>
+                      </div>
+                      <h5 className="text-xs sm:text-sm font-bold text-white mt-2.5">{photo.title}</h5>
+                      <p className="text-[11px] text-slate-300 mt-1 leading-snug">{photo.description}</p>
+                    </div>
                   </div>
-                  <h5 className="text-xs sm:text-sm font-bold text-white mt-2.5">Class 100,000 Cleanroom</h5>
-                  <p className="text-[11px] text-slate-300 mt-1 leading-snug">ESD-protected dust-free medical sensor assembly</p>
-                </div>
-              </div>
-
-              {/* Reliability Lab Card */}
-              <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur hover:bg-white/20 transition group flex flex-col justify-between">
-                <div>
-                  <div className="h-32 sm:h-36 rounded-lg overflow-hidden relative shadow-md">
-                    <img
-                      src="https://sc02.alicdn.com/kf/H991144319ed54718862f7042440066b8f.jpg"
-                      alt="Medke Reliability & Testing Lab"
-                      className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-                    <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-medkeNavy/85 backdrop-blur text-[10px] font-bold text-emerald-300 border border-white/20">
-                      Testing Lab
-                    </span>
+                ))
+              ) : (
+                <>
+                  {/* Cleanroom Card */}
+                  <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur hover:bg-white/20 transition group flex flex-col justify-between">
+                    <div>
+                      <div className="h-32 sm:h-36 rounded-lg overflow-hidden relative shadow-md">
+                        <img
+                          src="https://sc02.alicdn.com/kf/Hb48abb180ecf4e0eb0db9aeed915d8ddz.jpg"
+                          alt="Medke Class 100,000 Cleanroom Workshop"
+                          className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                        <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-medkeNavy/85 backdrop-blur text-[10px] font-bold text-emerald-300 border border-white/20">
+                          Cleanroom
+                        </span>
+                      </div>
+                      <h5 className="text-xs sm:text-sm font-bold text-white mt-2.5">Class 100,000 Cleanroom</h5>
+                      <p className="text-[11px] text-slate-300 mt-1 leading-snug">ESD-protected dust-free medical sensor assembly</p>
+                    </div>
                   </div>
-                  <h5 className="text-xs sm:text-sm font-bold text-white mt-2.5">Flex & Tensile Testing Lab</h5>
-                  <p className="text-[11px] text-slate-300 mt-1 leading-snug">100% semi-finished inspection & &gt;10k bend test</p>
-                </div>
-              </div>
 
-              {/* Warehouse Card */}
-              <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur hover:bg-white/20 transition group flex flex-col justify-between">
-                <div>
-                  <div className="h-32 sm:h-36 rounded-lg overflow-hidden relative shadow-md">
-                    <img
-                      src="https://sc02.alicdn.com/kf/H9e8c17033ad447b8a67ef820513c9cd8o.jpg"
-                      alt="Medke Finished Goods Warehouse"
-                      className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-                    <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-medkeNavy/85 backdrop-blur text-[10px] font-bold text-amber-300 border border-white/20">
-                      Warehouse
-                    </span>
+                  {/* Reliability Lab Card */}
+                  <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur hover:bg-white/20 transition group flex flex-col justify-between">
+                    <div>
+                      <div className="h-32 sm:h-36 rounded-lg overflow-hidden relative shadow-md">
+                        <img
+                          src="https://sc02.alicdn.com/kf/H991144319ed54718862f7042440066b8f.jpg"
+                          alt="Medke Reliability & Testing Lab"
+                          className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                        <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-medkeNavy/85 backdrop-blur text-[10px] font-bold text-emerald-300 border border-white/20">
+                          Testing Lab
+                        </span>
+                      </div>
+                      <h5 className="text-xs sm:text-sm font-bold text-white mt-2.5">Flex & Tensile Testing Lab</h5>
+                      <p className="text-[11px] text-slate-300 mt-1 leading-snug">100% semi-finished inspection & &gt;10k bend test</p>
+                    </div>
                   </div>
-                  <h5 className="text-xs sm:text-sm font-bold text-white mt-2.5">Finished Goods Buffer</h5>
-                  <p className="text-[11px] text-slate-300 mt-1 leading-snug">123+ core SKUs in stock ready to ship</p>
-                </div>
-              </div>
 
+                  {/* Warehouse Card */}
+                  <div className="bg-white/10 rounded-xl p-3 border border-white/15 backdrop-blur hover:bg-white/20 transition group flex flex-col justify-between">
+                    <div>
+                      <div className="h-32 sm:h-36 rounded-lg overflow-hidden relative shadow-md">
+                        <img
+                          src="https://sc02.alicdn.com/kf/H9e8c17033ad447b8a67ef820513c9cd8o.jpg"
+                          alt="Medke Finished Goods Warehouse"
+                          className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                        <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-medkeNavy/85 backdrop-blur text-[10px] font-bold text-amber-300 border border-white/20">
+                          Warehouse
+                        </span>
+                      </div>
+                      <h5 className="text-xs sm:text-sm font-bold text-white mt-2.5">Finished Goods Buffer</h5>
+                      <p className="text-[11px] text-slate-300 mt-1 leading-snug">123+ core SKUs in stock ready to ship</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
           </div>
