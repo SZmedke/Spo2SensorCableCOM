@@ -15,7 +15,7 @@ export const brandSlug = (name) =>
 const PRODUCT_LINE_META = {
   '/spo2': ['SpO2 Sensors & Adapter Cables', 'Compatible SpO2 sensors and adapter cables for Philips, GE, Mindray, Nihon Kohden and Drager patient monitors. Reusable and disposable options, OEM-grade build.'],
   '/ecg': ['ECG Cables & Lead Wires', 'Compatible ECG trunk cables and lead wires for major patient monitor brands. 3-lead, 5-lead and 12-lead configurations, IEC and AHA colour codes.'],
-  '/nibp': ['NIBP Cuffs, Hoses & Connectors', 'Compatible NIBP cuffs, adapter hoses and connectors for adult, paediatric and neonatal use. Single-tube and dual-tube options.'],
+  '/nibp': ['Medical-Grade NIBP Cuffs, Hoses & Connectors - ISO 13485 Manufacturer', 'Compatible NIBP cuffs, TPU adapter hoses & 30+ precision connectors for Philips, GE, Mindray, Welch Allyn, Dräger. Reusable PU bladderless & FDA 510(k) neonatal cuffs.'],
   '/ibp': ['IBP Cables & Transducers', 'Compatible invasive blood pressure cables and transducer interfaces for ICU and operating-room monitors.'],
   '/temperature': ['Temperature Probes', 'Compatible reusable and disposable temperature probes: skin surface, oesophageal and rectal, YSI 400/700 series.'],
   '/esu': ['ESU & Electrosurgical Accessories', 'Compatible electrosurgical pencils, grounding pads, forceps and electrocoagulation cables for ESU generators.'],
