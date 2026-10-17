@@ -459,23 +459,33 @@ export const eegLandingData = {
   },
   faqs: [
     {
+      q: 'Are Medke EEG leadwires 100% compatible with our Natus and Nihon Kohden amplifiers?',
       question: 'Are Medke EEG leadwires 100% compatible with our Natus and Nihon Kohden amplifiers?',
+      a: 'Yes. All Medke EEG electrodes and leadwires strictly adhere to the international DIN 42802 standard with a 1.5 mm recessed touchproof safety socket. They plug and play directly into Natus (NicoletOne, Grass Comet), Nihon Kohden (Neurofax series), Cadwell (Easy III, Arc), Compumedics (Grael), and Philips input boxes without any intermediate adapters.',
       answer: 'Yes. All Medke EEG electrodes and leadwires strictly adhere to the international DIN 42802 standard with a 1.5 mm recessed touchproof safety socket. They plug and play directly into Natus (NicoletOne, Grass Comet), Nihon Kohden (Neurofax series), Cadwell (Easy III, Arc), Compumedics (Grael), and Philips input boxes without any intermediate adapters.'
     },
     {
+      q: 'Which electrode material should I choose: Casted Ag/AgCl, Golden, or Pure Silver?',
       question: 'Which electrode material should I choose: Casted Ag/AgCl, Golden, or Pure Silver?',
+      a: `Casted Ag/AgCl: The clinical gold reference standard. Lowest baseline drift (<3 mV DC offset); essential for Long-Term Epilepsy Monitoring (LTM) and whole-night Polysomnography (PSG).\n\nCasted Golden: Multi-micron thick gold plating over cast brass. Maximum chemical inertness; resists wear and abrasive skin prep gels in high-throughput outpatient clinics.\n\nCasted Pure Silver (99.9%): Highest electrical conductivity; rapid signal settling time ideal for Evoked Potential (EP) and routine EEG screening at an economical price point.`,
       answer: `Casted Ag/AgCl: The clinical gold reference standard. Lowest baseline drift (<3 mV DC offset); essential for Long-Term Epilepsy Monitoring (LTM) and whole-night Polysomnography (PSG).\n\nCasted Golden: Multi-micron thick gold plating over cast brass. Maximum chemical inertness; resists wear and abrasive skin prep gels in high-throughput outpatient clinics.\n\nCasted Pure Silver (99.9%): Highest electrical conductivity; rapid signal settling time ideal for Evoked Potential (EP) and routine EEG screening at an economical price point.`
     },
     {
+      q: 'Are the Pin / Needle Plug Adapter Jumper Leads invasive or surgical needles?',
       question: 'Are the Pin / Needle Plug Adapter Jumper Leads invasive or surgical needles?',
+      a: 'No. Medke Pin Adapter Jumpers are 100% non-invasive electrical cable interconnects. One end features a standard 1.5mm DIN 42802 touchproof socket, and the other end terminates in a solid cylindrical brass pin plug (Φ1.5mm or Φ2.0mm) designed for headbox jumper patching and cap terminal connections. They do not penetrate human tissue.',
       answer: 'No. Medke Pin Adapter Jumpers are 100% non-invasive electrical cable interconnects. One end features a standard 1.5mm DIN 42802 touchproof socket, and the other end terminates in a solid cylindrical brass pin plug (Φ1.5mm or Φ2.0mm) designed for headbox jumper patching and cap terminal connections. They do not penetrate human tissue.'
     },
     {
+      q: 'What is the Minimum Order Quantity (MOQ) and production delivery lead time?',
       question: 'What is the Minimum Order Quantity (MOQ) and production delivery lead time?',
+      a: 'For standard catalog items (E0001, E0001-B, Ag/AgCl sets, Snap/Pinch leads), sample orders (1-5 sets) and trial batches (10-50 sets) ship from stock within 2-3 business days. Wholesale and OEM customized orders (custom lead lengths, specific color codes) typically deliver in 7-14 business days via DHL/FedEx door-to-door express.',
       answer: 'For standard catalog items (E0001, E0001-B, Ag/AgCl sets, Snap/Pinch leads), sample orders (1-5 sets) and trial batches (10-50 sets) ship from stock within 2-3 business days. Wholesale and OEM customized orders (custom lead lengths, specific color codes) typically deliver in 7-14 business days via DHL/FedEx door-to-door express.'
     },
     {
+      q: 'Can Medke provide OEM / ODM private labeling and customized wire lengths?',
       question: 'Can Medke provide OEM / ODM private labeling and customized wire lengths?',
+      a: 'Yes. As a direct source factory with full tooling, injection molding, and cable extrusion facilities, Medke supports customized wire lengths (0.5m to 3.0m), custom color combinations, molded client branding, customized packaging, and specialized terminal terminations.',
       answer: 'Yes. As a direct source factory with full tooling, injection molding, and cable extrusion facilities, Medke supports customized wire lengths (0.5m to 3.0m), custom color combinations, molded client branding, customized packaging, and specialized terminal terminations.'
     }
   ]
