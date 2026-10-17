@@ -10,9 +10,6 @@ export default function EegProductSection({ onPrefillModel }) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-block px-3 py-1 bg-[#E8EBF7] text-[#243181] font-bold text-xs uppercase tracking-wider rounded mb-2">
-            Balanced 3 &times; 2 Physical Line Architecture
-          </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#243181] tracking-tight">
             Medke Clinical EEG Electrodes &amp; Leadwire Portfolio
           </h2>
