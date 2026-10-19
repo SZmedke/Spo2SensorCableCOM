@@ -27,6 +27,7 @@ import EcgLandingPage from './pages/EcgLandingPage';
 import AedLandingPage from './pages/AedLandingPage';
 import EegLandingPage from './pages/EegLandingPage';
 import NibpLandingPage from './pages/NibpLandingPage';
+import IbpLandingPage from './pages/IbpLandingPage';
 
 function NotFound() {
   return (
@@ -91,7 +92,8 @@ export function AppShell() {
             <Route path="/aed" element={<AedLandingPage />} />
             <Route path="/eeg" element={<EegLandingPage />} />
             <Route path="/nibp" element={<NibpLandingPage />} />
-            {PRODUCT_LINE_PATHS.filter((p) => p !== '/spo2' && p !== '/ecg' && p !== '/aed' && p !== '/eeg' && p !== '/nibp').map((p) => (
+            <Route path="/ibp" element={<IbpLandingPage />} />
+            {PRODUCT_LINE_PATHS.filter((p) => p !== '/spo2' && p !== '/ecg' && p !== '/aed' && p !== '/eeg' && p !== '/nibp' && p !== '/ibp').map((p) => (
               <Route key={p} path={p} element={<CategoryPage slug={p.slice(1)} />} />
             ))}
             <Route path="*" element={<NotFound />} />
