@@ -110,26 +110,47 @@ export default function IbpInquiryForm({ prefillData, onResetPrefill }) {
     setIsSubmitting(true);
 
     try {
+      const compiledMessage = [
+        `Product Line: IBP Compatible Adapter Cables (B Series)`,
+        `Target Patient Monitor Brand: ${monitorBrand}`,
+        `Transducer Interface Standard: ${sensorBrand}`,
+        `Estimated Order Scale: ${quantity}`,
+        phone.trim() ? `Phone / WhatsApp: ${phone.trim()}` : '',
+        company.trim() ? `Company / Hospital: ${company.trim()}` : '',
+        notes.trim() ? `Specific Requirements: ${notes.trim()}` : ''
+      ].filter(Boolean).join('\n');
+
       const payload = {
         name: fullName.trim(),
         email: workEmail.trim(),
-        phone: phone.trim(),
-        company: company.trim(),
-        inquiry_type: 'Landing Page IBP Direct Quote',
-        inquiry_details: {
-          product_category: 'IBP Adapter Cables',
-          primary_monitor_brand: monitorBrand,
-          target_sensor_standard: sensorBrand,
-          estimated_quantity: quantity,
-          additional_notes: notes.trim(),
-          lead_source: 'Google Ads IBP Landing Page'
-        }
+        phone: phone.trim() || undefined,
+        company: company.trim() || undefined,
+        product_name: `[IBP] ${monitorBrand} to ${sensorBrand} Cable`,
+        quantity_text: quantity,
+        message: compiledMessage,
+        inquiry_type: 'Landing Page IBP Direct Quote'
       };
 
       const result = await submitInquiry(payload);
 
+      // GTM Telemetry event
+      if (typeof window !== 'undefined') {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'form_submit_lead',
+          lead_type: 'direct_factory_quote',
+          category: 'IBP',
+          monitor_brand: monitorBrand,
+          sensor_standard: sensorBrand,
+          contact_name: fullName.trim(),
+          contact_email: workEmail.trim(),
+          company_name: company.trim(),
+          inquiry_ref: result?.ref || ''
+        });
+      }
+
       setSubmittedData({
-        referenceId: result?.inquiry_id || `MEDKE-IBP-${Date.now().toString().slice(-4)}`,
+        referenceId: result?.ref || `MEDKE-IBP-${Date.now().toString().slice(-4)}`,
         name: fullName,
         email: workEmail,
         company: company,
