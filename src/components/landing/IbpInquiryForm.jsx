@@ -91,8 +91,8 @@ export default function IbpInquiryForm({ prefillData, onResetPrefill }) {
       }
     }
 
-    if (!phone.trim() || phone.trim().length < 5) {
-      errs.phone = 'Please provide a contact phone or WhatsApp number.';
+    if (phone.trim() && phone.trim().length < 5) {
+      errs.phone = 'Please provide a valid contact phone or WhatsApp number.';
     }
 
     if (!company.trim() || company.trim().length < 2) {
@@ -305,11 +305,10 @@ export default function IbpInquiryForm({ prefillData, onResetPrefill }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                      Phone / WhatsApp <span className="text-rose-500">*</span>
+                      Phone / WhatsApp
                     </label>
                     <input
                       type="tel"
-                      required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="e.g. +1 415 890 2345"
