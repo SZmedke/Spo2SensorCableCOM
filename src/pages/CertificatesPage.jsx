@@ -21,6 +21,8 @@ export default function CertificatesPage() {
   const [status, setStatus] = useState('idle'); // idle | submitting | error
   const [activeSection, setActiveSection] = useState('section-qms');
   const [requestedCert, setRequestedCert] = useState('');
+  const [honeypot, setHoneypot] = useState('');
+  const formStartedAt = React.useRef(Date.now());
 
   const manualLockRef = React.useRef(null);
   const lockTimerRef = React.useRef(null);
@@ -201,7 +203,11 @@ export default function CertificatesPage() {
         inquiry_type: 'Certificate & Compliance Dossier Request',
         quantity_text: values.quantity.trim() || undefined,
         message: values.message.trim(),
-      });
+      }, { honeypotValue: honeypot, formStartedAt: formStartedAt.current });
+      if (res.blocked) {
+        setStatus('idle');
+        return;
+      }
       if (res.ok) {
         navigate(`/inquiry/success?ref=${res.ref}`);
       } else {
@@ -846,6 +852,16 @@ export default function CertificatesPage() {
               )}
 
               <form onSubmit={onSubmit} noValidate>
+                <input
+                  type="text"
+                  name="b2b_website_url_hp"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+                />
                 <div className="form-grid-2">
                   {/* 1. Name */}
                   <div className="form-group">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { X, Download, FileText, CheckCircle2, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 import { submitInquiry } from '../../lib/inquiries';
 
@@ -12,6 +12,15 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDownloaded, setIsDownloaded] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
+  const formStartedAt = useRef(Date.now());
+
+  useEffect(() => {
+    if (isOpen) {
+      formStartedAt.current = Date.now();
+      setHoneypot('');
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -48,17 +57,26 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
     // 1. Submit lead to Supabase & trigger email notification to contact@medke.com
     try {
       const sourcePage = typeof window !== 'undefined' ? window.location.pathname : 'Landing Page';
-      await submitInquiry({
+      const result = await submitInquiry({
         name: 'Brochure Downloader',
         email: trimmed,
         product_name: 'Medke Brochure 2026 (PDF)',
         company: 'Website E-Catalog Visitor',
         inquiry_type: 'E-Catalog Download',
         message: `Visitor requested and downloaded the 2026 Medke Medical Cable Product Brochure (20.8 MB) from ${sourcePage}. Please follow up with technical catalog and pricing.`
-      }, { skipDataLayer: true });
+      }, {
+        skipDataLayer: true,
+        honeypotValue: honeypot,
+        formStartedAt: formStartedAt.current
+      });
+      if (result.blocked) {
+        setIsSubmitting(false);
+        return;
+      }
     } catch (err) {
-      console.warn('Lead capture notification warning:', err);
-      // Even if network or Supabase has a temporary hiccup, do not block file download
+      setError(err.message || 'Unable to verify this download request. Please try again.');
+      setIsSubmitting(false);
+      return;
     }
 
     // 2. Trigger browser native download
@@ -161,6 +179,16 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
           ) : (
             /* Email Input Form */
             <form onSubmit={handleDownloadSubmit} className="space-y-4">
+              <input
+                type="text"
+                name="b2b_website_url_hp"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+              />
               {error && (
                 <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />

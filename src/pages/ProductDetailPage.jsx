@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { getCategory, getProduct, PRODUCTS } from '../data/catalog';
@@ -28,6 +28,8 @@ export default function ProductDetailPage() {
   });
   const [formError, setFormError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
+  const formStartedAt = useRef(Date.now());
 
   if (!product) {
     return (
@@ -90,7 +92,8 @@ export default function ProductDetailPage() {
         product_name: product.name,
         part_number: product.partNumber,
         inquiry_type: 'Product Quote Inquiry',
-      });
+      }, { honeypotValue: honeypot, formStartedAt: formStartedAt.current });
+      if (res.blocked) return;
       if (res.ok) {
         navigate(`/inquiry/success?ref=${res.ref}`);
       } else {
@@ -223,6 +226,16 @@ export default function ProductDetailPage() {
             <h2 className="h-2">Request a Quote</h2>
           </div>
           <form className="inquiry-form" style={{ maxWidth: 640, margin: '0 auto' }} onSubmit={onSubmit} noValidate>
+            <input
+              type="text"
+              name="b2b_website_url_hp"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+            />
             <div className="form-grid">
               <div style={{ gridColumn: '1 / -1' }}>
                 <label className="field-label" htmlFor="pd-biz">Business Type</label>

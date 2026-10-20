@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Loader2, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { submitInquiry } from '../../lib/inquiries';
 
@@ -19,6 +19,8 @@ export default function InlineInquiryForm({ pageCategory = 'SpO2', selectedModel
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
+  const [honeypot, setHoneypot] = useState('');
+  const formStartedAt = useRef(Date.now());
 
   useEffect(() => {
     if (selectedModel) {
@@ -56,48 +58,26 @@ export default function InlineInquiryForm({ pageCategory = 'SpO2', selectedModel
     if (!validate()) return;
 
     setIsSubmitting(true);
-    const fallbackRef = `MEDKE-${Math.floor(1000 + Math.random() * 9000)}`;
 
     try {
-      let inquiryRef = fallbackRef;
-      try {
-        const res = await submitInquiry({
-          name: values.fullName.trim(),
-          email: values.workEmail.trim(),
-          product_name: `[${pageCategory}] ${values.targetModel.trim()}`,
-          company: values.companyCountry.trim() || undefined,
-          message: values.message.trim() || `Inquiry for ${values.targetModel.trim()}`,
-          inquiry_type: `Landing Page ${pageCategory} Direct Quote`
-        });
-        if (res && res.ref) {
-          inquiryRef = res.ref;
-        }
-      } catch (err) {
-        console.warn('Inquiry submit edge function notice:', err);
-      }
+      const res = await submitInquiry({
+        name: values.fullName.trim(),
+        email: values.workEmail.trim(),
+        product_name: `[${pageCategory}] ${values.targetModel.trim()}`,
+        company: values.companyCountry.trim() || undefined,
+        message: values.message.trim() || `Inquiry for ${values.targetModel.trim()}`,
+        inquiry_type: `Landing Page ${pageCategory} Direct Quote`
+      }, { honeypotValue: honeypot, formStartedAt: formStartedAt.current });
 
-      // Telemetry GTM trigger
-      if (typeof window !== 'undefined') {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'form_submit_lead',
-          lead_type: 'direct_factory_quote',
-          category: pageCategory,
-          target_model: values.targetModel,
-          contact_name: values.fullName,
-          ticket_id: inquiryRef,
-          timestamp: new Date().toISOString()
-        });
-        console.log('[GTM] Event fired: form_submit_lead', inquiryRef);
-      }
+      if (res.blocked) return;
 
       setSubmittedData({
-        ref: inquiryRef,
+        ref: res.ref,
         email: values.workEmail,
         model: values.targetModel
       });
-    } catch {
-      setErrors({ form: 'An unexpected error occurred. Please try again or message our WhatsApp.' });
+    } catch (err) {
+      setErrors({ form: err.message || 'An unexpected error occurred. Please try again or message our WhatsApp.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -113,6 +93,8 @@ export default function InlineInquiryForm({ pageCategory = 'SpO2', selectedModel
       message: ''
     });
     setErrors({});
+    setHoneypot('');
+    formStartedAt.current = Date.now();
     if (onResetSelectedModel) onResetSelectedModel();
   };
 
@@ -176,7 +158,17 @@ export default function InlineInquiryForm({ pageCategory = 'SpO2', selectedModel
             ) : (
               /* ACTUAL FORM */
               <form onSubmit={handleSubmit} className="space-y-5">
-                
+                <input
+                  type="text"
+                  name="b2b_website_url_hp"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+                />
+
                 {errors.form && (
                   <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs">
                     {errors.form}

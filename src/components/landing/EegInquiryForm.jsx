@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Loader2, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { submitInquiry } from '../../lib/inquiries';
 
@@ -20,6 +20,8 @@ export default function EegInquiryForm({ selectedModel = '', prefillBrand = '', 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
+  const [honeypot, setHoneypot] = useState('');
+  const formStartedAt = useRef(Date.now());
 
   // When model is prefilled from cards or table
   useEffect(() => {
@@ -93,7 +95,6 @@ export default function EegInquiryForm({ selectedModel = '', prefillBrand = '', 
     if (!validate()) return;
 
     setIsSubmitting(true);
-    const fallbackRef = `MEDKE-EEG-${Math.floor(1000 + Math.random() * 9000)}`;
     const productsString = selectedProducts.join(', ');
 
     const compiledMessage = [
@@ -105,51 +106,26 @@ export default function EegInquiryForm({ selectedModel = '', prefillBrand = '', 
     ].filter(Boolean).join('\n');
 
     try {
-      let inquiryRef = fallbackRef;
-      try {
-        const res = await submitInquiry({
-          name: fullName.trim(),
-          email: workEmail.trim(),
-          product_name: `[EEG] ${productsString}`,
-          company: company.trim() || undefined,
-          message: compiledMessage,
-          inquiry_type: 'Landing Page EEG Direct Quote'
-        });
-        if (res && res.ref) {
-          inquiryRef = res.ref;
-        }
-      } catch (err) {
-        console.warn('Inquiry submit warning:', err);
-      }
+      const res = await submitInquiry({
+        name: fullName.trim(),
+        email: workEmail.trim(),
+        product_name: `[EEG] ${productsString}`,
+        company: company.trim() || undefined,
+        country: country.trim() || undefined,
+        quantity_text: quantity,
+        message: compiledMessage,
+        inquiry_type: 'Landing Page EEG Direct Quote'
+      }, { honeypotValue: honeypot, formStartedAt: formStartedAt.current });
 
-      // Telemetry GTM trigger for Google Ads primary conversion
-      if (typeof window !== 'undefined') {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'form_submit_lead',
-          lead_type: 'direct_factory_quote',
-          category: 'EEG',
-          products: productsString,
-          target_brand: brand,
-          contact_name: fullName.trim(),
-          ticket_id: inquiryRef,
-          timestamp: new Date().toISOString()
-        });
-        window.dataLayer.push({
-          event: 'submit_inquiry',
-          inquiry_category: 'EEG',
-          ticket_id: inquiryRef
-        });
-        console.log('[GTM] Event fired: form_submit_lead & submit_inquiry', inquiryRef);
-      }
+      if (res.blocked) return;
 
       setSubmittedData({
-        ref: inquiryRef,
+        ref: res.ref,
         email: workEmail.trim(),
         products: productsString
       });
-    } catch {
-      setErrors({ form: 'An unexpected error occurred. Please try again or chat with our engineering sales team on WhatsApp.' });
+    } catch (err) {
+      setErrors({ form: err.message || 'An unexpected error occurred. Please try again or chat with our engineering sales team on WhatsApp.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -208,6 +184,8 @@ export default function EegInquiryForm({ selectedModel = '', prefillBrand = '', 
                   type="button"
                   onClick={() => {
                     setSubmittedData(null);
+                    setHoneypot('');
+                    formStartedAt.current = Date.now();
                     if (onResetSelectedModel) onResetSelectedModel();
                   }}
                   className="px-6 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition cursor-pointer"
@@ -227,6 +205,16 @@ export default function EegInquiryForm({ selectedModel = '', prefillBrand = '', 
             </div>
           ) : (
             <form onSubmit={handleRfqSubmit} className="space-y-6">
+              <input
+                type="text"
+                name="b2b_website_url_hp"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+              />
               
               {/* Contact Person Name & Business Email (Row 1) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

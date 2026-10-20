@@ -18,6 +18,12 @@ function jsonResponse(body: Record<string, unknown>, status = 200) {
 }
 
 const str = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+const MIN_FORM_ELAPSED_MS = 2500;
+
+function isDottedGmail(email: string): boolean {
+  const [localPart, domain] = email.toLowerCase().split('@');
+  return domain === 'gmail.com' && (localPart?.match(/\./g) || []).length >= 3;
+}
 
 function escapeHtml(text: string): string {
   return text
@@ -79,6 +85,12 @@ Deno.serve(async (request) => {
     return jsonResponse({ error: 'Invalid JSON payload' }, 400);
   }
 
+  const honeypot = str(payload.b2b_website_url_hp, 500);
+  const formElapsedMs = Number(payload.form_elapsed_ms);
+  if (honeypot || !Number.isFinite(formElapsedMs) || formElapsedMs < MIN_FORM_ELAPSED_MS) {
+    return jsonResponse({ error: 'Invalid submission' }, 400);
+  }
+
   const name = str(payload.name, 120);
   const email = str(payload.email, 200);
   const rawMessage = str(payload.message, 5000);
@@ -87,6 +99,9 @@ Deno.serve(async (request) => {
   }
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return jsonResponse({ error: 'Invalid email address' }, 400);
+  }
+  if (isDottedGmail(email)) {
+    return jsonResponse({ error: 'Please provide a valid business email without excessive punctuation.' }, 400);
   }
 
   // 提取其余字段并提供容错解析（如果顶层未传，从 message 中智能挽救）

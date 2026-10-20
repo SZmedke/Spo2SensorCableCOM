@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Send, Loader2 } from 'lucide-react';
 import SectionHeading from '../components/common/SectionHeading';
@@ -37,6 +37,8 @@ export default function ContactPage() {
   });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | submitting | error
+  const [honeypot, setHoneypot] = useState('');
+  const formStartedAt = useRef(Date.now());
 
   const set = (key) => (e) => setValues((v) => ({ ...v, [key]: e.target.value }));
 
@@ -67,7 +69,11 @@ export default function ContactPage() {
         ]
           .filter(Boolean)
           .join('\n\n'),
-      });
+      }, { honeypotValue: honeypot, formStartedAt: formStartedAt.current });
+      if (res.blocked) {
+        setStatus('idle');
+        return;
+      }
       if (res.ok) {
         navigate(`/inquiry/success?ref=${res.ref}`);
       } else {
@@ -112,6 +118,16 @@ export default function ContactPage() {
             style={{ maxWidth: 640, marginInline: 'auto' }}
             data-component="contact-form"
           >
+            <input
+              type="text"
+              name="b2b_website_url_hp"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+            />
             <div>
               <label className="field-label" htmlFor="cf-business-type">Business Type</label>
               <select

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Send, Loader2, MessageCircle } from 'lucide-react';
 import { COMPANY } from '../../data/catalog';
@@ -23,6 +23,8 @@ export default function InquiryForm({ productName = '', variant = 'full' }) {
   });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | submitting | error
+  const [honeypot, setHoneypot] = useState('');
+  const formStartedAt = useRef(Date.now());
 
   const set = (key) => (e) => setValues((v) => ({ ...v, [key]: e.target.value }));
 
@@ -50,7 +52,11 @@ export default function InquiryForm({ productName = '', variant = 'full' }) {
         product_name: values.product_name.trim() || undefined,
         message: values.message.trim(),
         inquiry_type: productName ? 'Product Quote Inquiry' : 'General Quote Inquiry',
-      });
+      }, { honeypotValue: honeypot, formStartedAt: formStartedAt.current });
+      if (res.blocked) {
+        setStatus('idle');
+        return;
+      }
       if (res.ok) {
         navigate(`/inquiry/success?ref=${res.ref}`);
       } else {
@@ -67,6 +73,16 @@ export default function InquiryForm({ productName = '', variant = 'full' }) {
 
   return (
     <form className="inquiry-form" onSubmit={onSubmit} noValidate data-component="inquiry-form" id="inquiry">
+      <input
+        type="text"
+        name="b2b_website_url_hp"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+      />
       <div className="inquiry-head">
         <div>
           <h3 className="h-3">Request a quote</h3>

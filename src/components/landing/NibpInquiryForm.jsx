@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Loader2, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { submitInquiry } from '../../lib/inquiries';
 
@@ -20,6 +20,8 @@ export default function NibpInquiryForm({ selectedProduct = '', prefillBrand = '
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
+  const [honeypot, setHoneypot] = useState('');
+  const formStartedAt = useRef(Date.now());
 
   // When product or code is prefilled from other sections
   useEffect(() => {
@@ -93,7 +95,6 @@ export default function NibpInquiryForm({ selectedProduct = '', prefillBrand = '
     if (!validate()) return;
 
     setIsSubmitting(true);
-    const fallbackRef = `MEDKE-NIBP-${Math.floor(1000 + Math.random() * 9000)}`;
     const productsString = selectedProducts.join(', ');
 
     const compiledMessage = [
@@ -105,25 +106,21 @@ export default function NibpInquiryForm({ selectedProduct = '', prefillBrand = '
     ].filter(Boolean).join('\n');
 
     try {
-      let inquiryRef = fallbackRef;
-      try {
-        const res = await submitInquiry({
-          name: fullName.trim(),
-          email: workEmail.trim(),
-          product_name: `[NIBP] ${productsString}`,
-          company: company.trim() || undefined,
-          message: compiledMessage,
-          inquiry_type: 'Landing Page NIBP Direct Quote'
-        });
-        if (res && res.ref) {
-          inquiryRef = res.ref;
-        }
-      } catch (err) {
-        console.warn('Database lead save notification warning:', err);
-      }
+      const res = await submitInquiry({
+        name: fullName.trim(),
+        email: workEmail.trim(),
+        product_name: `[NIBP] ${productsString}`,
+        company: company.trim() || undefined,
+        country: country.trim() || undefined,
+        quantity_text: quantity,
+        message: compiledMessage,
+        inquiry_type: 'Landing Page NIBP Direct Quote'
+      }, { honeypotValue: honeypot, formStartedAt: formStartedAt.current });
+
+      if (res.blocked) return;
 
       setSubmittedData({
-        ref: inquiryRef,
+        ref: res.ref,
         name: fullName.trim(),
         email: workEmail.trim(),
         products: productsString,
@@ -131,13 +128,7 @@ export default function NibpInquiryForm({ selectedProduct = '', prefillBrand = '
       });
     } catch (err) {
       console.error('Submission failed:', err);
-      setSubmittedData({
-        ref: fallbackRef,
-        name: fullName.trim(),
-        email: workEmail.trim(),
-        products: productsString,
-        brand: brand
-      });
+      setErrors({ form: err.message || 'Unable to submit your inquiry. Please try again or contact us on WhatsApp.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -212,6 +203,8 @@ export default function NibpInquiryForm({ selectedProduct = '', prefillBrand = '
                   type="button"
                   onClick={() => {
                     setSubmittedData(null);
+                    setHoneypot('');
+                    formStartedAt.current = Date.now();
                     if (onResetSelected) onResetSelected();
                   }}
                   className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition"
@@ -222,6 +215,16 @@ export default function NibpInquiryForm({ selectedProduct = '', prefillBrand = '
             </div>
           ) : (
             <form onSubmit={handleRfqSubmit} className="space-y-6">
+              <input
+                type="text"
+                name="b2b_website_url_hp"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+              />
               
               {/* Contact Person Name & Business Email (Row 1) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -377,6 +380,12 @@ export default function NibpInquiryForm({ selectedProduct = '', prefillBrand = '
                   className="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-slate-300 rounded-xl focus:outline-none focus:border-medkeBlue focus:ring-1 focus:ring-medkeBlue"
                 />
               </div>
+
+              {errors.form && (
+                <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl">
+                  {errors.form}
+                </div>
+              )}
 
               {/* Side-by-Side Dual Action Buttons: Submit Quote Request + Chat on WhatsApp */}
               <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">

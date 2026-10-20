@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Loader2, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { submitInquiry } from '../../lib/inquiries';
 
@@ -20,6 +20,8 @@ export default function IbpInquiryForm({ prefillData, onResetPrefill }) {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
+  const [honeypot, setHoneypot] = useState('');
+  const formStartedAt = useRef(Date.now());
 
   // Sync from Hub prefill
   useEffect(() => {
@@ -131,26 +133,15 @@ export default function IbpInquiryForm({ prefillData, onResetPrefill }) {
         inquiry_type: 'Landing Page IBP Direct Quote'
       };
 
-      const result = await submitInquiry(payload);
+      const result = await submitInquiry(payload, {
+        honeypotValue: honeypot,
+        formStartedAt: formStartedAt.current
+      });
 
-      // GTM Telemetry event
-      if (typeof window !== 'undefined') {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: 'form_submit_lead',
-          lead_type: 'direct_factory_quote',
-          category: 'IBP',
-          monitor_brand: monitorBrand,
-          sensor_standard: sensorBrand,
-          contact_name: fullName.trim(),
-          contact_email: workEmail.trim(),
-          company_name: company.trim(),
-          inquiry_ref: result?.ref || ''
-        });
-      }
+      if (result.blocked) return;
 
       setSubmittedData({
-        referenceId: result?.ref || `MEDKE-IBP-${Date.now().toString().slice(-4)}`,
+        referenceId: result.ref,
         name: fullName,
         email: workEmail,
         company: company,
@@ -160,16 +151,7 @@ export default function IbpInquiryForm({ prefillData, onResetPrefill }) {
       });
     } catch (err) {
       console.error('Failed to submit IBP inquiry:', err);
-      // Fallback display on network/cors issue
-      setSubmittedData({
-        referenceId: `MEDKE-IBP-${Date.now().toString().slice(-4)}`,
-        name: fullName,
-        email: workEmail,
-        company: company,
-        monitorBrand: monitorBrand,
-        sensorBrand: sensorBrand,
-        quantity: quantity
-      });
+      setErrors({ form: err.message || 'Unable to submit your inquiry. Please try again or contact us on WhatsApp.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -183,6 +165,8 @@ export default function IbpInquiryForm({ prefillData, onResetPrefill }) {
     setCompany('');
     setNotes('');
     setErrors({});
+    setHoneypot('');
+    formStartedAt.current = Date.now();
   };
 
   return (
@@ -265,7 +249,23 @@ export default function IbpInquiryForm({ prefillData, onResetPrefill }) {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                
+                <input
+                  type="text"
+                  name="b2b_website_url_hp"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
+                />
+
+                {errors.form && (
+                  <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs" role="alert">
+                    {errors.form}
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
