@@ -1535,3 +1535,14 @@
   }
 }
 
+/* Pulse ring animation for form focus */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(0, 71, 255, 0.6); }
+  70% { box-shadow: 0 0 0 16px rgba(0, 71, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 71, 255, 0); }
+}
+.highlight-focus {
+  animation: pulse-ring 1.5s ease-out;
+  border-color: #0047FF !important;
+}
+
