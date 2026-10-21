@@ -29,6 +29,7 @@ import EegLandingPage from './pages/EegLandingPage';
 import NibpLandingPage from './pages/NibpLandingPage';
 import IbpLandingPage from './pages/IbpLandingPage';
 import TemperatureLandingPage from './pages/TemperatureLandingPage';
+import EsuLandingPage from './pages/EsuLandingPage';
 
 function NotFound() {
   return (
@@ -95,7 +96,8 @@ export function AppShell() {
             <Route path="/nibp" element={<NibpLandingPage />} />
             <Route path="/ibp" element={<IbpLandingPage />} />
             <Route path="/temperature" element={<TemperatureLandingPage />} />
-            {PRODUCT_LINE_PATHS.filter((p) => p !== '/spo2' && p !== '/ecg' && p !== '/aed' && p !== '/eeg' && p !== '/nibp' && p !== '/ibp' && p !== '/temperature').map((p) => (
+            <Route path="/esu" element={<EsuLandingPage />} />
+            {PRODUCT_LINE_PATHS.filter((p) => p !== '/spo2' && p !== '/ecg' && p !== '/aed' && p !== '/eeg' && p !== '/nibp' && p !== '/ibp' && p !== '/temperature' && p !== '/esu').map((p) => (
               <Route key={p} path={p} element={<CategoryPage slug={p.slice(1)} />} />
             ))}
             <Route path="*" element={<NotFound />} />
