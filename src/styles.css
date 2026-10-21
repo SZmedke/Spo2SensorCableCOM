@@ -525,6 +525,10 @@
 /* floating whatsapp */
 .floating-wa { position: fixed; right: 16px; bottom: 16px; z-index: 60; display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 999px; background: #25D366; color: #fff; font-size: 14px; font-weight: 500; box-shadow: var(--elev-raised); transition: transform 150ms; }
 .floating-wa:hover { transform: translateY(-2px); }
+@media (max-width: 768px) {
+  /* On landing pages with a sticky dual-action bar (MobileStickyBar), hide the floating ball to prevent overlapping the quote button */
+  .floating-wa.floating-wa--has-sticky-bar { display: none !important; }
+}
 @media print { .floating-wa { display: none; } }
 
 /* team portrait lightbox trigger */

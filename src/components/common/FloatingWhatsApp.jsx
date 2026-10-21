@@ -1,11 +1,26 @@
+import { useLocation } from 'react-router-dom';
 import { COMPANY } from '../../data/catalog';
+
+/** Landing pages that render MobileStickyBar at bottom on mobile */
+const LANDING_PATHS_WITH_STICKY_BAR = new Set([
+  '/spo2',
+  '/ecg',
+  '/aed',
+  '/eeg',
+  '/nibp',
+  '/ibp',
+  '/temperature',
+]);
 
 /** Fixed bottom-right WhatsApp shortcut — visible on every breakpoint. */
 export default function FloatingWhatsApp() {
+  const { pathname } = useLocation();
+  const hasMobileStickyBar = LANDING_PATHS_WITH_STICKY_BAR.has(pathname);
   const message = encodeURIComponent('Hello Medke, I would like a quote for medical accessories.');
+
   return (
     <a
-      className="floating-wa"
+      className={`floating-wa ${hasMobileStickyBar ? 'floating-wa--has-sticky-bar' : ''}`}
       href={`${COMPANY.whatsappLink}?text=${message}`}
       target="_blank"
       rel="noreferrer"
