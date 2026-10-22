@@ -153,7 +153,7 @@ export default function LandingHero({ data, onOpenBrochure, onPrefillModel }) {
           </div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-medkeNavy/15 text-medkeNavy text-xs font-semibold shadow-xs">
             <span className={`w-2 h-2 rounded-full ${isEcg ? 'bg-purple-500' : 'bg-amber-500'}`}></span>
-            {isEcg ? 'Built-in Defibrillator Protection (1kΩ / 10kΩ)' : 'US FDA 510(k) Cleared (Premarket #K180xxx)'}
+            {isEcg ? 'Built-in Defibrillator Protection (1kΩ / 10kΩ)' : 'US FDA 510(k) Cleared'}
           </div>
         </div>
 
