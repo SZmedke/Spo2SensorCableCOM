@@ -29,6 +29,7 @@ const COLS = [
       { to: '/resources', label: 'Buying guides' },
       { to: '/applications', label: 'Applications' },
       { to: '/certificates', label: 'Certificates' },
+      { to: '/vr-showroom', label: 'VR Showroom' },
     ],
   },
 ];
