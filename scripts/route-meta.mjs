@@ -113,6 +113,10 @@ function build() {
     `Official regulatory compliance, ISO 13485:2016 certification, EU MDR CE certificates, US FDA 510(k) clearances, and global market authorizations for Medke patient monitoring accessories.`,
     0.8, 'monthly');
 
+  add('/vr-showroom', `3D Virtual Reality Factory Showroom | ${BRAND}`,
+    `Explore Shenzhen Medke Technology's 4,000㎡ medical manufacturing facility via interactive 3D 360° virtual tour. Inspect our Class 100,000 cleanrooms, automated extrusion lines, and ISO 13485:2016 quality laboratories.`,
+    0.8, 'monthly');
+
   for (const [path, [name, desc]] of Object.entries(PRODUCT_LINE_META)) {
     add(path, `${name} — Compatible Replacements | ${BRAND}`, desc, 0.8, 'monthly');
   }

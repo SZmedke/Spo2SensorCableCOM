@@ -22,6 +22,7 @@ import InquirySuccessPage from './pages/InquirySuccessPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import CertificatesPage from './pages/CertificatesPage';
+import VrShowroomPage from './pages/VrShowroomPage';
 import SpO2LandingPage from './pages/SpO2LandingPage';
 import EcgLandingPage from './pages/EcgLandingPage';
 import AedLandingPage from './pages/AedLandingPage';
@@ -88,6 +89,7 @@ export function AppShell() {
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/terms-of-service" element={<TermsOfServicePage />} />
             <Route path="/certificates" element={<CertificatesPage />} />
+            <Route path="/vr-showroom" element={<VrShowroomPage />} />
             <Route path="/inquiry/success" element={<InquirySuccessPage />} />
             <Route path="/spo2" element={<SpO2LandingPage />} />
             <Route path="/ecg" element={<EcgLandingPage />} />
