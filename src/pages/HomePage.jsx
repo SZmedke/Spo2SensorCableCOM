@@ -465,8 +465,9 @@ const TESTIMONIALS = [
 export default function HomePage() {
   const navigate = useNavigate();
 
-  // Video modal state
+  // Video modal state & player ref
   const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const videoContainerRef = useRef(null);
 
   // Inquiry Form State
   const [values, setValues] = useState({
@@ -481,6 +482,77 @@ export default function HomePage() {
   const [status, setStatus] = useState('idle'); // idle | submitting | error
   const [honeypot, setHoneypot] = useState('');
   const formStartedAt = useRef(Date.now());
+
+  // Initialize Kingsway VodPlayer on mount and ensure dynamic loading
+  useEffect(() => {
+    let timer;
+    let pollInterval;
+
+    const initPlayer = () => {
+      if (typeof window === 'undefined') return;
+
+      if (window.VodPlayer && typeof window.VodPlayer.initEmbed === 'function') {
+        try {
+          window.__KINGSWAY_EMBED_INIT_DONE__ = false;
+          window.VodPlayer.initEmbed();
+        } catch (e) {
+          console.warn('Kingsway VodPlayer init warning:', e);
+        }
+      }
+    };
+
+    initPlayer();
+
+    // Ensure SDK script tag exists if not in head
+    let script = document.getElementById('kingsway-sdk-script');
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'kingsway-sdk-script';
+      script.type = 'text/javascript';
+      script.defer = true;
+      script.charset = 'utf-8';
+      script.src = 'https://websdk.kingswayvideo.com/vod-player/latest/vod-player.min.js';
+      document.head.appendChild(script);
+    }
+
+    const onLoad = () => {
+      setTimeout(initPlayer, 50);
+    };
+    script.addEventListener('load', onLoad);
+
+    // Polling retry for 2 seconds to guarantee initialization after async load or route change
+    let attempts = 0;
+    pollInterval = setInterval(() => {
+      attempts++;
+      initPlayer();
+      if ((window.VodPlayer && typeof window.VodPlayer.initEmbed === 'function') || attempts > 10) {
+        clearInterval(pollInterval);
+      }
+    }, 200);
+
+    timer = setTimeout(initPlayer, 300);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(pollInterval);
+      if (script) script.removeEventListener('load', onLoad);
+    };
+  }, []);
+
+  // Handle click on "Watch Facility Video" CTA button
+  const handleWatchVideoClick = () => {
+    if (videoContainerRef.current) {
+      videoContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const playBtn = videoContainerRef.current.querySelector(
+        'button, .kplayer-play, .kplayer-poster, .kplayer-popover-placeholder, [data-kingsway-player]'
+      );
+      if (playBtn && typeof playBtn.click === 'function') {
+        playBtn.click();
+        return;
+      }
+    }
+    setVideoModalOpen(true);
+  };
 
   // ESC to close modal
   useEffect(() => {
@@ -894,21 +966,22 @@ export default function HomePage() {
 
           {/* Corporate Video Portal Feature Card */}
           <div className="factory-video-banner">
-            <div
-              className="video-banner-visual"
-              onClick={() => setVideoModalOpen(true)}
-              title="Click to watch Medke Corporate Facility Video Tour"
-            >
-              <img
-                src="/assets/images/about/facility-video-cover.jpg"
-                alt="Medke Cleanroom &amp; Automated Assembly"
+            <div className="video-banner-visual" ref={videoContainerRef}>
+              <div
+                data-kingsway-player="e49595f0d2"
+                data-width="100%"
+                data-height="100%"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  aspectRatio: '16 / 9',
+                  backgroundImage: `url('https://static.kingswayvideo.com/102648701945724985585/vod/e49595f0d2/cover.jpg?imageMogr2/format/webp/thumbnail/!30p?t=1793167018021')`,
+                  backgroundSize: 'auto 100%',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundColor: '#000000',
+                }}
               />
-              <div className="video-play-halo">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-              </div>
-              <div className="video-duration-badge">03:45 HD Video</div>
             </div>
 
             <div className="video-banner-info">
@@ -924,7 +997,7 @@ export default function HomePage() {
                 Tour our 4,000㎡ manufacturing operations from raw TPU wire extrusion and Class 100,000 sensor encapsulation to robotic laser soldering and 100% dielectric Hipot screening.
               </p>
               <div className="video-actions">
-                <button className="btn-play-trigger" onClick={() => setVideoModalOpen(true)}>
+                <button className="btn-play-trigger" onClick={handleWatchVideoClick}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                     <polygon points="5 3 19 12 5 21 5 3" />
                   </svg>
