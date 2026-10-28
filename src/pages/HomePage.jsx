@@ -467,7 +467,7 @@ export default function HomePage() {
 
   // Video modal state & player ref
   const [videoModalOpen, setVideoModalOpen] = useState(false);
-  const videoContainerRef = useRef(null);
+  const playerRef = useRef(null);
 
   // Inquiry Form State
   const [values, setValues] = useState({
@@ -483,68 +483,43 @@ export default function HomePage() {
   const [honeypot, setHoneypot] = useState('');
   const formStartedAt = useRef(Date.now());
 
-  // Initialize Kingsway VodPlayer on mount and ensure dynamic loading
+  // Initialize Kingsway VodPlayer with explicit constructor
   useEffect(() => {
-    let timer;
-    let pollInterval;
-
+    let playerInstance = null;
     const initPlayer = () => {
-      if (typeof window === 'undefined') return;
-
-      if (window.VodPlayer && typeof window.VodPlayer.initEmbed === 'function') {
+      if (typeof window !== 'undefined' && window.VodPlayer && playerRef.current) {
+        if (playerRef.current.querySelector('.kplayer, video, iframe')) return;
         try {
-          window.__KINGSWAY_EMBED_INIT_DONE__ = false;
-          window.VodPlayer.initEmbed();
-        } catch (e) {
-          console.warn('Kingsway VodPlayer init warning:', e);
+          playerInstance = new window.VodPlayer(playerRef.current, {
+            vid: 'e49595f0d2',
+            width: '100%',
+            height: '100%',
+          });
+        } catch (err) {
+          console.error('Kingsway VodPlayer init error:', err);
         }
       }
     };
 
-    initPlayer();
-
-    // Ensure SDK script tag exists if not in head
-    let script = document.getElementById('kingsway-sdk-script');
-    if (!script) {
-      script = document.createElement('script');
-      script.id = 'kingsway-sdk-script';
-      script.type = 'text/javascript';
-      script.defer = true;
-      script.charset = 'utf-8';
-      script.src = 'https://websdk.kingswayvideo.com/vod-player/latest/vod-player.min.js';
-      document.head.appendChild(script);
-    }
-
-    const onLoad = () => {
-      setTimeout(initPlayer, 50);
-    };
-    script.addEventListener('load', onLoad);
-
-    // Polling retry for 2 seconds to guarantee initialization after async load or route change
-    let attempts = 0;
-    pollInterval = setInterval(() => {
-      attempts++;
+    if (typeof window !== 'undefined' && window.VodPlayer) {
       initPlayer();
-      if ((window.VodPlayer && typeof window.VodPlayer.initEmbed === 'function') || attempts > 10) {
-        clearInterval(pollInterval);
-      }
-    }, 200);
-
-    timer = setTimeout(initPlayer, 300);
-
-    return () => {
-      clearTimeout(timer);
-      clearInterval(pollInterval);
-      if (script) script.removeEventListener('load', onLoad);
-    };
+    } else {
+      const interval = setInterval(() => {
+        if (typeof window !== 'undefined' && window.VodPlayer) {
+          clearInterval(interval);
+          initPlayer();
+        }
+      }, 100);
+      return () => clearInterval(interval);
+    }
   }, []);
 
   // Handle click on "Watch Facility Video" CTA button
   const handleWatchVideoClick = () => {
-    if (videoContainerRef.current) {
-      videoContainerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      const playBtn = videoContainerRef.current.querySelector(
-        'button, .kplayer-play, .kplayer-poster, .kplayer-popover-placeholder, [data-kingsway-player]'
+    if (playerRef.current) {
+      playerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const playBtn = playerRef.current.querySelector(
+        '.kplayer-state__icon, .kplayer-popover-placeholder, video, button, [data-kingsway-player]'
       );
       if (playBtn && typeof playBtn.click === 'function') {
         playBtn.click();
@@ -966,8 +941,9 @@ export default function HomePage() {
 
           {/* Corporate Video Portal Feature Card */}
           <div className="factory-video-banner">
-            <div className="video-banner-visual" ref={videoContainerRef}>
+            <div className="video-banner-visual">
               <div
+                ref={playerRef}
                 data-kingsway-player="e49595f0d2"
                 data-width="100%"
                 data-height="100%"
