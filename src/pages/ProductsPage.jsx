@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { submitInquiry } from '../lib/inquiries';
 import './ProductsPage.css';
 
@@ -262,7 +262,10 @@ export default function ProductsPage() {
     categories: ['spo2', 'ecg'],
   });
   const [bottomStatus, setBottomStatus] = useState('idle');
-  const formStartedAt = useRef(Date.now());
+  const navigate = useNavigate();
+  const [modalStatus, setModalStatus] = useState('idle');
+  const [modalError, setModalError] = useState('');
+  const formStartedAt = useRef(Date.now() - 3000);
 
   // Show Toast Helper
   const triggerToast = (msg) => {
@@ -339,6 +342,8 @@ export default function ProductsPage() {
       title,
       img: img || '/assets/images/placeholder.svg',
     });
+    setModalStatus('idle');
+    setModalError('');
     setRfqModalOpen(true);
   };
 
@@ -370,45 +375,108 @@ export default function ProductsPage() {
   // Modal Submit
   const handleModalSubmit = async (e) => {
     e.preventDefault();
-    closeRfqModal();
-    try {
-      await submitInquiry({
-        name: modalFormValues.name,
-        email: modalFormValues.email,
-        phone: modalFormValues.phone,
-        product: rfqProduct.pn,
-        message: `Quantity: ${modalFormValues.qty}. Requirement: ${modalFormValues.message}`,
-        source: 'products_page_modal',
-        startedAt: formStartedAt.current,
-      });
-    } catch {
-      // Graceful fallback
+    if (!modalFormValues.name.trim() || !modalFormValues.email.trim()) {
+      setModalError('Please provide your name and business email.');
+      return;
     }
-    triggerToast(`Thank you, ${modalFormValues.name}! Your inquiry for [${rfqProduct.pn}] was submitted.`);
-    setModalFormValues({ name: '', email: '', phone: '', qty: '10-50 pcs', message: '' });
+    setModalStatus('submitting');
+    setModalError('');
+    try {
+      const pnText = rfqProduct.pn || 'Direct Sample/Quote';
+      const titleText = rfqProduct.title || 'All Products Catalog';
+      const qtyText = modalFormValues.qty || 'Free Clinical Sample (1-2 pcs)';
+      const reqText = modalFormValues.message.trim();
+
+      const fullMessage = reqText
+        ? `Target Product: ${pnText} (${titleText})\nTarget Quantity: ${qtyText}\nRequirements / Monitor Model: ${reqText}`
+        : `Target Product: ${pnText} (${titleText})\nTarget Quantity: ${qtyText}\nClinical sample / quote request from All Products page.`;
+
+      const isSample = pnText === 'FREE-SAMPLE' || qtyText.toLowerCase().includes('sample');
+      const inqType = isSample ? 'Free Clinical Sample Request' : 'Product Quote & Sample Request';
+
+      const res = await submitInquiry(
+        {
+          name: modalFormValues.name.trim(),
+          email: modalFormValues.email.trim(),
+          phone: modalFormValues.phone.trim() || undefined,
+          product_name: `${pnText} - ${titleText}`,
+          quantity_text: qtyText,
+          inquiry_type: inqType,
+          message: fullMessage,
+          source: 'products_page_modal',
+        },
+        { honeypotValue: '', formStartedAt: formStartedAt.current }
+      );
+
+      if (res.blocked) {
+        setModalStatus('idle');
+        return;
+      }
+
+      if (res.ok) {
+        closeRfqModal();
+        setModalFormValues({ name: '', email: '', phone: '', qty: '10-50 pcs', message: '' });
+        navigate(`/inquiry/success?ref=${res.ref}`);
+      } else {
+        setModalStatus('error');
+        setModalError('Submission failed. Please try again or reach us via WhatsApp.');
+      }
+    } catch (err) {
+      setModalStatus('error');
+      setModalError(err.message || 'Failed to submit inquiry. Please try again.');
+    }
   };
 
   // Bottom Form Submit
   const handleBottomSubmit = async (e) => {
     e.preventDefault();
+    if (!bottomFormValues.name.trim() || !bottomFormValues.email.trim()) {
+      return;
+    }
     setBottomStatus('submitting');
     try {
-      await submitInquiry({
-        name: bottomFormValues.name,
-        email: bottomFormValues.email,
-        phone: bottomFormValues.phone,
-        company: bottomFormValues.company,
-        product: bottomFormValues.categories.join(', '),
-        message: bottomFormValues.message,
-        source: 'products_page_bottom_rfq',
-        startedAt: formStartedAt.current,
-      });
-      setBottomStatus('success');
-      triggerToast(`Thank you, ${bottomFormValues.name}! Your RFQ request was submitted.`);
-      setBottomFormValues({ name: '', email: '', phone: '', company: '', message: '', categories: ['spo2', 'ecg'] });
+      const categoryNames = {
+        spo2: 'SpO2 Sensors & Cables',
+        ecg: 'ECG / EKG Cables & Leads',
+        nibp: 'NIBP Cuffs & Hoses',
+        temp: 'Medical Temperature Probes',
+        ibp: 'IBP Cables & Transducers',
+        oem: 'Custom OEM / ODM Solutions',
+      };
+      const selectedCats = bottomFormValues.categories.map((c) => categoryNames[c] || c).join(', ');
+      const userMessage = bottomFormValues.message.trim();
+      const fullMessage = userMessage
+        ? `${userMessage}\n\n[Interested Product Categories: ${selectedCats || 'General Catalog'}]`
+        : `Direct RFQ and volume pricing inquiry for: ${selectedCats || 'General Medical Cable & Sensor Catalog'}.`;
+
+      const res = await submitInquiry(
+        {
+          name: bottomFormValues.name.trim(),
+          email: bottomFormValues.email.trim(),
+          phone: bottomFormValues.phone.trim() || undefined,
+          company: bottomFormValues.company.trim() || undefined,
+          product_name: selectedCats || 'All Products Catalog RFQ',
+          inquiry_type: 'Direct RFQ & Volume Pricing Inquiry',
+          message: fullMessage,
+          source: 'products_page_bottom_rfq',
+        },
+        { honeypotValue: '', formStartedAt: formStartedAt.current }
+      );
+
+      if (res.blocked) {
+        setBottomStatus('idle');
+        return;
+      }
+
+      if (res.ok) {
+        setBottomStatus('success');
+        setBottomFormValues({ name: '', email: '', phone: '', company: '', message: '', categories: ['spo2', 'ecg'] });
+        navigate(`/inquiry/success?ref=${res.ref}`);
+      } else {
+        setBottomStatus('error');
+      }
     } catch {
       setBottomStatus('error');
-      triggerToast('Request submitted. Our sales team will get back to you shortly.');
     }
   };
 
@@ -674,7 +742,7 @@ export default function ProductsPage() {
 
                 <div className="suite-actions-bar">
                   <span className="suite-notice-text">
-                    &check; 100% Signal Match Tested &middot; Standard Hospital Warranty &middot; In Stock for Prompt Dispatch
+                    <span style={{ color: 'var(--success)', fontWeight: 'bold', marginRight: 4 }}>✓</span> 100% Signal Match Tested &middot; Standard Hospital Warranty &middot; In Stock for Prompt Dispatch
                   </span>
                   <button
                     className="btn-suite-rfq"
@@ -1005,9 +1073,9 @@ export default function ProductsPage() {
                 Medke operates a 4,000㎡ ISO 13485 facility with in-house mold toolmaking, robotic laser soldering, and precision TPU wire extrusion. We take OEM/ODM projects from schematic to functional samples in as fast as 7&ndash;14 business days.
               </p>
               <div className="oem-spec-highlights">
-                <span>&check; Low Tooling Costs &middot; MOQ 50-100 pcs</span>
-                <span>&check; Custom Overmolded Relief &middot; Laser Etching</span>
-                <span>&check; 100% Signal Integrity &amp; Biocompatibility Tests</span>
+                <span><span style={{ color: 'var(--success)', fontWeight: 'bold', marginRight: 4 }}>✓</span> Low Tooling Costs &middot; MOQ 50-100 pcs</span>
+                <span><span style={{ color: 'var(--success)', fontWeight: 'bold', marginRight: 4 }}>✓</span> Custom Overmolded Relief &middot; Laser Etching</span>
+                <span><span style={{ color: 'var(--success)', fontWeight: 'bold', marginRight: 4 }}>✓</span> 100% Signal Integrity &amp; Biocompatibility Tests</span>
               </div>
             </div>
             <div className="oem-banner-action">
@@ -1073,7 +1141,7 @@ export default function ProductsPage() {
                       <span className="sku-medke-pn">{sku.pn}</span>
                       <span className="sku-moq-tag">MOQ: 10 pcs</span>
                     </div>
-                    <div className="sku-oem-crossref">&lrhar; {sku.oemRef}</div>
+                    <div className="sku-oem-crossref"><span style={{ marginRight: 4 }}>⇄</span> {sku.oemRef}</div>
                     <h3 className="sku-title">{sku.title}</h3>
                     <div className="sku-compat-tag">
                       <span>Compatible:</span> <strong>{sku.compat}</strong>
@@ -1122,7 +1190,10 @@ export default function ProductsPage() {
               {/* Clinical Sample Card */}
               <div className="sample-banner-box">
                 <div className="sample-badge-pill">
-                  &starf; Free Hospital Evaluation Program
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block', verticalAlign: '-1px', marginRight: 5 }}>
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  Free Hospital Evaluation Program
                 </div>
                 <h2 className="sample-banner-title">
                   Request Free Clinical Samples <br />for Biomedical &amp; Hospital Trials
@@ -1253,16 +1324,25 @@ export default function ProductsPage() {
                     />
                   </div>
 
+                  {bottomStatus === 'error' && (
+                    <div style={{ padding: '10px 14px', background: '#FEE2E2', border: '1px solid #F87171', borderRadius: 'var(--radius-md)', color: '#DC2626', fontSize: 13, marginBottom: 14 }}>
+                      Failed to submit inquiry. Please check your network or reach our sales team directly at info@medke.com.
+                    </div>
+                  )}
                   <button
                     type="submit"
                     className="btn-submit-rfq-main"
                     disabled={bottomStatus === 'submitting'}
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
-                    {bottomStatus === 'submitting' ? 'Submitting...' : 'Submit Request for Factory Quote'}
+                    {bottomStatus === 'submitting' ? 'Submitting Request...' : 'Submit Request for Factory Quote'}
                   </button>
                   <div className="rfq-privacy-note">
-                    &lock; Your business data is protected under our NDA &amp; medical confidentiality policy.
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: '-2px', marginRight: 5 }}>
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    Your business data is protected under our NDA &amp; medical confidentiality policy.
                   </div>
                 </form>
               </div>
@@ -1305,7 +1385,7 @@ export default function ProductsPage() {
                 <strong>Shenzhen Medke Technology Co., Ltd. (Factory Facility)</strong>
                 Units 401 &amp; 503, Bldg A1, Anle Industrial Zone, 172 Hangcheng Rd, Bao'an District, Shenzhen, 518126, Guangdong Province, China.
                 <div style={{ marginTop: 8, fontSize: 12, color: 'var(--text-main)', fontWeight: 600 }}>
-                  &check; Facility Audited by TÜV SÜD &middot; ISO 13485:2016 Certified
+                  <span style={{ color: 'var(--success)', fontWeight: 'bold', marginRight: 4 }}>✓</span> Facility Audited by TÜV SÜD &middot; ISO 13485:2016 Certified
                 </div>
               </div>
 
@@ -1383,6 +1463,11 @@ export default function ProductsPage() {
             </div>
 
             <form onSubmit={handleModalSubmit}>
+              {modalError && (
+                <div style={{ padding: '10px 14px', background: '#FEE2E2', border: '1px solid #F87171', borderRadius: 'var(--radius-md)', color: '#DC2626', fontSize: 13, marginBottom: 14 }}>
+                  {modalError}
+                </div>
+              )}
               <div className="form-grid-2col">
                 <div className="form-field-group">
                   <label className="form-label" htmlFor="mName">Name <span className="req">*</span></label>
@@ -1450,8 +1535,8 @@ export default function ProductsPage() {
                 />
               </div>
 
-              <button type="submit" className="btn-submit-rfq-main">
-                Send Instant RFQ to Medke Factory
+              <button type="submit" className="btn-submit-rfq-main" disabled={modalStatus === 'submitting'}>
+                {modalStatus === 'submitting' ? 'Submitting Inquiry...' : 'Send Instant RFQ to Medke Factory'}
               </button>
             </form>
           </div>
