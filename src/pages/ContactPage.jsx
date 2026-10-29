@@ -354,7 +354,8 @@ export default function ContactPage() {
         </div>
 
         <h1 className="hero-title">
-          Connect with Medke&apos;s <span className="text-highlight">Medical Cable &amp; Sensor</span> Specialists
+          <span className="hero-title-top">Connect with Medke&apos;s <span className="text-highlight">Medical Cable &amp; Sensor</span></span>{' '}
+          <span className="hero-title-sub">Specialists</span>
         </h1>
         <p className="hero-subtitle">
           Direct manufacturing support for hospital clinical engineering departments, worldwide medical device distributors, and medical equipment OEMs. Factory pricing, clinical trial samples, and full technical dossiers delivered with verified agility.

@@ -130,7 +130,7 @@
       z-index: 1;
     }
     .hero-header {
-      max-width: 920px;
+      max-width: 1040px;
       margin: 0 auto 36px;
       text-align: center;
     }
@@ -186,6 +186,13 @@
       color: var(--accent);
       margin-bottom: 16px;
       text-align: center;
+      max-width: none;
+    }
+    @media (min-width: 769px) {
+      .hero-title-top,
+      .hero-title-sub {
+        display: block;
+      }
     }
     .hero-title .text-highlight {
       background: linear-gradient(135deg, var(--accent) 0%, var(--cta) 100%);
