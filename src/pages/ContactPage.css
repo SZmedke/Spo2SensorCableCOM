@@ -178,23 +178,20 @@
     }
 
     .hero-title {
-      font-size: clamp(30px, 3.8vw, 44px);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 40px;
       font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
       color: var(--accent);
       margin-bottom: 16px;
       text-align: center;
     }
-    .hero-title-line {
-      display: block;
-    }
-    .hero-title span.text-highlight,
-    .hero-title-line.text-highlight {
+    .hero-title .text-highlight {
       background: linear-gradient(135deg, var(--accent) 0%, var(--cta) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      display: inline-block;
+      display: inline;
     }
     .hero-subtitle {
       font-size: 17px;
@@ -1579,7 +1576,13 @@
         font-size: 28px;
         line-height: 1.25;
       }
-      .hero-title-line { display: block; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 28px;
+        line-height: 1.25;
+      }
       .hero-subtitle {
         font-size: 15px;
       }
