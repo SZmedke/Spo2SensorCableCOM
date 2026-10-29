@@ -178,9 +178,9 @@
     }
 
     .hero-title {
-      font-size: 40px;
+      font-size: clamp(32px, 4.2vw, 48px);
       font-weight: 800;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       line-height: 1.18;
       color: var(--accent);
       margin-bottom: 16px;
@@ -189,6 +189,9 @@
       background: linear-gradient(135deg, var(--accent) 0%, var(--cta) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+    }
+    .hero-title-break {
+      display: inline;
     }
     .hero-subtitle {
       font-size: 17px;
@@ -968,21 +971,61 @@
     .file-input-hidden {
       display: none;
     }
+    .upload-zone.has-file {
+      border-color: #94A3B8;
+      background: #F8FAFC;
+      padding: 14px;
+    }
     .uploaded-file-tag {
-      display: none;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: #FFFFFF;
       border: 1px solid #CBD5E1;
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: var(--radius-sm);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--accent);
-      margin-top: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      max-width: 100%;
     }
     .uploaded-file-tag.visible {
       display: inline-flex;
+    }
+    .uploaded-file-tag svg {
+      color: var(--cta);
+      flex-shrink: 0;
+    }
+    .uploaded-file-tag .file-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 280px;
+      color: var(--text);
+    }
+    .uploaded-file-tag .file-size {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .uploaded-file-tag .remove-file-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #94A3B8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 4px;
+      margin-left: 4px;
+      transition: all 150ms ease;
+    }
+    .uploaded-file-tag .remove-file-btn:hover {
+      color: var(--danger);
+      background: #FEE2E2;
     }
 
     /* NDA Guarantee Note */
@@ -1531,6 +1574,10 @@
       }
       .hero-title {
         font-size: 28px;
+        line-height: 1.25;
+      }
+      .hero-title-break {
+        display: none;
       }
       .hero-subtitle {
         font-size: 15px;

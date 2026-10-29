@@ -3,6 +3,7 @@
 // Direct table access is revoked for anon/authenticated — this function is
 // the only write path. No secrets are exposed; service role stays server-side.
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.4';
+import { encodeBase64 } from 'https://deno.land/std@0.224.0/encoding/base64.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -147,6 +148,14 @@ Deno.serve(async (request) => {
     }
   }
 
+  // 提取用户上传附件元数据与内容
+  const attachment_url = str(payload.attachment_url, 1000) || null;
+  const attachment_name = str(payload.attachment_name, 255) || null;
+  const attachment_size = Number(payload.attachment_size) || null;
+  let attachment_base64 = typeof payload.attachment_base64 === 'string' && payload.attachment_base64.trim()
+    ? payload.attachment_base64.trim()
+    : null;
+
   const ref = `MK-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
 
   const adminClient = createClient(supabaseUrl, serviceRoleKey, {
@@ -202,6 +211,31 @@ Deno.serve(async (request) => {
     const quantityDisplay = quantity != null 
       ? `${quantity.toLocaleString()} pcs` 
       : (quantity_text || null);
+
+    // 检查并准备 Resend 物理邮件附件
+    const resendAttachments: Array<{ filename: string; content: string }> = [];
+
+    if (!attachment_base64 && attachment_url) {
+      try {
+        const fileRes = await fetch(attachment_url);
+        if (fileRes.ok) {
+          const buffer = await fileRes.arrayBuffer();
+          // 仅在 <= 15MB 时加入物理附件，避免超出邮件协议上限
+          if (buffer.byteLength <= 15 * 1024 * 1024) {
+            attachment_base64 = encodeBase64(new Uint8Array(buffer));
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch attachment from storage URL for email:', err);
+      }
+    }
+
+    if (attachment_name && attachment_base64) {
+      resendAttachments.push({
+        filename: attachment_name,
+        content: attachment_base64,
+      });
+    }
 
     const emailHtml = `
 <!DOCTYPE html>
@@ -336,6 +370,45 @@ Deno.serve(async (request) => {
             </td>
           </tr>
 
+          ${(attachment_name || attachment_url) ? `
+          <!-- Customer Specification Attachment Section -->
+          <tr>
+            <td style="padding:0 32px 24px;">
+              <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:18px 20px;">
+                <div style="font-size:11px;font-weight:700;color:#1e40af;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">
+                  📎 Customer Specification Attachment · 客户技术图纸/需求附件
+                </div>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td style="vertical-align:middle;">
+                      <div style="font-size:15px;font-weight:700;color:#1e3a8a;word-break:break-all;">
+                        ${escapeHtml(attachment_name || 'Customer_Attachment')}
+                      </div>
+                      ${attachment_size ? `
+                      <div style="font-size:12px;color:#64748b;margin-top:2px;">
+                        File Size: ${(attachment_size / 1024 / 1024).toFixed(2)} MB
+                      </div>
+                      ` : ''}
+                    </td>
+                    ${attachment_url ? `
+                    <td align="right" style="vertical-align:middle;padding-left:16px;">
+                      <a href="${escapeHtml(attachment_url)}" target="_blank" rel="noopener noreferrer" style="display:inline-block;background:#0047ff;color:#ffffff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:6px;text-decoration:none;box-shadow:0 2px 4px rgba(0,71,255,0.2);white-space:nowrap;">
+                        ⬇️ Download File / 下载原文件
+                      </a>
+                    </td>
+                    ` : ''}
+                  </tr>
+                </table>
+                ${resendAttachments.length > 0 ? `
+                <div style="margin-top:10px;font-size:12px;color:#15803d;font-weight:600;">
+                  ✓ Direct file is also attached to this email / 该文件已作为物理附件直连本邮件
+                </div>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+          ` : ''}
+
           <!-- Follow-up Action CTAs -->
           <tr>
             <td style="padding:20px 32px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;">
@@ -393,19 +466,24 @@ Deno.serve(async (request) => {
 </html>
     `;
 
+    const emailPayload: Record<string, unknown> = {
+      from: 'SpO2SensorCable <noreply@spo2sensorcable.com>',
+      to: ['contact@medke.com'],
+      reply_to: email,
+      subject: emailSubject,
+      html: emailHtml,
+    };
+    if (resendAttachments.length > 0) {
+      emailPayload.attachments = resendAttachments;
+    }
+
     fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${resendKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        from: 'SpO2SensorCable <noreply@spo2sensorcable.com>',
-        to: ['contact@medke.com'],
-        reply_to: email,
-        subject: emailSubject,
-        html: emailHtml,
-      }),
+      body: JSON.stringify(emailPayload),
     }).catch((err) => console.error('resend error', err));
   }
 
