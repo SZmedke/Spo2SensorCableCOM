@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 68" fill="none">
+  <defs>
+    <filter id="glow-iso" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <!-- Outer Octagon / Quality Seal -->
+  <g transform="translate(6, 4)">
+    <polygon points="17,0 43,0 60,17 60,43 43,60 17,60 0,43 0,17" fill="rgba(0,71,255,0.22)" stroke="#60A5FA" stroke-width="2.5" />
+    <circle cx="30" cy="30" r="22" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="3 2" />
+    <!-- Medical Cross -->
+    <path d="M 22,30 L 38,30 M 30,22 L 30,38" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+    <circle cx="30" cy="30" r="3" fill="#60A5FA" />
+  </g>
+  <!-- Text Block: Clean, Bold, 100% Readable -->
+  <text x="76" y="27" fill="#FFFFFF" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="22" font-weight="900" letter-spacing="0.04em">ISO 13485</text>
+  <text x="77" y="44" fill="#60A5FA" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700" letter-spacing="0.1em">MEDICAL DEVICES</text>
+  <text x="77" y="58" fill="#94A3B8" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" font-weight="600" letter-spacing="0.06em">TÜV SÜD CERTIFIED QMS</text>
+</svg>
