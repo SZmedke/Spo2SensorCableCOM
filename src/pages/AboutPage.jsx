@@ -174,7 +174,7 @@ export default function AboutPage() {
             {/* Right Visual Canvas */}
             <div className="hero-viewport-canvas reveal-on-scroll">
               <div className="hero-master-frame">
-                <img src="/assets/images/about/factory-exterior.jpg" alt="Medke 4,000㎡ Intelligent Manufacturing Center Exterior in Bao'an, Shenzhen" />
+                <img src="/assets/images/about/factory-exterior.jpg" alt="Medke 4,000㎡ Intelligent Manufacturing Center Exterior in Bao'an, Shenzhen" loading="eager" decoding="async" />
               </div>
 
               {/* Floating VR Radar Card */}
@@ -255,7 +255,7 @@ export default function AboutPage() {
                   <span className="fold-year-heavy">2008</span>
                 </div>
                 <div className="fold-lead-person">
-                  <img src="/assets/images/team/09_Li-Zhenzong_Founder.jpg" alt="Li Zhenzong - Founder of Medke" className="fold-avatar" />
+                  <img src="/assets/images/team/09_Li-Zhenzong_Founder.jpg" alt="Li Zhenzong - Founder of Medke" className="fold-avatar" loading="lazy" decoding="async" />
                   <div>
                     <h3 className="fold-name">Li Zhenzong</h3>
                     <div className="fold-title">Founder (Born 1954 in Hong Kong)</div>
@@ -289,7 +289,7 @@ export default function AboutPage() {
                   <span className="fold-year-heavy">Present</span>
                 </div>
                 <div className="fold-lead-person">
-                  <img src="/assets/images/team/08_Li-Weitao_Chairman-and-CEO.jpg" alt="Li Weitao - Chairman and CEO of Medke" className="fold-avatar" />
+                  <img src="/assets/images/team/08_Li-Weitao_Chairman-and-CEO.jpg" alt="Li Weitao - Chairman and CEO of Medke" className="fold-avatar" loading="lazy" decoding="async" />
                   <div>
                     <h3 className="fold-name">Li Weitao</h3>
                     <div className="fold-title">Chairman &amp; CEO (2nd Generation Industrialist)</div>
@@ -399,7 +399,7 @@ export default function AboutPage() {
               className="bento-box bento-hero-card"
               onClick={() => openLightbox('/assets/images/about/cleanroom-real-clean.jpg', 'ISO Class 7 (100,000-Grade) Dust-Free Assembly Cleanroom')}
             >
-              <img src="/assets/images/about/cleanroom-real-clean.jpg" alt="Medke ISO Class 7 Assembly Cleanroom" />
+              <img src="/assets/images/about/cleanroom-real-clean.jpg" alt="Medke ISO Class 7 Assembly Cleanroom" loading="lazy" decoding="async" />
               <div className="bento-hud-panel">
                 <div className="hud-param">
                   <span className="param-label">Cleanliness</span>
@@ -429,7 +429,7 @@ export default function AboutPage() {
               className="bento-box"
               onClick={() => openLightbox('/assets/images/about/lab-testing-real-web.jpg', 'Full-Chain Electrical Safety & Reliability Testing Laboratory')}
             >
-              <img src="/assets/images/about/lab-testing-real-web.jpg" alt="In-House Testing Laboratory" />
+              <img src="/assets/images/about/lab-testing-real-web.jpg" alt="In-House Testing Laboratory" loading="lazy" decoding="async" />
               <div className="bento-caption-scrim">
                 <h3 className="bento-title">Full Electrical &amp; Reliability Lab</h3>
                 <p className="bento-desc">20,000-cycle bending benches, 50N axial pull testers, and 1,500V dielectric breakdown test cells.</p>
@@ -443,7 +443,7 @@ export default function AboutPage() {
                 className="bento-box"
                 onClick={() => openLightbox('/assets/images/about/factory-01.jpg', 'High-Precision Extrusion & Multi-Cavity Injection Molding Workshop')}
               >
-                <img src="/assets/images/about/factory-01.jpg" alt="Extrusion and Molding Workshop" />
+                <img src="/assets/images/about/factory-01.jpg" alt="Extrusion and Molding Workshop" loading="lazy" decoding="async" />
                 <div className="bento-caption-scrim">
                   <h4 style={{ fontSize: '14px', fontWeight: 800, marginBottom: '2px' }}>Extrusion Workshop</h4>
                   <p style={{ fontSize: '12px', color: '#CBD5E1' }}>Medical-grade TPU jacketing.</p>
@@ -550,7 +550,7 @@ export default function AboutPage() {
               <div>
                 <div className="shield-logo-row">
                   <div className="shield-logo-wrap">
-                    <img src="/assets/images/certs/transparent/white-iso13485.png" alt="TÜV SÜD ISO 13485:2016 Certification" />
+                    <img src="/assets/images/certs/transparent/white-iso13485.png" alt="TÜV SÜD ISO 13485:2016 Certification" loading="lazy" decoding="async" />
                   </div>
                   <span className="shield-valid-pill">Valid to 2029</span>
                 </div>
@@ -569,7 +569,7 @@ export default function AboutPage() {
               <div>
                 <div className="shield-logo-row">
                   <div className="shield-logo-wrap">
-                    <img src="/assets/images/certs/transparent/white-ce0123.png" alt="EU CE MDR 0123 Certification" />
+                    <img src="/assets/images/certs/transparent/white-ce0123.png" alt="EU CE MDR 0123 Certification" loading="lazy" decoding="async" />
                   </div>
                   <span className="shield-valid-pill">Valid to 2031</span>
                 </div>
@@ -588,7 +588,7 @@ export default function AboutPage() {
               <div>
                 <div className="shield-logo-row">
                   <div className="shield-logo-wrap">
-                    <img src="/assets/images/certs/transparent/white-fda.png" alt="US FDA 510k Clearance" />
+                    <img src="/assets/images/certs/transparent/white-fda.png" alt="US FDA 510k Clearance" loading="lazy" decoding="async" />
                   </div>
                   <span className="shield-valid-pill">FEI 3012804266</span>
                 </div>
@@ -607,7 +607,7 @@ export default function AboutPage() {
               <div>
                 <div className="shield-logo-row">
                   <div className="shield-logo-wrap">
-                    <img src="/assets/images/certs/transparent/white-sfda.png" alt="Saudi SFDA Marketing Authorization" />
+                    <img src="/assets/images/certs/transparent/white-sfda.png" alt="Saudi SFDA Marketing Authorization" loading="lazy" decoding="async" />
                   </div>
                   <span className="shield-valid-pill">SFDA Authorized</span>
                 </div>
@@ -626,7 +626,7 @@ export default function AboutPage() {
               <div>
                 <div className="shield-logo-row">
                   <div className="shield-logo-wrap">
-                    <img src="/assets/images/certs/transparent/white-rzn.png" alt="Russia Roszdravnadzor RZN Registration" />
+                    <img src="/assets/images/certs/transparent/white-rzn.png" alt="Russia Roszdravnadzor RZN Registration" loading="lazy" decoding="async" />
                   </div>
                   <span className="shield-valid-pill">RZN Registered</span>
                 </div>
@@ -645,7 +645,7 @@ export default function AboutPage() {
               <div>
                 <div className="shield-logo-row">
                   <div className="shield-logo-wrap">
-                    <img src="/assets/images/certs/transparent/white-mdsap.png" alt="MDSAP 5-Country Regulatory Alliance" />
+                    <img src="/assets/images/certs/transparent/white-mdsap.png" alt="MDSAP 5-Country Regulatory Alliance" loading="lazy" decoding="async" />
                   </div>
                   <span className="shield-valid-pill">5 Nations Global</span>
                 </div>
@@ -684,34 +684,34 @@ export default function AboutPage() {
 
           <div className="brand-grid-10 reveal-on-scroll">
             <div className="brand-tile" title="Philips Compatible">
-              <img src="/assets/images/clients/client-logo-philips.png" alt="Philips Medical Systems" />
+              <img src="/assets/images/clients/client-logo-philips.png" alt="Philips Medical Systems" loading="lazy" decoding="async" />
             </div>
             <div className="brand-tile" title="Mindray Compatible">
-              <img src="/assets/images/clients/client-logo-mindray.png" alt="Mindray Healthcare" />
+              <img src="/assets/images/clients/client-logo-mindray.png" alt="Mindray Healthcare" loading="lazy" decoding="async" />
             </div>
             <div className="brand-tile" title="General Electric Healthcare Compatible">
               <span className="brand-text-ge">GE HEALTHCARE</span>
             </div>
             <div className="brand-tile" title="Dräger Compatible">
-              <img src="/assets/images/clients/client-logo-drager.png" alt="Dräger Medical" />
+              <img src="/assets/images/clients/client-logo-drager.png" alt="Dräger Medical" loading="lazy" decoding="async" />
             </div>
             <div className="brand-tile" title="Biolight Compatible">
-              <img src="/assets/images/clients/client-logo-biolight.png" alt="Biolight Healthcare" />
+              <img src="/assets/images/clients/client-logo-biolight.png" alt="Biolight Healthcare" loading="lazy" decoding="async" />
             </div>
             <div className="brand-tile" title="Comen Compatible">
-              <img src="/assets/images/clients/client-logo-comen.png" alt="Comen Medical" />
+              <img src="/assets/images/clients/client-logo-comen.png" alt="Comen Medical" loading="lazy" decoding="async" />
             </div>
             <div className="brand-tile" title="EDAN Compatible">
-              <img src="/assets/images/clients/client-logo-edan.png" alt="EDAN Instruments" />
+              <img src="/assets/images/clients/client-logo-edan.png" alt="EDAN Instruments" loading="lazy" decoding="async" />
             </div>
             <div className="brand-tile" title="Bionet Compatible">
-              <img src="/assets/images/clients/client-logo-bionet.png" alt="Bionet Healthcare" />
+              <img src="/assets/images/clients/client-logo-bionet.png" alt="Bionet Healthcare" loading="lazy" decoding="async" />
             </div>
             <div className="brand-tile" title="Schiller Compatible">
-              <img src="/assets/images/clients/client-logo-schiller.png" alt="Schiller Medical" />
+              <img src="/assets/images/clients/client-logo-schiller.png" alt="Schiller Medical" loading="lazy" decoding="async" />
             </div>
             <div className="brand-tile" title="Huntleigh Compatible">
-              <img src="/assets/images/clients/client-logo-huntleigh.png" alt="Huntleigh Healthcare" />
+              <img src="/assets/images/clients/client-logo-huntleigh.png" alt="Huntleigh Healthcare" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -806,7 +806,7 @@ export default function AboutPage() {
             <button type="button" className="modal-close-btn" onClick={closeLightbox} title="Close (Esc)">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
-            <img src={lightboxData.src} alt={lightboxData.caption} className="modal-image" />
+            <img src={lightboxData.src} alt={lightboxData.caption} className="modal-image" loading="lazy" decoding="async" />
             <div className="modal-caption">
               <div className="modal-caption-text">{lightboxData.caption}</div>
               <div style={{ fontSize: '12px', color: 'var(--text-subtle)', fontFamily: 'var(--font-mono)' }}>Shenzhen Medke Smart Campus</div>

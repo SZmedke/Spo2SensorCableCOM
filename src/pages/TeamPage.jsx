@@ -167,7 +167,7 @@ export default function TeamPage() {
           {/* 1. Li Zhenzong */}
           <div className="executive-card">
             <div className="executive-image-frame zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Li Zhenzong', role: 'Founder (Born 1954 in Hong Kong)', src: '/assets/images/team/09_Li-Zhenzong_Founder.jpg', initials: null, quote: 'In medical electronics, 0.1% tolerance is not an acceptable deviation—it is a patient\'s life.', credentials: 'Founder · Total Biocompatibility Creed Since 2008' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Li Zhenzong', role: 'Founder (Born 1954 in Hong Kong)', src: '/assets/images/team/09_Li-Zhenzong_Founder.jpg', initials: null, quote: 'In medical electronics, 0.1% tolerance is not an acceptable deviation—it is a patient\'s life.', credentials: 'Founder · Total Biocompatibility Creed Since 2008' }); } }}>
-              <img src="/assets/images/team/09_Li-Zhenzong_Founder.jpg" alt="Li Zhenzong - Founder" className="executive-img" />
+              <img src="/assets/images/team/09_Li-Zhenzong_Founder.jpg" alt="Li Zhenzong - Founder" className="executive-img" loading="lazy" decoding="async" />
               <div className="zoom-hint-badge">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                 <span>Enlarge</span>
@@ -190,7 +190,7 @@ export default function TeamPage() {
           {/* 2. Li Weitao */}
           <div className="executive-card">
             <div className="executive-image-frame zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Li Weitao', role: 'Chairman &amp; CEO (2nd Generation Industrialist)', src: '/assets/images/team/08_Li-Weitao_Chairman-and-CEO.jpg', initials: null, quote: 'Agile manufacturing means responding with certified engineering dossiers before competitors finish quoting.', credentials: 'Chairman &amp; CEO · TÜV SÜD CE MDR Class IIb &amp; FDA 510(k) Lead' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Li Weitao', role: 'Chairman &amp; CEO (2nd Generation Industrialist)', src: '/assets/images/team/08_Li-Weitao_Chairman-and-CEO.jpg', initials: null, quote: 'Agile manufacturing means responding with certified engineering dossiers before competitors finish quoting.', credentials: 'Chairman &amp; CEO · TÜV SÜD CE MDR Class IIb &amp; FDA 510(k) Lead' }); } }}>
-              <img src="/assets/images/team/08_Li-Weitao_Chairman-and-CEO.jpg" alt="Li Weitao - Chairman and CEO" className="executive-img" />
+              <img src="/assets/images/team/08_Li-Weitao_Chairman-and-CEO.jpg" alt="Li Weitao - Chairman and CEO" className="executive-img" loading="lazy" decoding="async" />
               <div className="zoom-hint-badge">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                 <span>Enlarge</span>
@@ -222,7 +222,7 @@ export default function TeamPage() {
           {/* 3. Xian Zuyin */}
           <div className="executive-card">
             <div className="executive-image-frame zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Xian Zuyin', role: 'General Manager (Operations &amp; Regulatory)', src: '/assets/images/team/03_Xian-Zuyin_General-Manager.jpg', initials: null, quote: 'Regulatory adherence is not documentation—it is the engineering foundation of clinical trust.', credentials: 'General Manager · Official European MDR Legal Signatory' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Xian Zuyin', role: 'General Manager (Operations &amp; Regulatory)', src: '/assets/images/team/03_Xian-Zuyin_General-Manager.jpg', initials: null, quote: 'Regulatory adherence is not documentation—it is the engineering foundation of clinical trust.', credentials: 'General Manager · Official European MDR Legal Signatory' }); } }}>
-              <img src="/assets/images/team/03_Xian-Zuyin_General-Manager.jpg" alt="Xian Zuyin - General Manager" className="executive-img" />
+              <img src="/assets/images/team/03_Xian-Zuyin_General-Manager.jpg" alt="Xian Zuyin - General Manager" className="executive-img" loading="lazy" decoding="async" />
               <div className="zoom-hint-badge">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                 <span>Enlarge</span>
@@ -255,7 +255,7 @@ export default function TeamPage() {
           <div className="dossier-card">
             <div className="dossier-top">
               <div className="dossier-photo-wrap zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Wu Fengguang', role: 'R&amp;D Manager', src: '/assets/images/team/02_Wu-Fengguang_R-and-D-Manager.jpg', initials: null, quote: 'Every monitor pinout has an exact geometric solution in our 2,000+ mold vault.', credentials: '2,000+ Molds · 98% Pinout Coverage · 24h DFM' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Wu Fengguang', role: 'R&amp;D Manager', src: '/assets/images/team/02_Wu-Fengguang_R-and-D-Manager.jpg', initials: null, quote: 'Every monitor pinout has an exact geometric solution in our 2,000+ mold vault.', credentials: '2,000+ Molds · 98% Pinout Coverage · 24h DFM' }); } }}>
-                <img src="/assets/images/team/02_Wu-Fengguang_R-and-D-Manager.jpg" alt="Wu Fengguang" className="dossier-photo" />
+                <img src="/assets/images/team/02_Wu-Fengguang_R-and-D-Manager.jpg" alt="Wu Fengguang" className="dossier-photo" loading="lazy" decoding="async" />
                 <div className="zoom-hint-badge" style={{ padding: '2px 5px', fontSize: 10 }}>
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </div>
@@ -299,7 +299,7 @@ export default function TeamPage() {
           <div className="dossier-card">
             <div className="dossier-top">
               <div className="dossier-photo-wrap zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Zhou Yuanbin', role: 'Quality Control Manager', src: '/assets/images/team/04_Zhou-Yuanbin_Quality-Control-Manager.jpg', initials: null, quote: 'A single defective wire never leaves our inspection stations.', credentials: '20,000 Cycles Flex · 50N Tensile · 1,500V Hi-Pot Testing' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Zhou Yuanbin', role: 'Quality Control Manager', src: '/assets/images/team/04_Zhou-Yuanbin_Quality-Control-Manager.jpg', initials: null, quote: 'A single defective wire never leaves our inspection stations.', credentials: '20,000 Cycles Flex · 50N Tensile · 1,500V Hi-Pot Testing' }); } }}>
-                <img src="/assets/images/team/04_Zhou-Yuanbin_Quality-Control-Manager.jpg" alt="Zhou Yuanbin" className="dossier-photo" />
+                <img src="/assets/images/team/04_Zhou-Yuanbin_Quality-Control-Manager.jpg" alt="Zhou Yuanbin" className="dossier-photo" loading="lazy" decoding="async" />
                 <div className="zoom-hint-badge" style={{ padding: '2px 5px', fontSize: 10 }}>
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </div>
@@ -321,7 +321,7 @@ export default function TeamPage() {
           <div className="dossier-card">
             <div className="dossier-top">
               <div className="dossier-photo-wrap zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Huang Yuanbin', role: 'Factory Supervisor', src: '/assets/images/team/07_Huang-Yuanbin_Factory-Supervisor.jpg', initials: null, quote: 'Disciplined 5S cleanrooms ensure consistent clinical cable reliability.', credentials: '4,000㎡ Campus · ISO Class 7 Cleanroom · Dual Continuous Shifts' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Huang Yuanbin', role: 'Factory Supervisor', src: '/assets/images/team/07_Huang-Yuanbin_Factory-Supervisor.jpg', initials: null, quote: 'Disciplined 5S cleanrooms ensure consistent clinical cable reliability.', credentials: '4,000㎡ Campus · ISO Class 7 Cleanroom · Dual Continuous Shifts' }); } }}>
-                <img src="/assets/images/team/07_Huang-Yuanbin_Factory-Supervisor.jpg" alt="Huang Yuanbin" className="dossier-photo" />
+                <img src="/assets/images/team/07_Huang-Yuanbin_Factory-Supervisor.jpg" alt="Huang Yuanbin" className="dossier-photo" loading="lazy" decoding="async" />
                 <div className="zoom-hint-badge" style={{ padding: '2px 5px', fontSize: 10 }}>
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </div>
@@ -343,7 +343,7 @@ export default function TeamPage() {
           <div className="dossier-card">
             <div className="dossier-top">
               <div className="dossier-photo-wrap zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Gong Shuangyu', role: 'Supply Chain Manager', src: '/assets/images/team/06_Gong-Shuangyu_Supply-Chain-Manager.jpg', initials: null, quote: 'Upstream material purity dictates downstream patient safety.', credentials: 'Medical TPU Resins · Kevlar Yarns · RoHS &amp; REACH Compliance' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Gong Shuangyu', role: 'Supply Chain Manager', src: '/assets/images/team/06_Gong-Shuangyu_Supply-Chain-Manager.jpg', initials: null, quote: 'Upstream material purity dictates downstream patient safety.', credentials: 'Medical TPU Resins · Kevlar Yarns · RoHS &amp; REACH Compliance' }); } }}>
-                <img src="/assets/images/team/06_Gong-Shuangyu_Supply-Chain-Manager.jpg" alt="Gong Shuangyu" className="dossier-photo" />
+                <img src="/assets/images/team/06_Gong-Shuangyu_Supply-Chain-Manager.jpg" alt="Gong Shuangyu" className="dossier-photo" loading="lazy" decoding="async" />
                 <div className="zoom-hint-badge" style={{ padding: '2px 5px', fontSize: 10 }}>
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </div>
@@ -365,7 +365,7 @@ export default function TeamPage() {
           <div className="dossier-card">
             <div className="dossier-top">
               <div className="dossier-photo-wrap zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Lu Wen', role: 'Finance Manager', src: '/assets/images/team/10_Lu-Wen_Finance-Manager.jpg', initials: null, quote: 'Solid financial backing guarantees smooth international supply contracts.', credentials: '¥10M Paid-In Capital · International L/C &amp; Trade Settlement' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Lu Wen', role: 'Finance Manager', src: '/assets/images/team/10_Lu-Wen_Finance-Manager.jpg', initials: null, quote: 'Solid financial backing guarantees smooth international supply contracts.', credentials: '¥10M Paid-In Capital · International L/C &amp; Trade Settlement' }); } }}>
-                <img src="/assets/images/team/10_Lu-Wen_Finance-Manager.jpg" alt="Lu Wen" className="dossier-photo" />
+                <img src="/assets/images/team/10_Lu-Wen_Finance-Manager.jpg" alt="Lu Wen" className="dossier-photo" loading="lazy" decoding="async" />
                 <div className="zoom-hint-badge" style={{ padding: '2px 5px', fontSize: 10 }}>
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </div>
@@ -395,7 +395,7 @@ export default function TeamPage() {
           {/* 10. Nancy Liu */}
           <div className="sales-leader-card">
             <div className="sales-photo-frame zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Nancy (Guiting) Liu', role: 'Sales Director', src: '/assets/images/team/01_Nancy_Liu-Guiting_Sales-Director.jpg', initials: null, quote: 'We provide clinical engineering departments with direct factory backing and zero communication friction.', credentials: '12 Years Clinical Sensor Experience · 500+ Hospital Projects Advised' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Nancy (Guiting) Liu', role: 'Sales Director', src: '/assets/images/team/01_Nancy_Liu-Guiting_Sales-Director.jpg', initials: null, quote: 'We provide clinical engineering departments with direct factory backing and zero communication friction.', credentials: '12 Years Clinical Sensor Experience · 500+ Hospital Projects Advised' }); } }}>
-              <img src="/assets/images/team/01_Nancy_Liu-Guiting_Sales-Director.jpg" alt="Nancy (Guiting) Liu" />
+              <img src="/assets/images/team/01_Nancy_Liu-Guiting_Sales-Director.jpg" alt="Nancy (Guiting) Liu" loading="lazy" decoding="async" />
               <div className="zoom-hint-badge" style={{ padding: '2px 6px', fontSize: 10 }}>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 <span>Enlarge</span>
@@ -425,7 +425,7 @@ export default function TeamPage() {
           {/* 11. Amy Yi Si */}
           <div className="sales-leader-card">
             <div className="sales-photo-frame zoomable-frame" role="button" tabIndex={0} onClick={() => openLightbox({ name: 'Amy (Yi Si)', role: 'Sales Operations Specialist', src: '/assets/images/team/05_Amy_Yi-Si_Sales-Assistant.jpg', initials: null, quote: 'Ensuring expedited samples and urgent tender orders clear international customs without delay.', credentials: '&lt; 24h Sample Logistics · Air Courier Documentation Expedited' })} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { openLightbox({ name: 'Amy (Yi Si)', role: 'Sales Operations Specialist', src: '/assets/images/team/05_Amy_Yi-Si_Sales-Assistant.jpg', initials: null, quote: 'Ensuring expedited samples and urgent tender orders clear international customs without delay.', credentials: '&lt; 24h Sample Logistics · Air Courier Documentation Expedited' }); } }}>
-              <img src="/assets/images/team/05_Amy_Yi-Si_Sales-Assistant.jpg" alt="Amy (Yi Si)" />
+              <img src="/assets/images/team/05_Amy_Yi-Si_Sales-Assistant.jpg" alt="Amy (Yi Si)" loading="lazy" decoding="async" />
               <div className="zoom-hint-badge" style={{ padding: '2px 6px', fontSize: 10 }}>
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 <span>Enlarge</span>
@@ -532,7 +532,7 @@ export default function TeamPage() {
           {/* 1 */}
           <div className="doc-tile">
             <div className="doc-img-wrap">
-              <img src="/assets/images/about/cleanroom-real-clean.jpg" alt="Cleanroom Soldering" />
+              <img src="/assets/images/about/cleanroom-real-clean.jpg" alt="Cleanroom Soldering" loading="lazy" decoding="async" />
             </div>
             <div className="doc-meta">
               <div className="doc-label">Cleanroom Workstation</div>
@@ -544,7 +544,7 @@ export default function TeamPage() {
           {/* 2 */}
           <div className="doc-tile">
             <div className="doc-img-wrap">
-              <img src="/assets/images/about/lab-testing-real-web.jpg" alt="Electrical Safety Test" />
+              <img src="/assets/images/about/lab-testing-real-web.jpg" alt="Electrical Safety Test" loading="lazy" decoding="async" />
             </div>
             <div className="doc-meta">
               <div className="doc-label">Reliability Lab</div>
@@ -556,7 +556,7 @@ export default function TeamPage() {
           {/* 3 */}
           <div className="doc-tile">
             <div className="doc-img-wrap">
-              <img src="/assets/images/about/factory-01.jpg" alt="Cable Extrusion" />
+              <img src="/assets/images/about/factory-01.jpg" alt="Cable Extrusion" loading="lazy" decoding="async" />
             </div>
             <div className="doc-meta">
               <div className="doc-label">Extrusion Line</div>
@@ -568,7 +568,7 @@ export default function TeamPage() {
           {/* 4 */}
           <div className="doc-tile">
             <div className="doc-img-wrap">
-              <img src="/assets/images/about/about-team-3.jpg" alt="Hospital Client Reception" />
+              <img src="/assets/images/about/about-team-3.jpg" alt="Hospital Client Reception" loading="lazy" decoding="async" />
             </div>
             <div className="doc-meta">
               <div className="doc-label">Technical Consultation</div>
@@ -697,7 +697,7 @@ export default function TeamPage() {
 
             <div className="lightbox-img-canvas" id="lightbox-canvas">
               {lightboxData.src ? (
-                <img src={lightboxData.src} alt={lightboxData.name} id="lightbox-img" style={{ display: 'block' }} />
+                <img src={lightboxData.src} alt={lightboxData.name} id="lightbox-img" style={{ display: 'block' }} loading="lazy" decoding="async" />
               ) : (
                 <div className="lightbox-avatar-fallback" id="lightbox-avatar-fallback" style={{ display: 'flex' }}>
                   {lightboxData.initials || 'MD'}

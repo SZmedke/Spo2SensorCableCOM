@@ -159,7 +159,6 @@
       opacity: 0;
       transform: translateY(32px);
       transition: opacity var(--duration-scroll) var(--ease-decel), transform var(--duration-scroll) var(--ease-decel);
-      will-change: opacity, transform;
     }
 
     .reveal-on-scroll.revealed {
