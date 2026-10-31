@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import LeadBrochureModal from '../components/landing/LeadBrochureModal';
 import './AboutPage.css';
 
 const FAQS = [
@@ -32,7 +33,7 @@ const FAQS = [
 export default function AboutPage() {
   const [activeFaqIndex, setActiveFaqIndex] = useState(0);
   const [lightboxData, setLightboxData] = useState(null);
-  const [showToast, setShowToast] = useState(false);
+  const [isBrochureModalOpen, setIsBrochureModalOpen] = useState(false);
 
   const toggleFaq = (index) => {
     setActiveFaqIndex((prev) => (prev === index ? null : index));
@@ -44,13 +45,6 @@ export default function AboutPage() {
 
   const closeLightbox = () => {
     setLightboxData(null);
-  };
-
-  const handleDownloadBrochure = () => {
-    setShowToast(true);
-    setTimeout(() => {
-      setShowToast(false);
-    }, 4000);
   };
 
   useEffect(() => {
@@ -166,7 +160,7 @@ export default function AboutPage() {
 
               {/* Hero CTA */}
               <div className="hero-btn-row">
-                <button type="button" className="btn btn-primary" onClick={handleDownloadBrochure}>
+                <button type="button" className="btn btn-primary" onClick={() => setIsBrochureModalOpen(true)}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                   <span>Download Corporate Brochure (PDF)</span>
                 </button>
@@ -821,16 +815,18 @@ export default function AboutPage() {
         </div>
       )}
 
-      {/* Real Brochure Download Toast */}
-      <div className={`download-toast ${showToast ? 'show' : ''}`}>
-        <div className="toast-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <div>
-          <div style={{ fontSize: '14px', fontWeight: 800, color: '#FFFFFF' }}>Brochure Download Initialized</div>
-          <div style={{ fontSize: '12px', color: '#94A3B8' }}>Medke_Corporate_Profile_2026.pdf (14.2 MB)</div>
-        </div>
-      </div>
+      {/* Corporate Brochure Lead Capture Modal */}
+      <LeadBrochureModal
+        isOpen={isBrochureModalOpen}
+        onClose={() => setIsBrochureModalOpen(false)}
+        badge="Official Corporate Profile (PDF)"
+        title="Medke Corporate Profile & Factory Capability"
+        subtitle="Instant download: 4,000㎡ smart facility overview, Class 100,000 cleanroom specs, TÜV ISO 13485 & CE MDR regulatory certificates, and OEM/ODM capacity deck."
+        pdfUrl="/docs/Medke-Company-Profile.pdf"
+        downloadFilename="Medke_Company_Profile.pdf"
+        assetName="Medke Company Profile (PDF)"
+        fileSize="8.0 MB"
+      />
     </div>
   );
 }

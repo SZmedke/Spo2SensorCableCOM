@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { X, Download, FileText, CheckCircle2, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
+import { X, Download, FileText, CheckCircle2, Loader2, AlertCircle } from 'lucide-react';
 import { submitInquiry } from '../../lib/inquiries';
 
 const BLOCKED_DOMAINS = [
@@ -7,7 +7,17 @@ const BLOCKED_DOMAINS = [
   'test.com', 'example.com', 'fake.com', '123.com', 'aaa.com', 'qq.com'
 ];
 
-export default function LeadBrochureModal({ isOpen, onClose }) {
+export default function LeadBrochureModal({
+  isOpen,
+  onClose,
+  title = '2026 Medke Medical Cable Catalog',
+  subtitle = 'Instant download: Full cross-reference index, pinout diagrams, biocompatibility certificates, and tiered OEM price sheets.',
+  badge = 'Complete Engineering E-Brochure (472+ SKUs)',
+  pdfUrl = '/docs/Medke-Brochure-2026.pdf',
+  downloadFilename = 'Medke_2026_Medical_Cable_Brochure.pdf',
+  assetName = 'Medke Brochure 2026 (PDF)',
+  fileSize = '20.8 MB'
+}) {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,8 +37,8 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
   const triggerDownload = () => {
     if (typeof window !== 'undefined') {
       const link = document.createElement('a');
-      link.href = '/docs/Medke-Brochure-2026.pdf';
-      link.download = 'Medke_2026_Medical_Cable_Brochure.pdf';
+      link.href = pdfUrl;
+      link.download = downloadFilename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -60,10 +70,10 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
       const result = await submitInquiry({
         name: 'Brochure Downloader',
         email: trimmed,
-        product_name: 'Medke Brochure 2026 (PDF)',
+        product_name: assetName,
         company: 'Website E-Catalog Visitor',
         inquiry_type: 'E-Catalog Download',
-        message: `Visitor requested and downloaded the 2026 Medke Medical Cable Product Brochure (20.8 MB) from ${sourcePage}. Please follow up with technical catalog and pricing.`
+        message: `Visitor requested and downloaded ${assetName} (${fileSize}) from ${sourcePage}. Please follow up with technical catalog and pricing.`
       }, {
         skipDataLayer: true,
         honeypotValue: honeypot,
@@ -87,8 +97,8 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'download_datasheet_lead',
-        asset_name: 'Medke Brochure 2026 (PDF)',
-        file_size: '20.8 MB',
+        asset_name: assetName,
+        file_size: fileSize,
         user_email: trimmed,
         timestamp: new Date().toISOString()
       });
@@ -127,14 +137,14 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
           
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-blue-100 text-xs font-semibold mb-3">
             <FileText className="w-3.5 h-3.5" />
-            <span>Complete Engineering E-Brochure (472+ SKUs)</span>
+            <span>{badge}</span>
           </div>
 
           <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-            2026 Medke Medical Cable Catalog
+            {title}
           </h3>
           <p className="text-xs sm:text-sm text-blue-100 mt-1.5 leading-relaxed">
-            Instant download: Full cross-reference index, pinout diagrams, biocompatibility certificates, and tiered OEM price sheets.
+            {subtitle}
           </p>
         </div>
 
@@ -151,14 +161,14 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
                   Download Initialized!
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-600 mt-1.5">
-                  Your PDF file (<strong>Medke_2026_Medical_Cable_Brochure.pdf</strong> · 20.8 MB) is downloading automatically.
+                  Your PDF file (<strong>{downloadFilename}</strong> · {fileSize}) is downloading automatically.
                 </p>
               </div>
 
               <div className="pt-3">
                 <a
-                  href="/docs/Medke-Brochure-2026.pdf"
-                  download="Medke_2026_Medical_Cable_Brochure.pdf"
+                  href={pdfUrl}
+                  download={downloadFilename}
                   className="inline-flex items-center gap-2 text-xs text-blue-600 font-bold hover:underline"
                 >
                   <Download className="w-3.5 h-3.5" />
@@ -208,7 +218,7 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
                   className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-sm focus:bg-white focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 transition-all"
                 />
                 <p className="text-[11px] text-slate-400 mt-1.5">
-                  High-definition vector PDF (20.8 MB) will start downloading directly in your browser.
+                  High-definition vector PDF ({fileSize}) will start downloading directly in your browser.
                 </p>
               </div>
 
@@ -241,7 +251,7 @@ export default function LeadBrochureModal({ isOpen, onClose }) {
                   ) : (
                     <>
                       <Download className="w-4 h-4" />
-                      <span>Unlock & Download High-Res PDF (20.8 MB)</span>
+                      <span>Unlock & Download High-Res PDF ({fileSize})</span>
                     </>
                   )}
                 </button>
