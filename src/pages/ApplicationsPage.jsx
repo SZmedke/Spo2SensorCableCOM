@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import LeadBrochureModal from '../components/landing/LeadBrochureModal';
+import { submitInquiry, INQUIRY_HONEYPOT_NAME } from '../lib/inquiries';
 import './ApplicationsPage.css';
 
 // 1. Clinical Department Data Store
@@ -223,8 +224,13 @@ export default function ApplicationsPage() {
   const [activeBomKit, setActiveBomKit] = useState(null);
   const [rfpDept, setRfpDept] = useState('icu');
   const [rfpBrand, setRfpBrand] = useState('philips');
-  const [rfpForm, setRfpForm] = useState({ name: '', email: '', org: '', country: '', notes: '' });
+  const [rfpForm, setRfpForm] = useState({ name: '', email: '', org: '', country: '', notes: '', certs: true });
+  const [rfpIsSubmitting, setRfpIsSubmitting] = useState(false);
+  const [rfpSubmitError, setRfpSubmitError] = useState('');
   const [rfpSubmitted, setRfpSubmitted] = useState(false);
+  const [rfpSubmittedRef, setRfpSubmittedRef] = useState('');
+  const [rfpHoneypot, setRfpHoneypot] = useState('');
+  const rfpFormStartedAt = useRef(Date.now());
   const [toastMsg, setToastMsg] = useState('');
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
@@ -288,14 +294,82 @@ export default function ApplicationsPage() {
     showToast(`Configured RFP target: ${DEPARTMENTS[deptKey]?.name || deptKey}`);
   };
 
-  const handleRfpSubmit = (e) => {
+  const handleRfpSubmit = async (e) => {
     e.preventDefault();
-    if (!rfpForm.name.trim() || !rfpForm.email.trim()) {
-      showToast('Please enter your full name and institutional work email.');
+    setRfpSubmitError('');
+
+    const trimmedName = rfpForm.name.trim();
+    const trimmedEmail = rfpForm.email.trim();
+    const trimmedOrg = rfpForm.org.trim();
+    const trimmedCountry = rfpForm.country.trim();
+    const trimmedNotes = rfpForm.notes.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedOrg) {
+      setRfpSubmitError('Please complete all required fields: Full Name, Institutional Email, and Hospital / Organization.');
+      showToast('Please complete all required fields.');
       return;
     }
-    setRfpSubmitted(true);
-    showToast('Department RFP submitted successfully. Engineering team will respond within 4 hours.');
+
+    const deptLabel = rfpDeptNames[rfpDept] || rfpDept;
+    const brandLabel = rfpBrandNames[rfpBrand] || rfpBrand;
+
+    const compiledMessage = [
+      `Target Clinical Department: ${deptLabel}`,
+      `Primary Patient Monitor Brand: ${brandLabel}`,
+      `Hospital / Organization: ${trimmedOrg}`,
+      trimmedCountry ? `Country / Region: ${trimmedCountry}` : '',
+      `Regulatory Dossier Requested: ${rfpForm.certs ? 'Yes (TÜV SÜD CE MDR Class IIb & ISO 13485 copies)' : 'No'}`,
+      trimmedNotes ? `Specific Sensor Requirements / Notes:\n${trimmedNotes}` : 'Specific Sensor Requirements / Notes:\nStandard department compatibility dossier and bulk quotation requested.'
+    ].filter(Boolean).join('\n\n');
+
+    const payload = {
+      name: trimmedName,
+      email: trimmedEmail,
+      company: trimmedOrg,
+      country: trimmedCountry || undefined,
+      product_name: `[Department RFP] ${deptLabel} · ${brandLabel}`,
+      inquiry_type: 'Department RFP & Solution Dossier',
+      message: compiledMessage
+    };
+
+    setRfpIsSubmitting(true);
+
+    try {
+      const res = await submitInquiry(payload, {
+        honeypotValue: rfpHoneypot,
+        formStartedAt: rfpFormStartedAt.current
+      });
+
+      if (res.blocked) {
+        setRfpIsSubmitting(false);
+        return;
+      }
+
+      setRfpSubmitted(true);
+      setRfpSubmittedRef(res.ref || '');
+      showToast(`Department RFP submitted successfully. Reference: ${res.ref || 'Recorded'}`);
+    } catch (err) {
+      console.error('Failed to submit department RFP:', err);
+      setRfpSubmitError(err?.message || 'Unable to submit your RFP at this moment. Please reach out directly to contact@medke.com.');
+      showToast('Failed to submit inquiry. Please review the form or contact engineering directly.');
+    } finally {
+      setRfpIsSubmitting(false);
+    }
+  };
+
+  const handleResetRfpForm = () => {
+    setRfpSubmitted(false);
+    setRfpSubmittedRef('');
+    setRfpSubmitError('');
+    setRfpForm({
+      name: '',
+      email: '',
+      org: '',
+      country: '',
+      notes: '',
+      certs: true
+    });
+    rfpFormStartedAt.current = Date.now();
   };
 
   // Human readable names for RFP preview
@@ -1031,6 +1105,18 @@ export default function ApplicationsPage() {
 
             {/* RFP Form */}
             <form id="department-rfp-form" onSubmit={handleRfpSubmit}>
+              {/* Anti-spam Honeypot Field */}
+              <input
+                type="text"
+                name={INQUIRY_HONEYPOT_NAME}
+                value={rfpHoneypot}
+                onChange={(e) => setRfpHoneypot(e.target.value)}
+                style={{ display: 'none' }}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
+
               <div className="rfp-form-grid">
                 <div className="form-field-wrap">
                   <label className="form-label" htmlFor="rfp-name">Full Name *</label>
@@ -1042,6 +1128,7 @@ export default function ApplicationsPage() {
                     value={rfpForm.name}
                     onChange={(e) => setRfpForm({ ...rfpForm, name: e.target.value })}
                     required
+                    disabled={rfpIsSubmitting}
                   />
                 </div>
                 <div className="form-field-wrap">
@@ -1054,6 +1141,7 @@ export default function ApplicationsPage() {
                     value={rfpForm.email}
                     onChange={(e) => setRfpForm({ ...rfpForm, email: e.target.value })}
                     required
+                    disabled={rfpIsSubmitting}
                   />
                 </div>
                 <div className="form-field-wrap">
@@ -1066,6 +1154,7 @@ export default function ApplicationsPage() {
                     value={rfpForm.org}
                     onChange={(e) => setRfpForm({ ...rfpForm, org: e.target.value })}
                     required
+                    disabled={rfpIsSubmitting}
                   />
                 </div>
                 <div className="form-field-wrap">
@@ -1078,6 +1167,7 @@ export default function ApplicationsPage() {
                     value={rfpForm.country || ''}
                     onChange={(e) => setRfpForm({ ...rfpForm, country: e.target.value })}
                     required
+                    disabled={rfpIsSubmitting}
                   />
                 </div>
                 <div className="form-field-wrap form-field-full">
@@ -1088,22 +1178,73 @@ export default function ApplicationsPage() {
                     placeholder="Specify monitor connector pinouts, required accessory categories (SpO2, ECG, NIBP, IBP, Temp), or tender deadlines..."
                     value={rfpForm.notes}
                     onChange={(e) => setRfpForm({ ...rfpForm, notes: e.target.value })}
+                    disabled={rfpIsSubmitting}
                   ></textarea>
                 </div>
                 <label className="form-checkbox-label">
-                  <input type="checkbox" id="rfp-certs-req" defaultChecked />
+                  <input
+                    type="checkbox"
+                    id="rfp-certs-req"
+                    checked={rfpForm.certs}
+                    onChange={(e) => setRfpForm({ ...rfpForm, certs: e.target.checked })}
+                    disabled={rfpIsSubmitting}
+                  />
                   <span>Include TÜV SÜD CE MDR Class IIb &amp; ISO 13485 regulatory certificate copies</span>
                 </label>
               </div>
 
-              <button type="submit" className="rfp-submit-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                <span>Request Tailored Departmental Proposal &amp; Dossier</span>
+              {rfpSubmitError && (
+                <div style={{ marginTop: 14, padding: '12px 16px', background: 'rgba(239, 68, 68, 0.12)', border: '1px solid #EF4444', color: '#FCA5A5', borderRadius: 8, fontSize: 13, lineHeight: 1.5 }}>
+                  <div style={{ fontWeight: 700, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6, color: '#F87171' }}>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span>Submission Advisory</span>
+                  </div>
+                  <span>{rfpSubmitError}</span>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="rfp-submit-btn"
+                disabled={rfpIsSubmitting}
+                style={{ opacity: rfpIsSubmitting ? 0.75 : 1, cursor: rfpIsSubmitting ? 'not-allowed' : 'pointer' }}
+              >
+                {rfpIsSubmitting ? (
+                  <>
+                    <svg style={{ animation: 'spin 1s linear infinite' }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" strokeOpacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round"/></svg>
+                    <span>Routing Department RFP...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <span>Request Tailored Departmental Proposal &amp; Dossier</span>
+                  </>
+                )}
               </button>
 
               {rfpSubmitted && (
-                <div style={{ marginTop: 16, padding: '12px 16px', background: '#DCFCE7', color: '#166534', borderRadius: 8, fontSize: 13, fontWeight: 600 }}>
-                  Thank you! Your department RFP has been routed to our biomedical engineering team. An OEM-cross-referenced proposal will be sent to {rfpForm.email} within 4 hours.
+                <div style={{ marginTop: 18, padding: '18px 20px', background: '#0F2E1E', border: '1px solid #22C55E', color: '#DCFCE7', borderRadius: 10, fontSize: 13.5, lineHeight: 1.6 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, color: '#4ADE80', fontWeight: 700, fontSize: 15 }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                    <span>Department RFP Received &amp; Routed</span>
+                  </div>
+                  <p style={{ margin: '0 0 10px 0', color: '#F0FDF4' }}>
+                    Thank you! Your departmental requirement has been routed directly to our biomedical engineering desk in Shenzhen. An OEM-cross-referenced dossier and volume pricing schedule will be delivered to <strong>{rfpForm.email}</strong> within <strong>4 hours</strong>.
+                  </p>
+                  {rfpSubmittedRef && (
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: '#86EFAC', background: 'rgba(34, 197, 94, 0.15)', padding: '6px 12px', borderRadius: 6, display: 'inline-block', marginBottom: 12 }}>
+                      Inquiry Reference: <strong>{rfpSubmittedRef}</strong>
+                    </div>
+                  )}
+                  <div>
+                    <button
+                      type="button"
+                      onClick={handleResetRfpForm}
+                      style={{ background: 'transparent', border: '1px solid #4ADE80', color: '#4ADE80', padding: '6px 14px', borderRadius: 6, fontSize: 12.5, fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
+                    >
+                      Submit Another Department RFP
+                    </button>
+                  </div>
                 </div>
               )}
             </form>
